@@ -33,5 +33,5 @@ jobs:
               php8.1 bin/console doctrine:schema:update --force &&
               yarn install &&
               yarn build &&
-              php8.1 bin/console cache:clear && 
+              php8.1 bin/console cache:clear
               "

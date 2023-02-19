@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Administration connexion</title>
+        <link rel="icon" href="/app_icon/icon_32px.png">
+        <meta name="turbo-cache-control" content="no-cache">
+        {% block stylesheets %}{{ encore_entry_link_tags('admin', null, 'admin') }}{% endblock %}
+        {% block javascripts %}{{ encore_entry_script_tags('admin', null, 'admin')  }}{% endblock %}
+        <link rel="manifest" href="/manifest.webmanifest">
+    </head>
+    <body class="admin-login-body">
+        <div class="admin-login">
+            <h2 class="admin-login-header">Administration</h2>
+
+            {% if error %}
+                <div class="admin-login-error">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <form method="post" class="login-container">
+
+                <p>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email"
+                           required autofocus placeholder="E-mail">
+                </p>
+
+                <p>
+                    <input type="password" name="password" id="inputPassword" class="" autocomplete="current-password"
+                           required placeholder="Mot de passe">
+                </p>
+
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <div class="d-flex ml-1">
+                    <input class="admin-login-remember-me" type="checkbox" name="_remember_me" id="_remember_me">
+                    <label for="_remember_me">Se souvenir de moi</label>
+                </div>
+
+                <p><input type="submit" value="Connexion"></p>
+
+                <div class="text-center">
+                    <a href="{{ path('homepage') }}" class="admin-login-homepage-link">
+                        <img src="{{ asset('app_icon/icon_100px.png') }}" width="50px">
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <a href="{{ path('homepage') }}" class="admin-login-homepage-link">Retour à la page d'accueil</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+

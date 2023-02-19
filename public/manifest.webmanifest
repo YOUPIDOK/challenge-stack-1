@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "TOUPIK-TV",
+  "short_name": "TOUPIK-TV",
+  "start_url": "https://toupik-tv.pidok-server.fr",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "TOUPIK-TV youtube manager",
+  "icons": [
+    {
+      "src": "app_icon/icon_200px.png",
+      "sizes": "200x200",
+      "type": "image/png"
+    }
+  ]
+}

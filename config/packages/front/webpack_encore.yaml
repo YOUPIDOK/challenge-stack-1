@@ -1,0 +1,10 @@
+webpack_encore:
+    output_path: false
+    builds:
+        main: '%kernel.project_dir%/public/build/main'
+        admin: '%kernel.project_dir%/public/build/admin'
+    script_attributes:
+        defer: true
+        'data-turbo-track': reload
+    link_attributes:
+        'data-turbo-track': reload

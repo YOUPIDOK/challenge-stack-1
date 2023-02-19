@@ -1,0 +1,13 @@
+{% block user_block %}
+    {% if app.user %}
+        <div class="text-center bg-primary fs-1">
+            <div>{{ app.user }}</div>
+        </div>
+
+        <li class="user-footer d-flex">
+            <a href="{{ path('homepage') }}" class="btn btn-default btn-flat w-50 text-center">Page d'accueil</a>
+            <a href="{{ path('admin_logout') }}" class="btn btn-default btn-flat w-50">Déconnexion</a>
+        </li>
+    {% endif %}
+{% endblock %}
+

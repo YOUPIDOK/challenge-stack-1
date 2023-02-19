@@ -1,0 +1,27 @@
+imports:
+    - { resource: './packages/doctrine/*.yaml' }
+    - { resource: './packages/sonata/*.yaml' }
+    - { resource: './packages/front/*.yaml' }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+#################################################### Menu Part #########################################################
+
+    app.menu_builder:
+        class: App\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # the previous menu
+#            - { name: knp_menu.menu_builder, method: createSidebarMenu, alias: sidebar } # Named "sidebar" this time
+
+########################################################################################################################

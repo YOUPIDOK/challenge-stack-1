@@ -1,0 +1,46 @@
+sonata_admin:
+    title: 'Administration'
+    title_logo: '/app_icon/icon_100px.png'
+    show_mosaic_button: false
+
+    security:
+        role_admin: ROLE_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN
+
+    dashboard:
+        blocks:
+            -
+                class: col-lg-3 col-xs-6
+                position: top
+                type: sonata.admin.block.stats
+                settings:
+                    code: admin.user
+                    icon: fa fa-users
+                    text: "Utilisateurs"
+                    color: bg-red
+        groups:
+            user:
+#                on_top: true
+                label: Utilisateurs
+                icon: '<i class="fa fa-users"></i>'
+                items:
+                    - admin.user
+                    - admin.group
+#    assets:
+#        extra_javascripts:
+#            - build/admin/admin.js
+#
+#        extra_stylesheets:
+#            - build/admin/admin.css
+
+    breadcrumbs:
+        child_admin_route: edit
+
+    templates:
+        layout: admin/override/layout.html.twig
+        user_block: admin/override/user_block.html.twig
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

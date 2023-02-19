@@ -1,0 +1,103 @@
+@import url(https://fonts.googleapis.com/cssfamily=Open+Sans:400,700);
+
+.admin-login-body {
+  background: #eee !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.admin-login {
+  position: absolute; /* or absolute */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  font-size: 16px;
+  border-bottom: solid 2px #c9c9c9;
+}
+
+@media (max-width: 400px) {
+  .admin-login {
+    width: 300px !important;
+  }
+}
+
+
+.admin-login-header,
+.admin-login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.admin-login-header {
+  background: #337AB7;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  color: #fff;
+}
+
+.login-container {
+  background: white;
+  padding: 12px;
+}
+
+.admin-login p {
+  padding: 12px;
+}
+
+.admin-login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.admin-login input[type="email"],
+.admin-login input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+}
+
+.admin-login input[type="email"]:focus,
+.admin-login input[type="password"]:focus {
+  border-color: #888;
+}
+
+.admin-login input[type="submit"] {
+  background: #337AB7;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.admin-login input[type="submit"]:hover {
+  background: #337AA9;
+}
+
+.admin-login input[type="submit"]:focus {
+  border-color: #216498;
+}
+
+.admin-login-remember-me {
+  width: 20px !important;
+  accent-color: #337AB7;
+}
+
+.admin-login-homepage-link {
+  color: black; font-size: 15px; text-decoration: none
+}
+
+.admin-login-error {
+  padding: 5px;
+  text-align: center;
+  color: #8B2E24;
+  background-color: #F7DBD8;
+  border: solid 1px #F6E0DF;
+}

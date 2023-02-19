@@ -1,0 +1,17 @@
+fos_ck_editor:
+  configs:
+    default:
+      toolbar:
+        - [ Bold, Italic, Underline ]
+        - [ Cut, Copy, PasteText, PasteFromWord ]
+        - [ Undo, Redo ]
+        - [ BackgroundColor, TextColor ]
+        - [ NumberedList, BulletedList ]
+        - [ Outdent, Indent ]
+        - [ JustifyLeft, JustifyCenter, JustifyRight, JustifyBlock ]
+        - [ 'Blockquote' ]
+        - [ Link, Unlink, Table ]
+        - [ Format, Maximize, Source ]
+      autoParagraph: false
+#      enterMode: CKEDITOR.ENTER_BR
+

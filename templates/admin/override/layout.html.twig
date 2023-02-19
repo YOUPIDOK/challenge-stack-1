@@ -1,0 +1,16 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('admin', null, 'admin') }}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin', null, 'admin')  }}
+    {{ parent() }}
+{% endblock %}
+
+{% block meta_tags %}
+    <link rel="icon" href="/app_icon/icon_32px.png">
+    {{ parent() }}
+{% endblock %}

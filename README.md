@@ -1,6 +1,5 @@
-
 # Challenge stack 1
-> Symfony 6.1
+> https://challenge-stack-1.pidok-server.fr
 ## Documentation
 ### Requirement
 * PHP ``8.1``

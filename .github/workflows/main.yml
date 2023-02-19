@@ -26,7 +26,7 @@ jobs:
         run:
               sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}
               "
-              cd /user/toupik-tv/toupik-tv.pidok-server.fr &&
+              cd /user/challenge-stack-1/challenge-stack-1.pidok-server.fr &&
               git reset --hard main &&
               git pull &&
               composer install &&

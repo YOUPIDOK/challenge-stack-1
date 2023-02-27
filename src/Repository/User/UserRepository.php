@@ -56,6 +56,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
+    public function userWithNoClientQb(?User $currentUser = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('u')
+            ->where('u.client IS NULL');
+
+        if ($currentUser !== null) {
+            $qb->orWhere('u = :user')->setParameter('user', $currentUser);
+        }
+
+        return $qb;
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

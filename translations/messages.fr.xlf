@@ -7,5 +7,53 @@
         <target>Utilisateurs</target>
       </segment>
     </unit>
+    <unit id="DHf_Cas" name="Client">
+      <segment>
+        <source>Client</source>
+        <target>Clients</target>
+      </segment>
+    </unit>
+    <unit id="v_LspAF" name="Height">
+      <segment>
+        <source>Height</source>
+        <target>Taille</target>
+      </segment>
+    </unit>
+    <unit id="WXzoaGl" name="Birthdate">
+      <segment>
+        <source>Birthdate</source>
+        <target>Date de naissance</target>
+      </segment>
+    </unit>
+    <unit id="zQSYJtW" name="Client List">
+      <segment>
+        <source>Client List</source>
+        <target>Clients</target>
+      </segment>
+    </unit>
+    <unit id="u.Xy.Ah" name="Client Create">
+      <segment>
+        <source>Client Create</source>
+        <target>Créer</target>
+      </segment>
+    </unit>
+    <unit id="ZaclZUL" name="Clients">
+      <segment>
+        <source>Clients</source>
+        <target>Clients</target>
+      </segment>
+    </unit>
+    <unit id="phigoGk" name="Registered At">
+      <segment>
+        <source>Registered At</source>
+        <target>Compte créé le</target>
+      </segment>
+    </unit>
+    <unit id="tRLZfny" name="User">
+      <segment>
+        <source>User</source>
+        <target>Utilisateur</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

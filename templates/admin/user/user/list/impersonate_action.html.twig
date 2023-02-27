@@ -1,4 +1,4 @@
-{% if app.user.id != object.id and (
+{% if app.user.id != object.id and object.client is not null (
         (not object.isSuperAdmin and is_granted('ROLE_IMPERSONATE')) or
         (object.isSuperAdmin and is_granted('ROLE_SUPER_ADMIN'))
     )

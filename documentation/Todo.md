@@ -1,10 +1,21 @@
-- Feature
-  - Taille
-  - Poid
-  - IMC
-  - Activité sportive de la journée
-    - Label
-    - Durée
-    - Catégorie
-  - Someil
-  - Aliment
+Admin
+  - Client
+  - data Weight
+  - Objective select
+  - Objective
+  - data sleep times
+  - data nutrition
+  - foods
+  - activities
+  - data activiest
+
+Entity
+  - Client
+  - data Weight
+  - Objective select
+  - Objective
+  - data sleep times
+  - data nutrition
+  - foods
+  - activities
+  - data activiest

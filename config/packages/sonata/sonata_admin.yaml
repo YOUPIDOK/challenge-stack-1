@@ -18,6 +18,15 @@ sonata_admin:
                     icon: fa fa-users
                     text: "Utilisateurs"
                     color: bg-red
+
+            - class:    col-lg-3 col-xs-6
+              position: top
+              type:     sonata.admin.block.stats
+              settings:
+                  code:  admin.client
+                  icon:  fa fa-users
+                  text:  "Clients"
+                  color: bg-green
         groups:
             user:
 #                on_top: true
@@ -26,6 +35,7 @@ sonata_admin:
                 items:
                     - admin.user
 #                    - admin.group
+                    - admin.client
 #    assets:
 #        extra_javascripts:
 #            - build/admin/admin.js

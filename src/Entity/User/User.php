@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'user__user_as_group')]
     private Collection $groups;
 
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'user')] // Really OneToOne but fix constraint
+    private ?Client $client = null;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
@@ -151,6 +154,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = RoleEnum::DEFAULT_ROLE;
 
+        if ($this->getClient() !== null) $roles[] = RoleEnum::ROLE_CLIENT;
+
         return array_unique($roles);
     }
 
@@ -202,6 +207,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function canImpersonate() :bool
     {
         return $this->hasRole('ROLE_IMPERSONATE');
+    }
+
+    public function isClient() :bool
+    {
+        return $this->client !== null;
     }
 
     /**
@@ -319,6 +329,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeGroup(Group $group): self
     {
         $this->groups->removeElement($group);
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        if ($client?->getUser() !== null && $client->getUser() !== $this) {
+            $client->getUser()->setClient(null);
+        }
+
+        $this->client = $client;
 
         return $this;
     }

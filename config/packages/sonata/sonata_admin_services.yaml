@@ -15,4 +15,10 @@ services:
       - { name: sonata.admin, model_class: App\Entity\User\Group, controller: ~, manager_type: orm, group: admin, label: Groups }
     calls:
       - [ setTranslationDomain, [ 'GroupAdmin' ] ]
+
+  admin.client:
+    class: App\Admin\User\ClientAdmin
+    tags:
+      - { name: sonata.admin, model_class: App\Entity\User\Client, controller: ~, manager_type: orm, group: admin, label: Clients }
+
 ########################################################################################################################

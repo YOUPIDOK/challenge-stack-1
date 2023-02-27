@@ -9,6 +9,7 @@ namespace App\Enum\User;
 class RoleEnum
 {
     const DEFAULT_ROLE = 'ROLE_USER';
+    const ROLE_CLIENT = 'ROLE_CLIENT';
 
     public static array $roles = [
         // TODO : Add roles

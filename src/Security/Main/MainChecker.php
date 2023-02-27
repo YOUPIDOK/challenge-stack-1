@@ -28,5 +28,9 @@ class MainChecker implements UserCheckerInterface
         if (!$user->isEnabled()) {
             throw new CustomUserMessageAccountStatusException("Votre compte n'est plus actif !");
         }
+
+        if (!$user->isClient()) {
+            throw new CustomUserMessageAccountStatusException("Vous n'êtes pas client!");
+        }
     }
 }

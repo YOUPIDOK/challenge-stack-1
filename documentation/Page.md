@@ -1,0 +1,7 @@
+- Login
+- Register
+- CGU
+- Politique confidentialité
+- Profile
+- Page d'accueil
+- Statistiques

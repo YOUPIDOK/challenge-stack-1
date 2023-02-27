@@ -1,0 +1,10 @@
+- Feature
+  - Taille
+  - Poid
+  - IMC
+  - Activité sportive de la journée
+    - Label
+    - Durée
+    - Catégorie
+  - Someil
+  - Aliment

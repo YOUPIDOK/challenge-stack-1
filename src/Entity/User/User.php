@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('email')]
-#[ORM\Table(name: 'user__user')]
+#[ORM\Table(name: 'user__users')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;

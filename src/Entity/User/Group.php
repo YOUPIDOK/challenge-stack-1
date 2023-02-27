@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[UniqueEntity('name')]
-#[ORM\Table(name: 'user__group')]
+#[ORM\Table(name: 'user__groups')]
 class Group
 {
     #[ORM\Id]

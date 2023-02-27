@@ -1,7 +1,10 @@
 - Login
 - Register
+  - Info de base
 - CGU
 - Politique confidentialité
 - Profile
+  - Edition
+  - Rapport journalier
+  - Statistiques
 - Page d'accueil
-- Statistiques

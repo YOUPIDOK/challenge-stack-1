@@ -25,7 +25,7 @@ sonata_admin:
                 icon: '<i class="fa fa-users"></i>'
                 items:
                     - admin.user
-                    - admin.group
+#                    - admin.group
 #    assets:
 #        extra_javascripts:
 #            - build/admin/admin.js

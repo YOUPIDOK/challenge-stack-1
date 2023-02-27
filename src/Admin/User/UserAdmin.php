@@ -61,7 +61,7 @@ final class UserAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('email')
             ->add('enabled')
-            ->add('groups')
+//            ->add('groups')
             ->add('isAdmin', CallbackFilter::class, [
                 'callback' => static function(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool {
                     if (!$data->hasValue()) {
@@ -111,7 +111,7 @@ final class UserAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('email')
             ->add('enabled')
-            ->add('groups')
+//            ->add('groups')
             ->add('isAdmin', FieldDescriptionInterface::TYPE_BOOLEAN,[
                 'accessor' => function ($user) {
                     return $user->isAdmin();
@@ -169,7 +169,7 @@ final class UserAdmin extends AbstractAdmin
                 ->end()
                 ->with('access', ['class' => 'col-md-6'])
                     ->add('enabled')
-                    ->add('groups')
+//                    ->add('groups')
                 ->end()
             ->end()
         ;

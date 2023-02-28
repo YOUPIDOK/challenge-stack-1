@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Objective[]    findAll()
  * @method Objective[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ObjectivesRepository extends ServiceEntityRepository
+class ObjectiveRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,7 +40,7 @@ class ObjectivesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Objectives[] Returns an array of Objectives objects
+//     * @return Objective[] Returns an array of Objective objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ObjectivesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Objectives
+//    public function findOneBySomeField($value): ?Objective
 //    {
 //        return $this->createQueryBuilder('o')
 //            ->andWhere('o.exampleField = :val')

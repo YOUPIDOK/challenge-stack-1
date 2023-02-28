@@ -3,15 +3,16 @@
 namespace App\Entity\Data;
 
 use App\Entity\Activity;
+use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\ActivityTimesRepository;
+use App\Repository\Data\ActivityTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Entity(repositoryClass: ActivityTimeRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
-class ActivityTimes
+class ActivityTime
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,6 +40,12 @@ class ActivityTimes
     #[Range(min: 0)]
     private ?float $distance = null;
 
+    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
+    private ?DailyReport $dailyReport = null;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -110,6 +117,18 @@ class ActivityTimes
     public function setDistance(?float $distance): self
     {
         $this->distance = $distance;
+
+        return $this;
+    }
+
+    public function getDailyReport(): ?DailyReport
+    {
+        return $this->dailyReport;
+    }
+
+    public function setDailyReport(?DailyReport $dailyReport): self
+    {
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

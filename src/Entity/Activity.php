@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Data\ActivityTimes;
+use App\Entity\Data\ActivityTime;
 use App\Entity\User\Client;
 use App\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,7 +37,7 @@ class Activity
     #[NotNull]
     private ?bool $isDistance = false;
 
-    #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityTimes::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityTime::class, cascade: ['remove'])]
     private Collection $activityTimes;
 
     public function __construct()
@@ -104,14 +104,14 @@ class Activity
     }
 
     /**
-     * @return Collection<int, ActivityTimes>
+     * @return Collection<int, ActivityTime>
      */
     public function getActivityTimes(): Collection
     {
         return $this->activityTimes;
     }
 
-    public function addActivityTime(ActivityTimes $activityTime): self
+    public function addActivityTime(ActivityTime $activityTime): self
     {
         if (!$this->activityTimes->contains($activityTime)) {
             $this->activityTimes->add($activityTime);
@@ -121,7 +121,7 @@ class Activity
         return $this;
     }
 
-    public function removeActivityTime(ActivityTimes $activityTime): self
+    public function removeActivityTime(ActivityTime $activityTime): self
     {
         if ($this->activityTimes->removeElement($activityTime)) {
             // set the owning side to null (unless already changed)

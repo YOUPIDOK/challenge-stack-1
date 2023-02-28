@@ -3,7 +3,8 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
-use App\Entity\Data\ActivityTimes;
+use App\Entity\DailyReport;
+use App\Entity\Data\ActivityTime;
 use App\Entity\Data\Nutrition;
 use App\Entity\Data\SleepTime;
 use App\Entity\Data\Weight;
@@ -62,9 +63,12 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Nutrition::class, cascade: ['remove'])]
     private Collection $nutritions;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTimes::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTime::class, cascade: ['remove'])]
+    private Collection $activityTime;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
     #[ORM\OrderBy(['date' => 'DESC'])]
-    private Collection $activityTimes;
+    private Collection $dailyReports;
 
     public function __construct()
     {
@@ -74,7 +78,8 @@ class Client
         $this->sleepTimes = new ArrayCollection();
         $this->weights = new ArrayCollection();
         $this->nutritions = new ArrayCollection();
-        $this->activityTimes = new ArrayCollection();
+        $this->activityTime = new ArrayCollection();
+        $this->dailyReports = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -326,26 +331,26 @@ class Client
     }
 
     /**
-     * @return Collection<int, ActivityTimes>
+     * @return Collection<int, ActivityTime>
      */
-    public function getActivityTimes(): Collection
+    public function getActivityTime(): Collection
     {
-        return $this->activityTimes;
+        return $this->activityTime;
     }
 
-    public function addActivityTime(ActivityTimes $activityTime): self
+    public function addActivityTime(ActivityTime $activityTime): self
     {
-        if (!$this->activityTimes->contains($activityTime)) {
-            $this->activityTimes->add($activityTime);
+        if (!$this->activityTime->contains($activityTime)) {
+            $this->activityTime->add($activityTime);
             $activityTime->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeActivityTime(ActivityTimes $activityTime): self
+    public function removeActivityTime(ActivityTime $activityTime): self
     {
-        if ($this->activityTimes->removeElement($activityTime)) {
+        if ($this->activityTime->removeElement($activityTime)) {
             // set the owning side to null (unless already changed)
             if ($activityTime->getClient() === $this) {
                 $activityTime->setClient(null);
@@ -353,5 +358,47 @@ class Client
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, DailyReport>
+     */
+    public function getDailyReports(): Collection
+    {
+        return $this->dailyReports;
+    }
+
+    public function addDailyReport(DailyReport $dailyReport): self
+    {
+        if (!$this->dailyReports->contains($dailyReport)) {
+            $this->dailyReports->add($dailyReport);
+            $dailyReport->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDailyReport(DailyReport $dailyReport): self
+    {
+        if ($this->dailyReports->removeElement($dailyReport)) {
+            // set the owning side to null (unless already changed)
+            if ($dailyReport->getClient() === $this) {
+                $dailyReport->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return DailyReport|null
+     */
+    public function getCurrentDailyReport(): ?DailyReport {
+        $dailyReport = $this->dailyReports->first();
+        $today = new DateTime();
+        if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
+            return $dailyReport;
+        }
+        return null;
     }
 }

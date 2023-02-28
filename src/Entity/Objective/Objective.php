@@ -3,7 +3,7 @@
 namespace App\Entity\Objective;
 
 use App\Entity\User\Client;
-use App\Repository\Objective\ObjectivesRepository;
+use App\Repository\Objective\ObjectiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
+#[ORM\Entity(repositoryClass: ObjectiveRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
 class Objective
 {
@@ -50,7 +50,6 @@ class Objective
 
     public function __construct()
     {
-        $this->selectObjectives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,36 +101,6 @@ class Objective
     public function setClientId(?Client $client): self
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, SelectObjectives>
-     */
-    public function getSelectObjectives(): Collection
-    {
-        return $this->selectObjectives;
-    }
-
-    public function addSelectObjective(SelectObjectives $selectObjective): self
-    {
-        if (!$this->selectObjectives->contains($selectObjective)) {
-            $this->selectObjectives->add($selectObjective);
-            $selectObjective->setObjectives($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSelectObjective(SelectObjectives $selectObjective): self
-    {
-        if ($this->selectObjectives->removeElement($selectObjective)) {
-            // set the owning side to null (unless already changed)
-            if ($selectObjective->getObjectives() === $this) {
-                $selectObjective->setObjectives(null);
-            }
-        }
 
         return $this;
     }

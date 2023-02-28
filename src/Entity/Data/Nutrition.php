@@ -2,17 +2,18 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\Food;
 use App\Entity\User\Client;
 use App\Enum\Nutrition\MealTypeEnum;
 use App\Enum\Objective\ObjectiveTypeEnum;
-use App\Repository\Data\NutritionsRepository;
+use App\Repository\Data\NutritionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: NutritionsRepository::class)]
+#[ORM\Entity(repositoryClass: NutritionRepository::class)]
 #[ORM\Table(name: 'data__nutritions')]
 class Nutrition
 {
@@ -35,12 +36,16 @@ class Nutrition
 
     #[ORM\Column()]
     #[NotNull]
-    private ?\DateTime $date = null;
-
-    #[ORM\Column()]
-    #[NotNull]
     #[Range(min: 0)]
     private ?float $foodWeight = null;
+
+    #[ORM\ManyToOne(inversedBy: 'nutritions')]
+    private ?DailyReport $dailyReport = null;
+
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -97,17 +102,6 @@ class Nutrition
         return MealTypeEnum::BREAKFAST === $this->mealType;
     }
 
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(?\DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     public function getFoodWeight(): ?float
     {
@@ -117,6 +111,18 @@ class Nutrition
     public function setFoodWeight(?float $foodWeight): self
     {
         $this->foodWeight = $foodWeight;
+
+        return $this;
+    }
+
+    public function getDailyReport(): ?DailyReport
+    {
+        return $this->dailyReport;
+    }
+
+    public function setDailyReport(?DailyReport $dailyReport): self
+    {
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

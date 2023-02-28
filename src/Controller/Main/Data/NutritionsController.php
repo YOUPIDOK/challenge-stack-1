@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller\Data;
+namespace App\Controller\Main\Data;
 
 use App\Entity\Data\Nutrition;
 use App\Form\Data\NutritionsType;
 use App\Repository\DailyReportRepository;
-use App\Repository\Data\NutritionsRepository;
+use App\Repository\Data\NutritionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NutritionsController extends AbstractController
 {
     #[Route('/new', name: 'app_data_nutritions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, NutritionsRepository $nutritionsRepository, DailyReportRepository $dailyReportRepository): Response
+    public function new(Request $request, NutritionRepository $nutritionsRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $nutrition = new Nutrition();
         $form = $this->createForm(NutritionsType::class, $nutrition);
@@ -53,7 +53,7 @@ class NutritionsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_data_nutritions_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Nutrition $nutrition, NutritionsRepository $nutritionsRepository): Response
+    public function edit(Request $request, Nutrition $nutrition, NutritionRepository $nutritionsRepository): Response
     {
         $form = $this->createForm(NutritionsType::class, $nutrition);
         $form->handleRequest($request);
@@ -71,7 +71,7 @@ class NutritionsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_data_nutritions_delete', methods: ['POST'])]
-    public function delete(Request $request, Nutrition $nutrition, NutritionsRepository $nutritionsRepository): Response
+    public function delete(Request $request, Nutrition $nutrition, NutritionRepository $nutritionsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$nutrition->getId(), $request->request->get('_token'))) {
             $nutritionsRepository->remove($nutrition, true);

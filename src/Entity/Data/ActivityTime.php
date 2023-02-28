@@ -19,10 +19,6 @@ class ActivityTime
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
-    #[NotNull]
-    private ?Client $client = null;
-
     #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $startAt = null;
@@ -50,18 +46,6 @@ class ActivityTime
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getStartAt(): ?\DateTime

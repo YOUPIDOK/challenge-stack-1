@@ -2,11 +2,14 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\Food;
 use App\Entity\User\Client;
 use App\Enum\Nutrition\MealTypeEnum;
 use App\Enum\Objective\ObjectiveTypeEnum;
 use App\Repository\Data\NutritionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -41,6 +44,14 @@ class Nutritions
     #[NotNull]
     #[Range(min: 0)]
     private ?float $foodWeight = null;
+
+    #[ORM\OneToMany(mappedBy: 'nutritions', targetEntity: DailyReport::class)]
+    private Collection $dailyReports;
+
+    public function __construct()
+    {
+        $this->dailyReports = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,6 +128,36 @@ class Nutritions
     public function setFoodWeight(?float $foodWeight): self
     {
         $this->foodWeight = $foodWeight;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DailyReport>
+     */
+    public function getDailyReports(): Collection
+    {
+        return $this->dailyReports;
+    }
+
+    public function addDailyReport(DailyReport $dailyReport): self
+    {
+        if (!$this->dailyReports->contains($dailyReport)) {
+            $this->dailyReports->add($dailyReport);
+            $dailyReport->setNutritions($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDailyReport(DailyReport $dailyReport): self
+    {
+        if ($this->dailyReports->removeElement($dailyReport)) {
+            // set the owning side to null (unless already changed)
+            if ($dailyReport->getNutritions() === $this) {
+                $dailyReport->setNutritions(null);
+            }
+        }
 
         return $this;
     }

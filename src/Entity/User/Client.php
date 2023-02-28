@@ -3,6 +3,7 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
+use App\Entity\DailyReport;
 use App\Entity\Data\ActivityTimes;
 use App\Entity\Data\Nutritions;
 use App\Entity\Data\SleepTime;
@@ -65,6 +66,9 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTimes::class, cascade: ['remove'])]
     private Collection $activityTimes;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
+    private Collection $dailyReports;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
@@ -74,6 +78,7 @@ class Client
         $this->weights = new ArrayCollection();
         $this->nutritions = new ArrayCollection();
         $this->activityTimes = new ArrayCollection();
+        $this->dailyReports = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -348,6 +353,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($activityTime->getClient() === $this) {
                 $activityTime->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DailyReport>
+     */
+    public function getDailyReports(): Collection
+    {
+        return $this->dailyReports;
+    }
+
+    public function addDailyReport(DailyReport $dailyReport): self
+    {
+        if (!$this->dailyReports->contains($dailyReport)) {
+            $this->dailyReports->add($dailyReport);
+            $dailyReport->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDailyReport(DailyReport $dailyReport): self
+    {
+        if ($this->dailyReports->removeElement($dailyReport)) {
+            // set the owning side to null (unless already changed)
+            if ($dailyReport->getClient() === $this) {
+                $dailyReport->setClient(null);
             }
         }
 

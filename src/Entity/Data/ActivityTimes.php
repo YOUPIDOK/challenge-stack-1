@@ -3,8 +3,11 @@
 namespace App\Entity\Data;
 
 use App\Entity\Activity;
+use App\Entity\DailyReport;
 use App\Entity\User\Client;
 use App\Repository\Data\ActivityTimesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
@@ -38,6 +41,14 @@ class ActivityTimes
     #[NotNull]
     #[Range(min: 0)]
     private ?float $distance = null;
+
+    #[ORM\OneToMany(mappedBy: 'ActivityTimes', targetEntity: DailyReport::class)]
+    private Collection $dailyReports;
+
+    public function __construct()
+    {
+        $this->dailyReports = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -110,6 +121,36 @@ class ActivityTimes
     public function setDistance(?float $distance): self
     {
         $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DailyReport>
+     */
+    public function getDailyReports(): Collection
+    {
+        return $this->dailyReports;
+    }
+
+    public function addDailyReport(DailyReport $dailyReport): self
+    {
+        if (!$this->dailyReports->contains($dailyReport)) {
+            $this->dailyReports->add($dailyReport);
+            $dailyReport->setActivityTimes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDailyReport(DailyReport $dailyReport): self
+    {
+        if ($this->dailyReports->removeElement($dailyReport)) {
+            // set the owning side to null (unless already changed)
+            if ($dailyReport->getActivityTimes() === $this) {
+                $dailyReport->setActivityTimes(null);
+            }
+        }
 
         return $this;
     }

@@ -2,8 +2,11 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\User\Client;
 use App\Repository\Data\SleepTimeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -27,6 +30,13 @@ class SleepTime
     #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $awakeAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
+    private ?DailyReport $dailyReport = null;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -65,6 +75,18 @@ class SleepTime
     public function setAwakeAt(?\DateTime $awakeAt): self
     {
         $this->awakeAt = $awakeAt;
+
+        return $this;
+    }
+
+    public function getDailyReport(): ?DailyReport
+    {
+        return $this->dailyReport;
+    }
+
+    public function setDailyReport(?DailyReport $dailyReport): self
+    {
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

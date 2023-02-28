@@ -21,10 +21,6 @@ class Weight
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column()]
-    #[NotNull]
-    private ?\DateTime $date = null;
-
     #[ORM\ManyToOne(inversedBy: 'weights')]
     #[NotNull]
     private ?Client $client = null;
@@ -44,18 +40,6 @@ class Weight
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(?\DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 
     public function getClient(): ?Client

@@ -3,6 +3,7 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
+use App\Entity\Data\SleepTime;
 use App\Entity\Food;
 use App\Entity\Objective\Objectives;
 use App\Repository\User\ClientRepository;
@@ -49,11 +50,15 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objectives::class)]
     private Collection $objectives;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class)]
+    private Collection $sleepTimes;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->objectives = new ArrayCollection();
+        $this->sleepTimes = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -202,12 +207,42 @@ class Client
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getSleepTimes(): Collection
+    {
+        return $this->sleepTimes;
+    }
+
+    public function addSleepTime(SleepTime $sleepTime): self
+    {
+        if (!$this->sleepTimes->contains($sleepTime)) {
+            $this->sleepTimes->add($sleepTime);
+            $sleepTime->setClient($this);
+        }
+
+        return $this;
+    }
+
+
     public function removeObjective(Objectives $objective): self
     {
         if ($this->objectives->removeElement($objective)) {
             // set the owning side to null (unless already changed)
             if ($objective->getClientId() === $this) {
                 $objective->setClientId(null);
+            }
+        }
+        return $this;
+    }
+
+    public function removeSleepTime(SleepTime $sleepTime): self
+    {
+        if ($this->sleepTimes->removeElement($sleepTime)) {
+            // set the owning side to null (unless already changed)
+            if ($sleepTime->getClient() === $this) {
+                $sleepTime->setClient(null);
             }
         }
 

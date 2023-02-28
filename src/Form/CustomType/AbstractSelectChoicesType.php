@@ -23,8 +23,8 @@ abstract class AbstractSelectChoicesType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $defaultAttributs = [
-            'data-controller' => 'choices',
-            'data-choices-target' => 'select',
+            'data-controller' => 'form--choices',
+            'data-form--choices-target' => 'select',
         ];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], $defaultAttributs);

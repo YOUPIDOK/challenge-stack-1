@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Créer un compte</h1>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.email) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.firstname) }}</div>
+            <div class="col-md-6">{{ form_row(form.lastname) }}</div>
+            <div class="col-md-6">{{ form_row(form.gender) }}</div>
+            <div class="col-md-6">{{ form_row(form.client.birthdate) }}</div>
+            <div class="col-md-6">{{ form_row(form.plainPassword.first) }}</div>
+            <div class="col-md-6">{{ form_row(form.plainPassword.second) }}</div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">{{ form_row(form.client.height) }}</div>
+            <div class="col-md-6">{{ form_row(form.weight) }}</div>
+        </div>
+
+        <button class="btn btn-primary w-100">S'inscrir</button>
+        {{ form_end(form) }}
+        <div class="mt-2">Déjà inscrit ? <a href="{{ path('login') }}">Se connecter</a></div>
+    </div>
+{% endblock %}

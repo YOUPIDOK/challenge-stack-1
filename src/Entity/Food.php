@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Data\Nutritions;
+use App\Entity\Data\Nutrition;
 use App\Entity\User\Client;
 use App\Repository\FoodRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,7 +30,7 @@ class Food
     #[NotNull]
     private ?string $label = null;
 
-    #[ORM\OneToMany(mappedBy: 'food', targetEntity: Nutritions::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'food', targetEntity: Nutrition::class, cascade: ['remove'])]
     private Collection $nutritions;
 
     #[ORM\Column()]
@@ -93,14 +93,14 @@ class Food
     }
 
     /**
-     * @return Collection<int, Nutritions>
+     * @return Collection<int, Nutrition>
      */
     public function getNutritions(): Collection
     {
         return $this->nutritions;
     }
 
-    public function addNutrition(Nutritions $nutrition): self
+    public function addNutrition(Nutrition $nutrition): self
     {
         if (!$this->nutritions->contains($nutrition)) {
             $this->nutritions->add($nutrition);
@@ -110,7 +110,7 @@ class Food
         return $this;
     }
 
-    public function removeNutrition(Nutritions $nutrition): self
+    public function removeNutrition(Nutrition $nutrition): self
     {
         if ($this->nutritions->removeElement($nutrition)) {
             // set the owning side to null (unless already changed)

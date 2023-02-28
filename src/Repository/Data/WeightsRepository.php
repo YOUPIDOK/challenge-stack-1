@@ -2,26 +2,26 @@
 
 namespace App\Repository\Data;
 
-use App\Entity\Data\Weights;
+use App\Entity\Data\Weight;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Weights>
+ * @extends ServiceEntityRepository<Weight>
  *
- * @method Weights|null find($id, $lockMode = null, $lockVersion = null)
- * @method Weights|null findOneBy(array $criteria, array $orderBy = null)
- * @method Weights[]    findAll()
- * @method Weights[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Weight|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Weight|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Weight[]    findAll()
+ * @method Weight[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class WeightsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Weights::class);
+        parent::__construct($registry, Weight::class);
     }
 
-    public function save(Weights $entity, bool $flush = false): void
+    public function save(Weight $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class WeightsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Weights $entity, bool $flush = false): void
+    public function remove(Weight $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

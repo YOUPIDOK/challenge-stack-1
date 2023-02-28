@@ -16,8 +16,10 @@ class ProfileController extends AbstractController
     public function profile(WeightRepository $weightRepo): Response
     {
         $weight = $weightRepo->findLastWeightByClient($this->getUser()->getClient());
-        dd($weight);
-        return $this->render('pages/profile/profile.html.twig');
+
+        return $this->render('pages/profile/profile.html.twig', [
+            'weight' => $weight
+        ]);
     }
 
     #[Route('/modifier', name: 'profile_update')]

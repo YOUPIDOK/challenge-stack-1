@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: SelectObjectivesRepository::class)]
+#[ORM\Table(name: 'objective__select_objective')]
 class SelectObjectives
 {
     #[ORM\Id]

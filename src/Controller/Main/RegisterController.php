@@ -36,13 +36,14 @@ class RegisterController extends AbstractController
 
         $user = new User();
 
-        $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPlainPassword() ?? ''));
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
+            $user->setEnabled(true);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPlainPassword()));
 
             $em->persist($user);
             $em->flush();
@@ -54,6 +55,8 @@ class RegisterController extends AbstractController
 
             $em->persist($weight);
             $em->flush();
+
+            $this->addFlash('success', 'Votre compte a bien été créer.');
 
             return $this->redirectToRoute('login');
         }

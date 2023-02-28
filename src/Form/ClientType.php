@@ -10,10 +10,12 @@ use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -21,12 +23,13 @@ class ClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('birthdate', DateTimeType::class, [
+        $builder->add('birthdate', DateType::class, [
             'label' => 'Date de naissance',
             'required' => true,
             'widget' => 'single_text',
             'constraints' => [
-                new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans'])
+                new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans']),
+                new GreaterThanOrEqual(['value' => new DateTime('-150years'), 'message' => 'Maximum 150 ans']),
             ]
         ]);
 

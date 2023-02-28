@@ -10,7 +10,7 @@
     <unit id="DHf_Cas" name="Client">
       <segment>
         <source>Client</source>
-        <target>Clients</target>
+        <target>Client</target>
       </segment>
     </unit>
     <unit id="v_LspAF" name="Height">
@@ -53,6 +53,78 @@
       <segment>
         <source>User</source>
         <target>Utilisateur</target>
+      </segment>
+    </unit>
+    <unit id="g6rOhkA" name="Foods">
+      <segment>
+        <source>Foods</source>
+        <target>Nourritures</target>
+      </segment>
+    </unit>
+    <unit id="5W0nkTY" name="Food List">
+      <segment>
+        <source>Food List</source>
+        <target>Nourritures</target>
+      </segment>
+    </unit>
+    <unit id="pix7Lzv" name="Food Create">
+      <segment>
+        <source>Food Create</source>
+        <target>Créer</target>
+      </segment>
+    </unit>
+    <unit id="6NmIyAB" name="Proteins">
+      <segment>
+        <source>Proteins</source>
+        <target>Protéines</target>
+      </segment>
+    </unit>
+    <unit id="zuVgZVZ" name="Lipids">
+      <segment>
+        <source>Lipids</source>
+        <target>Lipides</target>
+      </segment>
+    </unit>
+    <unit id="PDM6Xje" name="Carbohydrates">
+      <segment>
+        <source>Carbohydrates</source>
+        <target>Glucides</target>
+      </segment>
+    </unit>
+    <unit id="DmY3P0X" name="Label">
+      <segment>
+        <source>Label</source>
+        <target>Libellé</target>
+      </segment>
+    </unit>
+    <unit id="qxA4EWX" name="Heart Rate">
+      <segment>
+        <source>Heart Rate</source>
+        <target>Fréquence cardiaque</target>
+      </segment>
+    </unit>
+    <unit id="uRji.nZ" name="Is Distance">
+      <segment>
+        <source>Is Distance</source>
+        <target>Se mesure en distance</target>
+      </segment>
+    </unit>
+    <unit id="hbUwLUs" name="Activity List">
+      <segment>
+        <source>Activity List</source>
+        <target>Activités sportives</target>
+      </segment>
+    </unit>
+    <unit id="_rzNT53" name="Activity Create">
+      <segment>
+        <source>Activity Create</source>
+        <target>Créer</target>
+      </segment>
+    </unit>
+    <unit id="TQB25rT" name="Activities">
+      <segment>
+        <source>Activities</source>
+        <target>Activités sportives</target>
       </segment>
     </unit>
   </file>

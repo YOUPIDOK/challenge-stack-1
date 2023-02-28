@@ -2,8 +2,12 @@
 
 namespace App\Entity\User;
 
+use App\Entity\Activity;
+use App\Entity\Food;
 use App\Repository\User\ClientRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
@@ -35,9 +39,21 @@ class Client
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class, cascade: ['remove'])]
+    private Collection $food;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
+    private Collection $activities;
+
+    public function __construct()
+    {
+        $this->food = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+    }
+
     public function __toString(): string
     {
-        return '';
+        return '' . $this->getUser();
     }
 
     public function getId(): ?int
@@ -99,6 +115,66 @@ class Client
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Food>
+     */
+    public function getFood(): Collection
+    {
+        return $this->food;
+    }
+
+    public function addFood(Food $food): self
+    {
+        if (!$this->food->contains($food)) {
+            $this->food->add($food);
+            $food->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFood(Food $food): self
+    {
+        if ($this->food->removeElement($food)) {
+            // set the owning side to null (unless already changed)
+            if ($food->getClient() === $this) {
+                $food->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): self
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities->add($activity);
+            $activity->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): self
+    {
+        if ($this->activities->removeElement($activity)) {
+            // set the owning side to null (unless already changed)
+            if ($activity->getClient() === $this) {
+                $activity->setClient(null);
+            }
+        }
 
         return $this;
     }

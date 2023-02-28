@@ -1,21 +1,17 @@
 Admin
-  - Client
-  - data Weight
   - Objective select
   - Objective
+  - 
+  - data Weight
   - data sleep times
   - data nutrition
-  - foods
-  - activities
-  - data activiest
+  - data activies
 
 Entity
-  - Client
   - data Weight
-  - Objective select
-  - Objective
   - data sleep times
   - data nutrition
-  - foods
-  - activities
-  - data activiest
+  - data activies
+  - 
+  - Objective select
+  - Objective

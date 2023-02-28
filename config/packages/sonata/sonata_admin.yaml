@@ -36,6 +36,19 @@ sonata_admin:
                     - admin.user
 #                    - admin.group
                     - admin.client
+            food:
+                on_top: true
+                label: Nourritures
+                icon:  '<i class="fa fa-cutlery"></i>'
+                items:
+                    - admin.food
+
+            activity:
+                on_top: true
+                label:  Activités sportives
+                icon:   '<i class="fa fa-book"></i>'
+                items:
+                    - admin.activity
 #    assets:
 #        extra_javascripts:
 #            - build/admin/admin.js

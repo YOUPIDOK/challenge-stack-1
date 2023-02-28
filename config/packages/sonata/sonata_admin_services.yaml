@@ -22,3 +22,15 @@ services:
       - { name: sonata.admin, model_class: App\Entity\User\Client, controller: ~, manager_type: orm, group: admin, label: Clients }
 
 ########################################################################################################################
+######################################################## Food ##########################################################
+  admin.food:
+    class: App\Admin\FoodAdmin
+    tags:
+      - { name: sonata.admin, model_class: App\Entity\Food, controller: ~, manager_type: orm, group: admin, label: Foods }
+########################################################################################################################
+###################################################### Activities ######################################################
+  admin.activity:
+    class: App\Admin\ActivityAdmin
+    tags:
+      - { name: sonata.admin, model_class: App\Entity\Activity, controller: ~, manager_type: orm, group: admin, label: Activities }
+########################################################################################################################

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
@@ -34,10 +35,18 @@ class Objectives
     #[NotNull]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Objectives', targetEntity: SelectObjectives::class, cascade: ['remove'])]
-    #[Count(min: 1)]
+    #[ORM\Column()]
     #[NotNull]
-    private Collection $selectObjectives;
+    #[Range(min: 0)]
+    private ?float $objectiveValue = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    private ?bool $active = null;
+
+    #[ORM\Column(length: 255)]
+    #[NotNull]
+    private ?string $type = null;
 
     public function __construct()
     {
@@ -123,6 +132,42 @@ class Objectives
                 $selectObjective->setObjectives(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getObjectiveValue(): ?float
+    {
+        return $this->objectiveValue;
+    }
+
+    public function setObjectiveValue(?float $objectiveValue): self
+    {
+        $this->objectiveValue = $objectiveValue;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

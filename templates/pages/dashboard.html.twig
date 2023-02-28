@@ -1,9 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Dashboard{% endblock %}
-
+{% block stylesheets %}
+    {% for file in encore_entry_css_files('dashboard', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
     <div class="container">
-        
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h3>Mon profil</h3>
+                <div class="avatar">
+                <img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
+                    Nom Prénom
+                </div>
+                <div class="profile-info">
+                    <div class="profile-info-title">
+                        <p>Poids</p>
+                        <p>Age</p>
+                        <p>Taille</p>
+                    </div>
+                    <div class="profile-info-value">
+                        <p>85kg</p>
+                        <p>40ans</p>
+                        <p>1m90</p>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-card-body">
+            <h4>Mes objectifs</h4>
+            <div class="accordion" id="accordionExample">
+            {# {% for objectif in objectifs %}
+
+            {% endfor %} #}
+                {% include "components/objectif.html.twig" %}
+            </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -5,8 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="/app_icon/icon_32px.png">
-        {% block stylesheets %}{{ encore_entry_link_tags('main', null, 'main') }}{% endblock %}
-        {% block javascripts %}{{ encore_entry_script_tags('main', null, 'main')  }}{% endblock %}
+        {{ encore_entry_link_tags('main', null, 'main') }}
+          {% block stylesheets %}{% endblock %}
+        {{ encore_entry_script_tags('main', null, 'main')  }}
+        {% block javascripts %}{% endblock %}
         <link rel="manifest" href="/manifest.webmanifest">
     </head>
     <body>

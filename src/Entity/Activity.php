@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Data\ActivityTimes;
 use App\Entity\User\Client;
 use App\Repository\ActivityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -33,6 +36,14 @@ class Activity
     #[ORM\Column]
     #[NotNull]
     private ?bool $isDistance = false;
+
+    #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityTimes::class, cascade: ['remove'])]
+    private Collection $activityTimes;
+
+    public function __construct()
+    {
+        $this->activityTimes = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -88,6 +99,36 @@ class Activity
     public function setIsDistance(?bool $isDistance): self
     {
         $this->isDistance = $isDistance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActivityTimes>
+     */
+    public function getActivityTimes(): Collection
+    {
+        return $this->activityTimes;
+    }
+
+    public function addActivityTime(ActivityTimes $activityTime): self
+    {
+        if (!$this->activityTimes->contains($activityTime)) {
+            $this->activityTimes->add($activityTime);
+            $activityTime->setActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivityTime(ActivityTimes $activityTime): self
+    {
+        if ($this->activityTimes->removeElement($activityTime)) {
+            // set the owning side to null (unless already changed)
+            if ($activityTime->getActivity() === $this) {
+                $activityTime->setActivity(null);
+            }
+        }
 
         return $this;
     }

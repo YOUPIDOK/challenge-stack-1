@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutrition{% endblock %}
+
+{% block body %}
+    <h1>Nutrition</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nutrition.id }}</td>
+            </tr>
+            <tr>
+                <th>MealType</th>
+                <td>{{ nutrition.mealType }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ nutrition.date ? nutrition.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FoodWeight</th>
+                <td>{{ nutrition.foodWeight }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_data_nutrition_index') }}">back to list</a>
+
+    <a href="{{ path('app_data_nutrition_edit', {'id': nutrition.id}) }}">edit</a>
+
+    {{ include('data/nutrition/_delete_form.html.twig') }}
+{% endblock %}

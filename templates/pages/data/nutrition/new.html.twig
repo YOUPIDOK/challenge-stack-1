@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Nutrition{% endblock %}
+
+{% block body %}
+    <h1>Create new Nutrition</h1>
+
+    {{ include('data/nutrition/_form.html.twig') }}
+
+    <a href="{{ path('app_data_nutrition_index') }}">back to list</a>
+{% endblock %}

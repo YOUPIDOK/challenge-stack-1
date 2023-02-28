@@ -6,6 +6,7 @@ use App\Entity\DailyReport;
 use App\Repository\DailyReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +22,7 @@ class DailyReportController extends AbstractController
             $client = $user->getClient();
             $dailyReports = $client->getDailyReports();
 
-            return $this->render('pages/daily_report/index.html.twig', [
+            return $this->render('pages/dailyReport/index.html.twig', [
                 'dailyReports' => $dailyReports,
             ]);
         }
@@ -30,7 +31,7 @@ class DailyReportController extends AbstractController
     }
 
     #[Route('/', name: 'daily_report_show_current')]
-    public function showOrCreateCurrent(DailyReportRepository $dailyReportRepository): Response
+    public function showOrCreateCurrent(Request $request, DailyReportRepository $dailyReportRepository): Response
     {
         $user = $this->getUser();
         if (isset($user)) {
@@ -45,7 +46,8 @@ class DailyReportController extends AbstractController
                 $dailyReportRepository->save($dailyReport, true);
             }
 
-            return $this->render('pages/daily_report/show.html.twig' ,
+            $request->getSession()->set('current_daily_report_id', $dailyReport->getId());
+            return $this->render('pages/dailyReport/show.html.twig' ,
             [
                 'dailyReports' => $dailyReport
             ]);
@@ -56,9 +58,10 @@ class DailyReportController extends AbstractController
     }
 
     #[Route('/{id}', name: 'daily_report_show', methods: ['GET'])]
-    public function show(DailyReport $dailyReport): Response
+    public function show(Request $request, DailyReport $dailyReport): Response
     {
-        return $this->render('pages/daily_report/show.html.twig', [
+        $request->getSession()->set('current_daily_report_id', $dailyReport->getId());
+        return $this->render('pages/dailyReport/show.html.twig', [
             'dailyReport' => $dailyReport,
         ]);
     }

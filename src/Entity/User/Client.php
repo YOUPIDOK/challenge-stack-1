@@ -64,7 +64,7 @@ class Client
     private Collection $nutritions;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTime::class, cascade: ['remove'])]
-    private Collection $activityTimes;
+    private Collection $activityTime;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
     #[ORM\OrderBy(['date' => 'DESC'])]
@@ -78,7 +78,7 @@ class Client
         $this->sleepTimes = new ArrayCollection();
         $this->weights = new ArrayCollection();
         $this->nutritions = new ArrayCollection();
-        $this->activityTimes = new ArrayCollection();
+        $this->activityTime = new ArrayCollection();
         $this->dailyReports = new ArrayCollection();
     }
 
@@ -333,15 +333,15 @@ class Client
     /**
      * @return Collection<int, ActivityTime>
      */
-    public function getActivityTimes(): Collection
+    public function getActivityTime(): Collection
     {
-        return $this->activityTimes;
+        return $this->activityTime;
     }
 
     public function addActivityTime(ActivityTime $activityTime): self
     {
-        if (!$this->activityTimes->contains($activityTime)) {
-            $this->activityTimes->add($activityTime);
+        if (!$this->activityTime->contains($activityTime)) {
+            $this->activityTime->add($activityTime);
             $activityTime->setClient($this);
         }
 
@@ -350,7 +350,7 @@ class Client
 
     public function removeActivityTime(ActivityTime $activityTime): self
     {
-        if ($this->activityTimes->removeElement($activityTime)) {
+        if ($this->activityTime->removeElement($activityTime)) {
             // set the owning side to null (unless already changed)
             if ($activityTime->getClient() === $this) {
                 $activityTime->setClient(null);

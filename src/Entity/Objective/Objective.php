@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
@@ -34,14 +35,21 @@ class Objective
     #[NotNull]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Objective', targetEntity: SelectObjectives::class, cascade: ['remove'])]
-    #[Count(min: 1)]
+    #[ORM\Column()]
     #[NotNull]
-    private Collection $selectObjectives;
+    #[Range(min: 0)]
+    private ?float $objectiveValue = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    private ?bool $active = null;
+
+    #[ORM\Column(length: 255)]
+    #[NotNull]
+    private ?string $type = null;
 
     public function __construct()
     {
-        $this->selectObjectives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,32 +105,38 @@ class Objective
         return $this;
     }
 
-    /**
-     * @return Collection<int, SelectObjectives>
-     */
-    public function getSelectObjectives(): Collection
+    public function getObjectiveValue(): ?float
     {
-        return $this->selectObjectives;
+        return $this->objectiveValue;
     }
 
-    public function addSelectObjective(SelectObjectives $selectObjective): self
+    public function setObjectiveValue(?float $objectiveValue): self
     {
-        if (!$this->selectObjectives->contains($selectObjective)) {
-            $this->selectObjectives->add($selectObjective);
-            $selectObjective->setObjectives($this);
-        }
+        $this->objectiveValue = $objectiveValue;
 
         return $this;
     }
 
-    public function removeSelectObjective(SelectObjectives $selectObjective): self
+    public function isActive(): ?bool
     {
-        if ($this->selectObjectives->removeElement($selectObjective)) {
-            // set the owning side to null (unless already changed)
-            if ($selectObjective->getObjectives() === $this) {
-                $selectObjective->setObjectives(null);
-            }
-        }
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

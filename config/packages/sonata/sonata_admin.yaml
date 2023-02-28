@@ -27,6 +27,24 @@ sonata_admin:
                   icon:  fa fa-users
                   text:  "Clients"
                   color: bg-green
+
+            - class:    col-lg-3 col-xs-6
+              position: top
+              type:     sonata.admin.block.stats
+              settings:
+                  code:  admin.food
+                  icon:  fa fa-cutlery
+                  text:  "Nourritures"
+                  color: bg-orange
+
+            - class:    col-lg-3 col-xs-6
+              position: top
+              type:     sonata.admin.block.stats
+              settings:
+                  code:  admin.activity
+                  icon:  fa fa-book
+                  text:  "Clients"
+                  color: bg-blue
         groups:
             user:
 #                on_top: true

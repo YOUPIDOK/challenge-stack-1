@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Weight[]    findAll()
  * @method Weight[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WeightsRepository extends ServiceEntityRepository
+class WeightRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

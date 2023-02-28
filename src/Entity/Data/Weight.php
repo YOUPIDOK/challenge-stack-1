@@ -3,13 +3,13 @@
 namespace App\Entity\Data;
 
 use App\Entity\User\Client;
-use App\Repository\Data\WeightsRepository;
+use App\Repository\Data\WeightRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: WeightsRepository::class)]
+#[ORM\Entity(repositoryClass: WeightRepository::class)]
 #[ORM\Table(name: 'data__weights')]
 class Weight
 {

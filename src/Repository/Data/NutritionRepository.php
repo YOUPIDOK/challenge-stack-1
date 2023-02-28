@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Nutrition[]    findAll()
  * @method Nutrition[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NutritionsRepository extends ServiceEntityRepository
+class NutritionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

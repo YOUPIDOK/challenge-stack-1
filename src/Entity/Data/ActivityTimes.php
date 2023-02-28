@@ -4,12 +4,12 @@ namespace App\Entity\Data;
 
 use App\Entity\Activity;
 use App\Entity\User\Client;
-use App\Repository\Data\ActivityTimesRepository;
+use App\Repository\Data\ActivityTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Entity(repositoryClass: ActivityTimeRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
 class ActivityTimes
 {

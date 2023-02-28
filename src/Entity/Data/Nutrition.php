@@ -6,13 +6,13 @@ use App\Entity\Food;
 use App\Entity\User\Client;
 use App\Enum\Nutrition\MealTypeEnum;
 use App\Enum\Objective\ObjectiveTypeEnum;
-use App\Repository\Data\NutritionsRepository;
+use App\Repository\Data\NutritionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: NutritionsRepository::class)]
+#[ORM\Entity(repositoryClass: NutritionRepository::class)]
 #[ORM\Table(name: 'data__nutritions')]
 class Nutrition
 {

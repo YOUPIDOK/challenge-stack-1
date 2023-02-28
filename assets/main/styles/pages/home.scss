@@ -1,0 +1,13 @@
+.header-description {
+    font-family:'urbanist';
+}
+.btn-header{
+    background-color: var(--bluesky);
+    border: 1px solid var(--bluesky);
+    transition: 0.3s;
+}
+.btn-header:hover{
+    color: var(--bluesky)!important;
+    background-color: transparent;
+
+}

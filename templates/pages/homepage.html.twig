@@ -1,9 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Homepage{% endblock %}
-
+{% block stylesheets %}
+    {% for file in encore_entry_css_files('home', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
     <div class="container">
+        <div class="header d-flex justify-content-around align-items-center">
+        <div class="d-flex flex-column w-50">
+            <img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
+            <p class="header-description">Améliorez votre santé en surveillant votre activité physique, 
+            votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
+            </p>
+            <button class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Get started</button>
+        </div>
+            <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
 
+        </div>
     </div>
 {% endblock %}

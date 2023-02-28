@@ -7,6 +7,7 @@ use App\Repository\Objective\SelectObjectivesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: SelectObjectivesRepository::class)]
 class SelectObjectives
@@ -20,13 +21,14 @@ class SelectObjectives
     #[NotNull]
     private ?string $type = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
-    #[NotNull]
-    private ?string $objectiveValue = null;
-
     #[ORM\ManyToOne(inversedBy: 'selectObjectives')]
     #[NotNull]
     private ?Objectives $Objectives = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $objectiveValue = null;
 
     public function getId(): ?int
     {
@@ -54,18 +56,6 @@ class SelectObjectives
         return null;
     }
 
-    public function getObjectiveValue(): ?string
-    {
-        return $this->objectiveValue;
-    }
-
-    public function setObjectiveValue(?string $objectiveValue): self
-    {
-        $this->objectiveValue = $objectiveValue;
-
-        return $this;
-    }
-
     public function getObjectives(): ?Objectives
     {
         return $this->Objectives;
@@ -74,6 +64,18 @@ class SelectObjectives
     public function setObjectives(?Objectives $Objectives): self
     {
         $this->Objectives = $Objectives;
+
+        return $this;
+    }
+
+    public function getObjectiveValue(): ?float
+    {
+        return $this->objectiveValue;
+    }
+
+    public function setObjectiveValue(?float $objectiveValue): self
+    {
+        $this->objectiveValue = $objectiveValue;
 
         return $this;
     }

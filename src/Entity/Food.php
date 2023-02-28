@@ -29,28 +29,28 @@ class Food
     #[NotNull]
     private ?string $label = null;
 
-    #[ORM\Column]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $calories = null;
-
-    #[ORM\Column]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $carbohydrates = null;
-
-    #[ORM\Column()]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $lipids = null;
-
-    #[ORM\Column()]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $proteins = null;
-
     #[ORM\OneToMany(mappedBy: 'food', targetEntity: Nutritions::class, cascade: ['remove'])]
     private Collection $nutritions;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $calories = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $carbohydrates = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $lipids = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $proteins = null;
 
     public function __construct()
     {
@@ -91,54 +91,6 @@ class Food
         return $this;
     }
 
-    public function getCalories(): ?int
-    {
-        return $this->calories;
-    }
-
-    public function setCalories(?int $calories): self
-    {
-        $this->calories = $calories;
-
-        return $this;
-    }
-
-    public function getCarbohydrates(): ?int
-    {
-        return $this->carbohydrates;
-    }
-
-    public function setCarbohydrates(?int $carbohydrates): self
-    {
-        $this->carbohydrates = $carbohydrates;
-
-        return $this;
-    }
-
-    public function getLipids(): ?int
-    {
-        return $this->lipids;
-    }
-
-    public function setLipids(?int $lipids): self
-    {
-        $this->lipids = $lipids;
-
-        return $this;
-    }
-
-    public function getProteins(): ?int
-    {
-        return $this->proteins;
-    }
-
-    public function setProteins(?int $proteins): self
-    {
-        $this->proteins = $proteins;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Nutritions>
      */
@@ -165,6 +117,54 @@ class Food
                 $nutrition->setFood(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCalories(): ?float
+    {
+        return $this->calories;
+    }
+
+    public function setCalories(?float $calories): self
+    {
+        $this->calories = $calories;
+
+        return $this;
+    }
+
+    public function getCarbohydrates(): ?float
+    {
+        return $this->carbohydrates;
+    }
+
+    public function setCarbohydrates(?float $carbohydrates): self
+    {
+        $this->carbohydrates = $carbohydrates;
+
+        return $this;
+    }
+
+    public function getLipids(): ?float
+    {
+        return $this->lipids;
+    }
+
+    public function setLipids(?float $lipids): self
+    {
+        $this->lipids = $lipids;
+
+        return $this;
+    }
+
+    public function getProteins(): ?float
+    {
+        return $this->proteins;
+    }
+
+    public function setProteins(?float $proteins): self
+    {
+        $this->proteins = $proteins;
 
         return $this;
     }

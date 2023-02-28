@@ -17,11 +17,6 @@ class Weights
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
-    #[NotNull]
-    #[Range(min: 20, max: 400)]
-    private ?string $weight = null;
-
     #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $date = null;
@@ -30,21 +25,14 @@ class Weights
     #[NotNull]
     private ?Client $client = null;
 
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 20, max: 400)]
+    private ?float $weight = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getWeight(): ?string
-    {
-        return $this->weight;
-    }
-
-    public function setWeight(?string $weight): self
-    {
-        $this->weight = $weight;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTime
@@ -67,6 +55,18 @@ class Weights
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?float $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

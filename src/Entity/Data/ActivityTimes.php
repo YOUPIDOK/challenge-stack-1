@@ -34,8 +34,10 @@ class ActivityTimes
     private ?Activity $activity = null;
 
     #[ORM\Column()]
+    #[NotNull]
     #[Range(min: 0)]
-    private ?int $distance = null;
+    private ?float $distance = null;
+
 
     public function getId(): ?int
     {
@@ -90,18 +92,6 @@ class ActivityTimes
         return $this;
     }
 
-    public function getDistance(): ?int
-    {
-        return $this->distance;
-    }
-
-    public function setDistance(?int $distance): self
-    {
-        $this->distance = $distance;
-
-        return $this;
-    }
-
     /**
      * @return int
      */
@@ -109,5 +99,17 @@ class ActivityTimes
     {
         $interval = date_diff($this->startAt, $this->endAt);
         return ($interval->d * 24 * 60) + ($interval->h * 60) + $interval->i;
+    }
+
+    public function getDistance(): ?float
+    {
+        return $this->distance;
+    }
+
+    public function setDistance(?float $distance): self
+    {
+        $this->distance = $distance;
+
+        return $this;
     }
 }

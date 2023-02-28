@@ -37,9 +37,9 @@ class Nutritions
     private ?\DateTime $date = null;
 
     #[ORM\Column()]
-    #[Range(min: 1)]
     #[NotNull]
-    private ?int $foodWeight = null;
+    #[Range(min: 0)]
+    private ?float $foodWeight = null;
 
     public function getId(): ?int
     {
@@ -108,12 +108,12 @@ class Nutritions
         return $this;
     }
 
-    public function getFoodWeight(): ?int
+    public function getFoodWeight(): ?float
     {
         return $this->foodWeight;
     }
 
-    public function setFoodWeight(?int $foodWeight): self
+    public function setFoodWeight(?float $foodWeight): self
     {
         $this->foodWeight = $foodWeight;
 

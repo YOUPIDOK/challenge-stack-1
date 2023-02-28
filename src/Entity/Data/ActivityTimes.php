@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Table(name: 'data__activity_times')]
 class ActivityTimes
 {
     #[ORM\Id]

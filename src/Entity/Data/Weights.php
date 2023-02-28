@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: WeightsRepository::class)]
+#[ORM\Table(name: 'data__weights')]
 class Weights
 {
     #[ORM\Id]

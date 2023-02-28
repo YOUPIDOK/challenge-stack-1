@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: SleepTimeRepository::class)]
+#[ORM\Table(name: 'data__sleep_times')]
 class SleepTime
 {
     #[ORM\Id]

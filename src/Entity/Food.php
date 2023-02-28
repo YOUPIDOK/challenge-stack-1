@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Unique;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
 #[UniqueEntity(fields: ['label', 'client'])]
+#[ORM\Table(name: 'foods')]
 class Food
 {
     #[ORM\Id]

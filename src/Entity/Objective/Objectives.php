@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
+#[ORM\Table(name: 'objective__objectives')]
 class Objectives
 {
     #[ORM\Id]

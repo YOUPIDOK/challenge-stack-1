@@ -4,6 +4,7 @@ namespace App\Entity\User;
 
 use App\Entity\Activity;
 use App\Entity\Food;
+use App\Entity\Objective\Objectives;
 use App\Repository\User\ClientRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,10 +46,14 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objectives::class)]
+    private Collection $objectives;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->objectives = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -173,6 +178,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($activity->getClient() === $this) {
                 $activity->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Objectives>
+     */
+    public function getObjectives(): Collection
+    {
+        return $this->objectives;
+    }
+
+    public function addObjective(Objectives $objective): self
+    {
+        if (!$this->objectives->contains($objective)) {
+            $this->objectives->add($objective);
+            $objective->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjective(Objectives $objective): self
+    {
+        if ($this->objectives->removeElement($objective)) {
+            // set the owning side to null (unless already changed)
+            if ($objective->getClientId() === $this) {
+                $objective->setClientId(null);
             }
         }
 

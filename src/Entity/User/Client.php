@@ -3,7 +3,10 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
+use App\Entity\Data\ActivityTimes;
+use App\Entity\Data\Nutritions;
 use App\Entity\Data\SleepTime;
+use App\Entity\Data\Weights;
 use App\Entity\Food;
 use App\Entity\Objective\Objectives;
 use App\Repository\User\ClientRepository;
@@ -47,11 +50,20 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objectives::class)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objectives::class, cascade: ['remove'])]
     private Collection $objectives;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class, cascade: ['remove'])]
     private Collection $sleepTimes;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Weights::class, cascade: ['remove'])]
+    private Collection $weights;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Nutritions::class, cascade: ['remove'])]
+    private Collection $nutritions;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTimes::class, cascade: ['remove'])]
+    private Collection $activityTimes;
 
     public function __construct()
     {
@@ -59,6 +71,9 @@ class Client
         $this->activities = new ArrayCollection();
         $this->objectives = new ArrayCollection();
         $this->sleepTimes = new ArrayCollection();
+        $this->weights = new ArrayCollection();
+        $this->nutritions = new ArrayCollection();
+        $this->activityTimes = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -243,6 +258,96 @@ class Client
             // set the owning side to null (unless already changed)
             if ($sleepTime->getClient() === $this) {
                 $sleepTime->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Weights>
+     */
+    public function getWeights(): Collection
+    {
+        return $this->weights;
+    }
+
+    public function addWeight(Weights $weight): self
+    {
+        if (!$this->weights->contains($weight)) {
+            $this->weights->add($weight);
+            $weight->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeight(Weights $weight): self
+    {
+        if ($this->weights->removeElement($weight)) {
+            // set the owning side to null (unless already changed)
+            if ($weight->getClient() === $this) {
+                $weight->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nutritions>
+     */
+    public function getNutritions(): Collection
+    {
+        return $this->nutritions;
+    }
+
+    public function addNutrition(Nutritions $nutrition): self
+    {
+        if (!$this->nutritions->contains($nutrition)) {
+            $this->nutritions->add($nutrition);
+            $nutrition->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNutrition(Nutritions $nutrition): self
+    {
+        if ($this->nutritions->removeElement($nutrition)) {
+            // set the owning side to null (unless already changed)
+            if ($nutrition->getClient() === $this) {
+                $nutrition->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActivityTimes>
+     */
+    public function getActivityTimes(): Collection
+    {
+        return $this->activityTimes;
+    }
+
+    public function addActivityTime(ActivityTimes $activityTime): self
+    {
+        if (!$this->activityTimes->contains($activityTime)) {
+            $this->activityTimes->add($activityTime);
+            $activityTime->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivityTime(ActivityTimes $activityTime): self
+    {
+        if ($this->activityTimes->removeElement($activityTime)) {
+            // set the owning side to null (unless already changed)
+            if ($activityTime->getClient() === $this) {
+                $activityTime->setClient(null);
             }
         }
 

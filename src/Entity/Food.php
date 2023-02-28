@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Data\Nutritions;
 use App\Entity\User\Client;
 use App\Repository\FoodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -45,6 +48,14 @@ class Food
     #[NotNull]
     #[Range(min: 0)]
     private ?int $proteins = null;
+
+    #[ORM\OneToMany(mappedBy: 'food', targetEntity: Nutritions::class, cascade: ['remove'])]
+    private Collection $nutritions;
+
+    public function __construct()
+    {
+        $this->nutritions = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -124,6 +135,36 @@ class Food
     public function setProteins(?int $proteins): self
     {
         $this->proteins = $proteins;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nutritions>
+     */
+    public function getNutritions(): Collection
+    {
+        return $this->nutritions;
+    }
+
+    public function addNutrition(Nutritions $nutrition): self
+    {
+        if (!$this->nutritions->contains($nutrition)) {
+            $this->nutritions->add($nutrition);
+            $nutrition->setFood($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNutrition(Nutritions $nutrition): self
+    {
+        if ($this->nutritions->removeElement($nutrition)) {
+            // set the owning side to null (unless already changed)
+            if ($nutrition->getFood() === $this) {
+                $nutrition->setFood(null);
+            }
+        }
 
         return $this;
     }

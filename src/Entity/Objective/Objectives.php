@@ -7,6 +7,7 @@ use App\Repository\Objective\ObjectivesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
@@ -17,15 +18,14 @@ class Objectives
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $startAt = null;
 
     #[ORM\Column(nullable: true)]
-    #[NotNull]
     private ?\DateTime $endAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     #[NotNull]
     private ?string $label = null;
 
@@ -33,7 +33,9 @@ class Objectives
     #[NotNull]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Objectives', targetEntity: SelectObjectives::class)]
+    #[ORM\OneToMany(mappedBy: 'Objectives', targetEntity: SelectObjectives::class, cascade: ['remove'])]
+    #[Count(min: 1)]
+    #[NotNull]
     private Collection $selectObjectives;
 
     public function __construct()

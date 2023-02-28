@@ -16,11 +16,11 @@ class SelectObjectives
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50)]
     #[NotNull]
     private ?string $type = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     #[NotNull]
     private ?string $objectiveValue = null;
 
@@ -45,7 +45,7 @@ class SelectObjectives
         return $this;
     }
 
-    public function getTypeValue()
+    public function getTypeValue(): ?string
     {
         if ($this->type !== null) {
             return ObjectiveTypeEnum::getType($this->type);

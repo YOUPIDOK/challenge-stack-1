@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: WeightsRepository::class)]
 #[ORM\Table(name: 'data__weights')]
-class Weights
+class Weight
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
-class Objectives
+class Objective
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

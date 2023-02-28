@@ -13,41 +13,53 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/daily-report')]
 class DailyReportController extends AbstractController
 {
-    #[Route('/', name: 'daily_report_index')]
-    public function index(DailyReportRepository $dailyReportRepository): Response
+    #[Route('/', name: 'daily_report_index', methods: ['GET'])]
+    public function index(): Response
     {
         $user = $this->getUser();
         if (isset($user)) {
-            $idClient = $user->getClient()->getId();
-            $dailyReports = $dailyReportRepository->findBy(['client.id' => $idClient]);
-            dump($dailyReports);
-            return $this->render('pages/homepage.html.twig' ,
-            [
-                'dailyReports' => $dailyReports
+            $client = $user->getClient();
+            $dailyReport = $client->getDailyReports();
+
+
+            return $this->render('pages/daily_report/show.html.twig', [
+                'dailyReport' => $dailyReport,
             ]);
         }
         // Pas connecté :
         return $this->render('pages/homepage.html.twig');
     }
 
-    #[Route('/{id}', name: 'daily_report_show', methods: ['POST'])]
-    public function show(DailyReport $dailyReport): Response
+    #[Route('/', name: 'daily_report_show_current')]
+    public function showOrCreateCurrent(DailyReportRepository $dailyReportRepository): Response
     {
-        return $this->render('dailyReport/show.html.twig', [
-            'dailyReport' => $dailyReport,
-        ]);
+        $user = $this->getUser();
+        if (isset($user)) {
+            $client = $user->getClient();
+            $dailyReport = $client->getCurrentDailyReport();
+
+            // Création du rapport du jour s'il n'existe pas
+            if ($dailyReport === null) {
+                $dailyReport = new DailyReport();
+                $dailyReport->setDate(new \DateTime());
+                $dailyReport->setClient($this->getUser()->getClient());
+                $dailyReportRepository->save($dailyReport, true);
+            }
+
+            return $this->render('pages/daily_report/show.html.twig' ,
+            [
+                'dailyReports' => $dailyReport
+            ]);
+        }
+
+        // Pas connecté :
+        return $this->render('pages/homepage.html.twig');
     }
 
-    #[Route('/new', name: 'daily_report_new')]
-    public function create(EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'daily_report_show', methods: ['GET'])]
+    public function show(DailyReport $dailyReport): Response
     {
-        $dailyReport = new DailyReport();
-        $dailyReport->setDate(new \DateTime());
-        $dailyReport->setClient($this->getUser()->getClient());
-        $entityManager->persist($dailyReport);
-        $entityManager->flush();
-
-        return $this->render('dailyReport/show.html.twig', [
+        return $this->render('pages/daily_report/show.html.twig', [
             'dailyReport' => $dailyReport,
         ]);
     }

@@ -4,12 +4,12 @@ namespace App\Entity\User;
 
 use App\Entity\Activity;
 use App\Entity\DailyReport;
-use App\Entity\Data\ActivityTimes;
-use App\Entity\Data\Nutritions;
+use App\Entity\Data\ActivityTime;
+use App\Entity\Data\Nutrition;
 use App\Entity\Data\SleepTime;
-use App\Entity\Data\Weights;
+use App\Entity\Data\Weight;
 use App\Entity\Food;
-use App\Entity\Objective\Objectives;
+use App\Entity\Objective\Objective;
 use App\Repository\User\ClientRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -51,22 +51,23 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objectives::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objective::class, cascade: ['remove'])]
     private Collection $objectives;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class, cascade: ['remove'])]
     private Collection $sleepTimes;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Weights::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Weight::class, cascade: ['remove'])]
     private Collection $weights;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Nutritions::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Nutrition::class, cascade: ['remove'])]
     private Collection $nutritions;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTimes::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTime::class, cascade: ['remove'])]
     private Collection $activityTimes;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
+    #[ORM\OrderBy(['date' => 'DESC'])]
     private Collection $dailyReports;
 
     public function __construct()
@@ -210,14 +211,14 @@ class Client
     }
 
     /**
-     * @return Collection<int, Objectives>
+     * @return Collection<int, Objective>
      */
     public function getObjectives(): Collection
     {
         return $this->objectives;
     }
 
-    public function addObjective(Objectives $objective): self
+    public function addObjective(Objective $objective): self
     {
         if (!$this->objectives->contains($objective)) {
             $this->objectives->add($objective);
@@ -246,7 +247,7 @@ class Client
     }
 
 
-    public function removeObjective(Objectives $objective): self
+    public function removeObjective(Objective $objective): self
     {
         if ($this->objectives->removeElement($objective)) {
             // set the owning side to null (unless already changed)
@@ -270,14 +271,14 @@ class Client
     }
 
     /**
-     * @return Collection<int, Weights>
+     * @return Collection<int, Weight>
      */
     public function getWeights(): Collection
     {
         return $this->weights;
     }
 
-    public function addWeight(Weights $weight): self
+    public function addWeight(Weight $weight): self
     {
         if (!$this->weights->contains($weight)) {
             $this->weights->add($weight);
@@ -287,7 +288,7 @@ class Client
         return $this;
     }
 
-    public function removeWeight(Weights $weight): self
+    public function removeWeight(Weight $weight): self
     {
         if ($this->weights->removeElement($weight)) {
             // set the owning side to null (unless already changed)
@@ -300,14 +301,14 @@ class Client
     }
 
     /**
-     * @return Collection<int, Nutritions>
+     * @return Collection<int, Nutrition>
      */
     public function getNutritions(): Collection
     {
         return $this->nutritions;
     }
 
-    public function addNutrition(Nutritions $nutrition): self
+    public function addNutrition(Nutrition $nutrition): self
     {
         if (!$this->nutritions->contains($nutrition)) {
             $this->nutritions->add($nutrition);
@@ -317,7 +318,7 @@ class Client
         return $this;
     }
 
-    public function removeNutrition(Nutritions $nutrition): self
+    public function removeNutrition(Nutrition $nutrition): self
     {
         if ($this->nutritions->removeElement($nutrition)) {
             // set the owning side to null (unless already changed)
@@ -330,14 +331,14 @@ class Client
     }
 
     /**
-     * @return Collection<int, ActivityTimes>
+     * @return Collection<int, ActivityTime>
      */
     public function getActivityTimes(): Collection
     {
         return $this->activityTimes;
     }
 
-    public function addActivityTime(ActivityTimes $activityTime): self
+    public function addActivityTime(ActivityTime $activityTime): self
     {
         if (!$this->activityTimes->contains($activityTime)) {
             $this->activityTimes->add($activityTime);
@@ -347,7 +348,7 @@ class Client
         return $this;
     }
 
-    public function removeActivityTime(ActivityTimes $activityTime): self
+    public function removeActivityTime(ActivityTime $activityTime): self
     {
         if ($this->activityTimes->removeElement($activityTime)) {
             // set the owning side to null (unless already changed)
@@ -387,5 +388,17 @@ class Client
         }
 
         return $this;
+    }
+
+    /**
+     * @return DailyReport|null
+     */
+    public function getCurrentDailyReport(): ?DailyReport {
+        $dailyReport = $this->dailyReports->first();
+        $today = new DateTime();
+        if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
+            return $dailyReport;
+        }
+        return null;
     }
 }

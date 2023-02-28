@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
-class Objectives
+class Objective
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,7 +34,7 @@ class Objectives
     #[NotNull]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Objectives', targetEntity: SelectObjectives::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'Objective', targetEntity: SelectObjectives::class, cascade: ['remove'])]
     #[Count(min: 1)]
     #[NotNull]
     private Collection $selectObjectives;

@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Entity\Data\ActivityTimes;
-use App\Entity\Data\Nutritions;
+use App\Entity\Data\ActivityTime;
+use App\Entity\Data\Nutrition;
 use App\Entity\Data\SleepTime;
-use App\Entity\Data\Weights;
+use App\Entity\Data\Weight;
 use App\Entity\User\Client;
 use App\Repository\DailyReportRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -28,17 +30,25 @@ class DailyReport
     #[NotNull]
     private ?\DateTime $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dailyReports')]
-    private ?SleepTime $sleepTime = null;
+    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: SleepTime::class, cascade: ['remove'])]
+    private Collection $sleepTimes;
 
-    #[ORM\ManyToOne(inversedBy: 'dailyReports')]
-    private ?Nutritions $nutritions = null;
+    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: Nutrition::class, cascade: ['remove'])]
+    private Collection $nutritions;
 
-    #[ORM\ManyToOne(inversedBy: 'dailyReports')]
-    private ?ActivityTimes $activityTimes = null;
+    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: ActivityTime::class, cascade: ['remove'])]
+    private Collection $activityTimes;
 
-    #[ORM\ManyToOne(inversedBy: 'dailyReports')]
-    private ?Weights $weights = null;
+    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: Weight::class, cascade: ['remove'])]
+    private Collection $weights;
+
+    public function __construct()
+    {
+        $this->sleepTimes = new ArrayCollection();
+        $this->nutritions = new ArrayCollection();
+        $this->activityTimes = new ArrayCollection();
+        $this->weights = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,50 +79,122 @@ class DailyReport
         return $this;
     }
 
-    public function getSleepTime(): ?SleepTime
+    /**
+     * @return Collection<int, SleepTime>
+     */
+    public function getSleepTimes(): Collection
     {
-        return $this->sleepTime;
+        return $this->sleepTimes;
     }
 
-    public function setSleepTime(?SleepTime $sleepTime): self
+    public function addSleepTime(SleepTime $sleepTime): self
     {
-        $this->sleepTime = $sleepTime;
+        if (!$this->sleepTimes->contains($sleepTime)) {
+            $this->sleepTimes->add($sleepTime);
+            $sleepTime->setDailyReport($this);
+        }
 
         return $this;
     }
 
-    public function getNutritions(): ?Nutritions
+    public function removeSleepTime(SleepTime $sleepTime): self
+    {
+        if ($this->sleepTimes->removeElement($sleepTime)) {
+            // set the owning side to null (unless already changed)
+            if ($sleepTime->getDailyReport() === $this) {
+                $sleepTime->setDailyReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nutrition>
+     */
+    public function getNutritions(): Collection
     {
         return $this->nutritions;
     }
 
-    public function setNutritions(?Nutritions $nutritions): self
+    public function addNutrition(Nutrition $nutrition): self
     {
-        $this->nutritions = $nutritions;
+        if (!$this->nutritions->contains($nutrition)) {
+            $this->nutritions->add($nutrition);
+            $nutrition->setDailyReport($this);
+        }
 
         return $this;
     }
 
-    public function getActivityTimes(): ?ActivityTimes
+    public function removeNutrition(Nutrition $nutrition): self
+    {
+        if ($this->nutritions->removeElement($nutrition)) {
+            // set the owning side to null (unless already changed)
+            if ($nutrition->getDailyReport() === $this) {
+                $nutrition->setDailyReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActivityTime>
+     */
+    public function getActivityTimes(): Collection
     {
         return $this->activityTimes;
     }
 
-    public function setActivityTimes(?ActivityTimes $activityTimes): self
+    public function addActivityTime(ActivityTime $activityTime): self
     {
-        $this->activityTimes = $activityTimes;
+        if (!$this->activityTimes->contains($activityTime)) {
+            $this->activityTimes->add($activityTime);
+            $activityTime->setDailyReport($this);
+        }
 
         return $this;
     }
 
-    public function getWeights(): ?Weights
+    public function removeActivityTime(ActivityTime $activityTime): self
+    {
+        if ($this->activityTimes->removeElement($activityTime)) {
+            // set the owning side to null (unless already changed)
+            if ($activityTime->getDailyReport() === $this) {
+                $activityTime->setDailyReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Weight>
+     */
+    public function getWeights(): Collection
     {
         return $this->weights;
     }
 
-    public function setWeights(?Weights $weights): self
+    public function addWeight(Weight $weight): self
     {
-        $this->weights = $weights;
+        if (!$this->weights->contains($weight)) {
+            $this->weights->add($weight);
+            $weight->setDailyReport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeight(Weight $weight): self
+    {
+        if ($this->weights->removeElement($weight)) {
+            // set the owning side to null (unless already changed)
+            if ($weight->getDailyReport() === $this) {
+                $weight->setDailyReport(null);
+            }
+        }
 
         return $this;
     }

@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
-class ActivityTimes
+class ActivityTime
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -42,12 +42,12 @@ class ActivityTimes
     #[Range(min: 0)]
     private ?float $distance = null;
 
-    #[ORM\OneToMany(mappedBy: 'ActivityTimes', targetEntity: DailyReport::class)]
-    private Collection $dailyReports;
+    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
+    private ?DailyReport $dailyReport = null;
 
     public function __construct()
     {
-        $this->dailyReports = new ArrayCollection();
+
     }
 
 
@@ -125,32 +125,14 @@ class ActivityTimes
         return $this;
     }
 
-    /**
-     * @return Collection<int, DailyReport>
-     */
-    public function getDailyReports(): Collection
+    public function getDailyReport(): ?DailyReport
     {
-        return $this->dailyReports;
+        return $this->dailyReport;
     }
 
-    public function addDailyReport(DailyReport $dailyReport): self
+    public function setDailyReport(?DailyReport $dailyReport): self
     {
-        if (!$this->dailyReports->contains($dailyReport)) {
-            $this->dailyReports->add($dailyReport);
-            $dailyReport->setActivityTimes($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDailyReport(DailyReport $dailyReport): self
-    {
-        if ($this->dailyReports->removeElement($dailyReport)) {
-            // set the owning side to null (unless already changed)
-            if ($dailyReport->getActivityTimes() === $this) {
-                $dailyReport->setActivityTimes(null);
-            }
-        }
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

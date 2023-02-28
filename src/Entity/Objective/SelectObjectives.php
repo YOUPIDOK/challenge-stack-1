@@ -24,7 +24,7 @@ class SelectObjectives
 
     #[ORM\ManyToOne(inversedBy: 'selectObjectives')]
     #[NotNull]
-    private ?Objectives $Objectives = null;
+    private ?Objective $Objectives = null;
 
     #[ORM\Column()]
     #[NotNull]
@@ -57,12 +57,12 @@ class SelectObjectives
         return null;
     }
 
-    public function getObjectives(): ?Objectives
+    public function getObjectives(): ?Objective
     {
         return $this->Objectives;
     }
 
-    public function setObjectives(?Objectives $Objectives): self
+    public function setObjectives(?Objective $Objectives): self
     {
         $this->Objectives = $Objectives;
 

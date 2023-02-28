@@ -2,26 +2,26 @@
 
 namespace App\Repository\Objective;
 
-use App\Entity\Objective\Objectives;
+use App\Entity\Objective\Objective;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Objectives>
+ * @extends ServiceEntityRepository<Objective>
  *
- * @method Objectives|null find($id, $lockMode = null, $lockVersion = null)
- * @method Objectives|null findOneBy(array $criteria, array $orderBy = null)
- * @method Objectives[]    findAll()
- * @method Objectives[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Objective|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Objective|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Objective[]    findAll()
+ * @method Objective[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ObjectivesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Objectives::class);
+        parent::__construct($registry, Objective::class);
     }
 
-    public function save(Objectives $entity, bool $flush = false): void
+    public function save(Objective $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ObjectivesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Objectives $entity, bool $flush = false): void
+    public function remove(Objective $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ObjectivesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Objectives[] Returns an array of Objectives objects
+//     * @return Objective[] Returns an array of Objective objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ObjectivesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Objectives
+//    public function findOneBySomeField($value): ?Objective
 //    {
 //        return $this->createQueryBuilder('o')
 //            ->andWhere('o.exampleField = :val')

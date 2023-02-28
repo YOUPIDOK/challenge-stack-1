@@ -31,12 +31,11 @@ class SleepTime
     #[NotNull]
     private ?\DateTime $awakeAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'sleepTime', targetEntity: DailyReport::class)]
-    private Collection $dailyReports;
+    #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
+    private ?DailyReport $dailyReport = null;
 
     public function __construct()
     {
-        $this->dailyReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,32 +79,14 @@ class SleepTime
         return $this;
     }
 
-    /**
-     * @return Collection<int, DailyReport>
-     */
-    public function getDailyReports(): Collection
+    public function getDailyReport(): ?DailyReport
     {
-        return $this->dailyReports;
+        return $this->dailyReport;
     }
 
-    public function addDailyReport(DailyReport $dailyReport): self
+    public function setDailyReport(?DailyReport $dailyReport): self
     {
-        if (!$this->dailyReports->contains($dailyReport)) {
-            $this->dailyReports->add($dailyReport);
-            $dailyReport->setSleepTime($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDailyReport(DailyReport $dailyReport): self
-    {
-        if ($this->dailyReports->removeElement($dailyReport)) {
-            // set the owning side to null (unless already changed)
-            if ($dailyReport->getSleepTime() === $this) {
-                $dailyReport->setSleepTime(null);
-            }
-        }
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

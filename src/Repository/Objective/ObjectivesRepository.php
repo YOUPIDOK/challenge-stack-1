@@ -40,7 +40,7 @@ class ObjectivesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Objectives[] Returns an array of Objectives objects
+//     * @return Objective[] Returns an array of Objective objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ObjectivesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Objectives
+//    public function findOneBySomeField($value): ?Objective
 //    {
 //        return $this->createQueryBuilder('o')
 //            ->andWhere('o.exampleField = :val')

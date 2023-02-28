@@ -2,26 +2,26 @@
 
 namespace App\Repository\Data;
 
-use App\Entity\Data\ActivityTimes;
+use App\Entity\Data\ActivityTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ActivityTimes>
+ * @extends ServiceEntityRepository<ActivityTime>
  *
- * @method ActivityTimes|null find($id, $lockMode = null, $lockVersion = null)
- * @method ActivityTimes|null findOneBy(array $criteria, array $orderBy = null)
- * @method ActivityTimes[]    findAll()
- * @method ActivityTimes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ActivityTime|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ActivityTime|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ActivityTime[]    findAll()
+ * @method ActivityTime[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ActivityTimesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ActivityTimes::class);
+        parent::__construct($registry, ActivityTime::class);
     }
 
-    public function save(ActivityTimes $entity, bool $flush = false): void
+    public function save(ActivityTime $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ActivityTimesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ActivityTimes $entity, bool $flush = false): void
+    public function remove(ActivityTime $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ActivityTimesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ActivityTimes[] Returns an array of ActivityTimes objects
+//     * @return ActivityTime[] Returns an array of ActivityTime objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ActivityTimesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ActivityTimes
+//    public function findOneBySomeField($value): ?ActivityTime
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

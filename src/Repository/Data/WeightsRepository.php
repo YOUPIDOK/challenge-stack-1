@@ -40,7 +40,7 @@ class WeightsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Weights[] Returns an array of Weights objects
+//     * @return Weight[] Returns an array of Weight objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class WeightsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Weights
+//    public function findOneBySomeField($value): ?Weight
 //    {
 //        return $this->createQueryBuilder('w')
 //            ->andWhere('w.exampleField = :val')

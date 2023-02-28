@@ -19,11 +19,10 @@ class DailyReportController extends AbstractController
         $user = $this->getUser();
         if (isset($user)) {
             $client = $user->getClient();
-            $dailyReport = $client->getDailyReports();
+            $dailyReports = $client->getDailyReports();
 
-
-            return $this->render('pages/daily_report/show.html.twig', [
-                'dailyReport' => $dailyReport,
+            return $this->render('pages/daily_report/index.html.twig', [
+                'dailyReports' => $dailyReports,
             ]);
         }
         // Pas connecté :

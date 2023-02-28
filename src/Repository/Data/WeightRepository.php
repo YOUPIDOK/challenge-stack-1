@@ -45,6 +45,8 @@ class WeightRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('weight')
             ->innerJoin('weight.dailyReport', 'dailyReport')
+            ->where('dailyReport.client = :client')
+            ->setParameter('client', $client)
             ->setMaxResults(1)
             ->orderBy('dailyReport.date', 'DESC')
             ->getQuery()

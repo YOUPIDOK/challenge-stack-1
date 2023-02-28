@@ -38,10 +38,6 @@ class Nutrition
 
     #[ORM\Column()]
     #[NotNull]
-    private ?\DateTime $date = null;
-
-    #[ORM\Column()]
-    #[NotNull]
     #[Range(min: 0)]
     private ?float $foodWeight = null;
 
@@ -108,17 +104,6 @@ class Nutrition
         return MealTypeEnum::BREAKFAST === $this->mealType;
     }
 
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(?\DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     public function getFoodWeight(): ?float
     {

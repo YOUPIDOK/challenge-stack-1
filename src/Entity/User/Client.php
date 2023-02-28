@@ -3,6 +3,7 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
+use App\Entity\Data\SleepTime;
 use App\Entity\Food;
 use App\Repository\User\ClientRepository;
 use DateTime;
@@ -45,10 +46,14 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class)]
+    private Collection $sleepTimes;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->sleepTimes = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -173,6 +178,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($activity->getClient() === $this) {
                 $activity->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SleepTime>
+     */
+    public function getSleepTimes(): Collection
+    {
+        return $this->sleepTimes;
+    }
+
+    public function addSleepTime(SleepTime $sleepTime): self
+    {
+        if (!$this->sleepTimes->contains($sleepTime)) {
+            $this->sleepTimes->add($sleepTime);
+            $sleepTime->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSleepTime(SleepTime $sleepTime): self
+    {
+        if ($this->sleepTimes->removeElement($sleepTime)) {
+            // set the owning side to null (unless already changed)
+            if ($sleepTime->getClient() === $this) {
+                $sleepTime->setClient(null);
             }
         }
 

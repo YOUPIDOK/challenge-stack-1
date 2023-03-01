@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: DailyReportRepository::class)]
+#[ORM\Table(name: 'daily_reports')]
 class DailyReport
 {
     #[ORM\Id]

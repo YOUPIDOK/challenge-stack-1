@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Data\Weight;
 use App\Entity\User\User;
 use App\Enum\User\GenderEnum;
 use App\Form\CustomType\SelectChoicesType;
@@ -18,13 +19,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
 
-class RegisterType extends AbstractType
+class UpdateProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var User $user */
+        $user = $options['data'];
+
         $builder->add('email', EmailType::class, [
             'label' => 'E-mail',
-            'required' => true,
+            'disabled' => true,
         ]);
 
         $builder->add('firstname', TextType::class, [
@@ -37,26 +41,28 @@ class RegisterType extends AbstractType
             'required' => true,
         ]);
 
-        $builder->add('gender', SelectChoicesType::class, [
+        $builder->add('gender', ChoiceType::class, [
             'label' => 'Genre',
-            'required' => true,
+            'disabled' => true,
             'choices' => GenderEnum::getChoices()
         ]);
 
-        $builder->add('weight', NumberType::class, [
-            'label' => 'Poid',
-            'required' => true,
-            'mapped' => false,
-            'scale' => 2,
-            'help' => 'En Kg',
-            'constraints' => [
-                new Range( ['min' => 20, 'max' => 400])
-            ]
-        ]);
+        /** @var Weight $weight */
+        $weight = $options['weight'];
+        if ($weight !== null) {
+            $builder->add('weight', NumberType::class, [
+                'label' => 'Poid',
+                'disabled' => true,
+                'data' => $weight->getWeight(),
+                'mapped' => false,
+                'scale' => 2,
+                'help' => 'En Kg',
+            ]);
+        }
 
         $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'required' => true,
+            'required' => false,
             'first_options' => [
                 'label' => 'Mot de passe',
             ],
@@ -66,13 +72,16 @@ class RegisterType extends AbstractType
             'invalid_message' => 'Les mots de passe sont différents',
         ]);
 
-        $builder->add('client', ClientType::class);
+        $builder->add('client', ClientType::class, [
+            'disable_birthdate' => true
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class
+            'data_class' => User::class,
+            'weight' => null
         ]);
     }
 }

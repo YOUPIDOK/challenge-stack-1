@@ -26,6 +26,7 @@ class ClientType extends AbstractType
         $builder->add('birthdate', DateType::class, [
             'label' => 'Date de naissance',
             'required' => true,
+            'disabled' => $options['disable_birthdate'],
             'widget' => 'single_text',
             'constraints' => [
                 new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans']),
@@ -47,7 +48,8 @@ class ClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Client::class
+            'data_class' => Client::class,
+            'disable_birthdate' => false
         ]);
     }
 }

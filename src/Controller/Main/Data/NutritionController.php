@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller\Data;
+namespace App\Controller\Main\Data;
 
 use App\Entity\Data\Nutrition;
 use App\Form\Data\NutritionType;
 use App\Repository\DailyReportRepository;
-use App\Repository\Data\NutritionsRepository;
+use App\Repository\Data\NutritionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +29,7 @@ class NutritionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_data_nutritions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, NutritionsRepository $nutritionsRepository, DailyReportRepository $dailyReportRepository): Response
+    public function new(Request $request, NutritionRepository $nutritionsRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $id = $request->getSession()->get('current_daily_report_id');
         $dailyReport = $dailyReportRepository->find($id);

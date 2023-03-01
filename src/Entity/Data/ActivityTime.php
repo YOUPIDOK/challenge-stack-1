@@ -5,14 +5,12 @@ namespace App\Entity\Data;
 use App\Entity\Activity;
 use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\ActivityTimesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\Data\ActivityTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Entity(repositoryClass: ActivityTimeRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
 class ActivityTime
 {
@@ -20,10 +18,6 @@ class ActivityTime
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
-    #[NotNull]
-    private ?Client $client = null;
 
     #[ORM\Column()]
     #[NotNull]
@@ -51,25 +45,11 @@ class ActivityTime
 
     public function __construct()
     {
-
     }
-
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getStartAt(): ?\DateTime

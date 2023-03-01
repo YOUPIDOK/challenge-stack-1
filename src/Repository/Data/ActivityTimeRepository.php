@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ActivityTime[]    findAll()
  * @method ActivityTime[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ActivityTimesRepository extends ServiceEntityRepository
+class ActivityTimeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Main;
 
+use App\Entity\DailyReport;
 use App\Entity\Data\Weight;
 use App\Entity\User\User;
 use App\Form\RegisterType;
@@ -48,12 +49,20 @@ class RegisterController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $weight = (new Weight())
+            $now = new DateTime('now');
+
+            $dailyReport = (new DailyReport())
+                ->setDate($now)
                 ->setClient($user->getClient())
+            ;
+
+            $weight = (new Weight())
                 ->setWeight($form->get('weight')->getData())
-                ->setDate(new DateTime('now'));
+                ->setDailyReport($dailyReport)
+            ;
 
             $em->persist($weight);
+            $em->persist($dailyReport);
             $em->flush();
 
             $this->addFlash('success', 'Votre compte a bien été créer.');

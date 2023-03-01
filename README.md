@@ -9,6 +9,7 @@
 composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
+php bin/console doctrine:fixtures:load         
 yarn install
 yarn build
 ```
@@ -19,3 +20,11 @@ php bin/console user:create # Create user
 ```
 ### MLD
 > https://dbdiagram.io/d/63fc7977296d97641d83f681
+
+## Utilisateurs
+- Super admin
+    - email : admin@mail.fr
+    - mot de passe : password
+- Admin
+    - email : admin@mail.fr
+    - mot de passe : password

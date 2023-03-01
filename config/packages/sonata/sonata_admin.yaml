@@ -43,7 +43,7 @@ sonata_admin:
               settings:
                   code:  admin.activity
                   icon:  fa fa-book
-                  text:  "Clients"
+                  text:  "Activités sportives"
                   color: bg-blue
         groups:
             user:

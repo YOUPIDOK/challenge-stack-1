@@ -47,7 +47,7 @@ class DailyReportRepository extends ServiceEntityRepository
             ->createQueryBuilder('daily_report')
             ->where('daily_report.client = :client')
             ->setParameter('client', $client)
-            ->orderBy('daily_report.date', 'ASC');
+            ->orderBy('daily_report.date', 'DESC');
 
         if ($start !== null) {
             $qb

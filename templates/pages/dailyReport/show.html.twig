@@ -80,8 +80,8 @@
             <tbody>
             {% for activity in dailyReport.activityTimes %}
                 <tr>
-                    <th scope="row">{{ activity.startAt ? activity.startAt|date('Y-m-d H:i:s') : '' }}</th>
-                    <td>{{ activity.endAt ? activity.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <th scope="row">{{ activity.startAt ? activity.startAt|date('d/m/Y H:i:s') : '' }}</th>
+                    <td>{{ activity.endAt ? activity.endAt|date('') : '' }}</td>
                     <td>{{ activity.distance }}</td>
                     <td>{{ activity.time }}</td>
                     <td>{{ activity.activity.label }}</td>
@@ -114,9 +114,9 @@
             <tbody>
             {% for sleepTime in dailyReport.sleepTimes %}
                 <tr>
-                    <th scope="row">{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ sleepTime.time }}</td>
+                    <th scope="row">{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('d/m/Y H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('d/m/Y H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.time }} min</td>
                     <td>
                         <a href="{{ path('app_main_data_sleep_time_edit', {id: sleepTime.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
                         <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-sleep-time-{{ sleepTime.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
@@ -130,11 +130,7 @@
             </tbody>
         </table>
     </div>
-
-
 {% endblock %}
-
-
 
 {% block modals %}
     {% for nutrition in dailyReport.nutritions %}

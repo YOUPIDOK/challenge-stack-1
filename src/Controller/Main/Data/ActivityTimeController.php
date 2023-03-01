@@ -39,8 +39,6 @@ class ActivityTimeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $activityTime->setTimeFromDates();
-
             $activityTimeRepository->save($activityTime, true);
             $dailyReportRepository->save($dailyReport, true);
             $this->addFlash('success', 'Votre activité du jour à était ajouté');
@@ -65,7 +63,6 @@ class ActivityTimeController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $activityTime->setTimeFromDates();
             $activityTimeRepository->save($activityTime, true);
 
             $this->addFlash('success', 'Votre activité du jour à était modifié');

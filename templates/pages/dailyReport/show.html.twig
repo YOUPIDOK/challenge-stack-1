@@ -25,12 +25,12 @@
             <thead>
             <tr>
                 <th scope="col">Label</th>
-                <th scope="col">Poids</th>
                 <th scope="col">Food label</th>
                 <th scope="col">Calories</th>
                 <th scope="col">Glucide</th>
                 <th scope="col">Lipide</th>
                 <th scope="col">Protein</th>
+                <th scope="col">Poids</th>
                 <th scope="col">actions</th>
             </tr>
             </thead>
@@ -38,12 +38,12 @@
             {% for nutrition in dailyReport.nutritions %}
                 <tr>
                     <th scope="row">{{ nutrition.mealType }}</th>
-                    <td>{{ nutrition.foodWeight }}</td>
                     <td>{{ nutrition.food.label }}</td>
                     <td>{{ nutrition.food.calories }}</td>
                     <td>{{ nutrition.food.carbohydrates }}</td>
                     <td>{{ nutrition.food.lipids }}</td>
                     <td>{{ nutrition.food.proteins }}</td>
+                    <td>{{ nutrition.foodWeight }}</td>
                     <td>
                         <a href="{{ path('app_main_data_nutrition_edit', {id: nutrition.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
                         <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-nutrition-{{ nutrition.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
@@ -103,6 +103,7 @@
                 <th scope="col">Commencé le </th>
                 <th scope="col">Finis le </th>
                 <th scope="col">Temps de sommeil</th>
+                <th scope="col">actions</th>
             </tr>
             </thead>
             <tbody>
@@ -178,7 +179,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Voulez vous vraimenet supprimer la ce sommeil ?
+                        Voulez vous vraimenet supprimer ce sommeil ?
                     </div>
                     <div class="modal-footer">
                         <a href="{{ path('app_main_data_sleep_time_delete', {id: sleepTime.id}) }}" class="text-danger">Supprimer</a>

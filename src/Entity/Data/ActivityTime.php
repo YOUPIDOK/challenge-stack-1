@@ -131,7 +131,7 @@ class ActivityTime
         $minutes .= $interval->format('%h') * 60;
         $minutes .= $interval->format('%i');
 
-        $this->time = intval($minutes);
+        $this->time = intval($minutes) / 10;
 
         return $this;
     }

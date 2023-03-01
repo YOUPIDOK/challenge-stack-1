@@ -39,6 +39,10 @@ class ActivityTime
     #[ORM\ManyToOne(inversedBy: 'activityTimes')]
     private ?DailyReport $dailyReport = null;
 
+    #[ORM\Column]
+    #[Range(min: 0)]
+    private ?int $time = null;
+
     public function __construct()
     {
     }
@@ -84,15 +88,6 @@ class ActivityTime
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getActivityDuration(): int
-    {
-        $interval = date_diff($this->startAt, $this->endAt);
-        return ($interval->d * 24 * 60) + ($interval->h * 60) + $interval->i;
-    }
-
     public function getDistance(): ?float
     {
         return $this->distance;
@@ -113,6 +108,30 @@ class ActivityTime
     public function setDailyReport(?DailyReport $dailyReport): self
     {
         $this->dailyReport = $dailyReport;
+
+        return $this;
+    }
+
+    public function getTime(): ?int
+    {
+        return $this->time;
+    }
+
+    public function setTime(?int $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function setTimeFromDates(): self
+    {
+        $interval = $this->startAt->diff($this->endAt);
+        $minutes = $interval->format('%a') * 24 * 60;
+        $minutes .= $interval->format('%h') * 60;
+        $minutes .= $interval->format('%i');
+
+        $this->time = intval($minutes) / 10;
 
         return $this;
     }

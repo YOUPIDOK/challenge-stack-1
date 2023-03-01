@@ -3,63 +3,64 @@
 namespace App\Controller\Main;
 
 use App\Entity\DailyReport;
+use App\Form\DailyReport\SearchDailyReportType;
 use App\Repository\DailyReportRepository;
+use App\Security\Main\Voter\DailyReportVoter;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-#[Route('/daily-report')]
+#[Route('/rapport-journalier')]
+#[IsGranted('ROLE_CLIENT')]
 class DailyReportController extends AbstractController
 {
-    #[Route('/', name: 'daily_report_index', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/', name: 'daily_reports', methods: ['GET'])]
+    public function index(Request $request, DailyReportRepository $dailyReportRepo): Response
     {
-        $user = $this->getUser();
-        if (isset($user)) {
-            $client = $user->getClient();
-            $dailyReport = $client->getDailyReports();
+        $client = $this->getUser()->getClient();
 
+        $form = $this->createForm(SearchDailyReportType::class);
+        $form->handleRequest($request);
 
-            return $this->render('pages/daily_report/show.html.twig', [
-                'dailyReport' => $dailyReport,
-            ]);
-        }
-        // Pas connecté :
-        return $this->render('pages/homepage.html.twig');
+        $adapter = new QueryAdapter($dailyReportRepo->searchDailyReportQb($client, $form->get('start')->getData(), $form->get('end')->getData()));
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($request->query->get('page', 1));
+
+        return $this->render('pages/dailyReport/index.html.twig', [
+            'pager' => $pager,
+            'form' => $form->createView()
+        ]);
     }
 
-    #[Route('/', name: 'daily_report_show_current')]
+    #[Route('-du-jour', name: 'daily_report_show_current')]
     public function showOrCreateCurrent(DailyReportRepository $dailyReportRepository): Response
     {
-        $user = $this->getUser();
-        if (isset($user)) {
-            $client = $user->getClient();
-            $dailyReport = $client->getCurrentDailyReport();
+        $client = $this->getUser()->getClient();
+        $dailyReport = $client->getCurrentDailyReport();
 
-            // Création du rapport du jour s'il n'existe pas
-            if ($dailyReport === null) {
-                $dailyReport = new DailyReport();
-                $dailyReport->setDate(new \DateTime());
-                $dailyReport->setClient($this->getUser()->getClient());
-                $dailyReportRepository->save($dailyReport, true);
-            }
-
-            return $this->render('pages/daily_report/show.html.twig' ,
-            [
-                'dailyReports' => $dailyReport
-            ]);
+        if ($dailyReport === null) {
+            $dailyReport = new DailyReport();
+            $dailyReport->setDate(new \DateTime());
+            $dailyReport->setClient($this->getUser()->getClient());
+            $dailyReportRepository->save($dailyReport, true);
         }
 
-        // Pas connecté :
-        return $this->render('pages/homepage.html.twig');
+        return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()]);
     }
 
     #[Route('/{id}', name: 'daily_report_show', methods: ['GET'])]
     public function show(DailyReport $dailyReport): Response
     {
-        return $this->render('pages/daily_report/show.html.twig', [
+        $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
+
+        return $this->render('pages/dailyReport/show.html.twig', [
             'dailyReport' => $dailyReport,
         ]);
     }

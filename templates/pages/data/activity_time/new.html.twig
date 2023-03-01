@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ActivityTime{% endblock %}
+
+{% block body %}
+    <h1>Create new ActivityTime</h1>
+
+    {{ include('pages/data/activity_time/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+{% endblock %}

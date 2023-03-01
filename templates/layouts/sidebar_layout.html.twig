@@ -7,6 +7,9 @@
 	{{ encore_entry_script_tags('sidebar',null, 'main') }}
 {% endblock %}
 {% block main_body %}
-	{% include "partials/_sidebar.html.twig" %}
-	{% block body %}{% endblock %}
+	<section id="body-pd">
+		{% include "partials/_sidebar.html.twig" %}
+
+		{% block body %}{% endblock %}
+	</section>
 {% endblock %}

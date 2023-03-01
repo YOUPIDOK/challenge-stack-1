@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
-
+{% block stylesheets %}
+    {% for file in encore_entry_css_files('login', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
     <div class="container">
         <form method="post" class="login shadow border border-1 p-3">

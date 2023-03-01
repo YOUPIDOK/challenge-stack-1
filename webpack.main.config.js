@@ -8,6 +8,7 @@ Encore
     .setOutputPath('public/build/main')
     .setPublicPath('/build/main' )
     .addEntry('main', './assets/main/app.js')
+    .addStyleEntry('login', './assets/main/styles/pages/security/login.scss')
     .enableStimulusBridge('./assets/main/controllers.json')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()

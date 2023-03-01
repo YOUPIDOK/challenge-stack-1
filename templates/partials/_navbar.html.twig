@@ -7,7 +7,7 @@
             {{ knp_menu_render('main') }}
             <div class="d-flex justify-content-end ">
                 {% if app.user is not null %}
-                    <span class="btn btn-primary btn-sm text-white"><i class="fa-solid fa-user"></i> {{ app.user.identity }}</span>
+                    <a href="{{ path('profile') }}" class="btn btn-primary btn-sm text-white"><i class="fa-solid fa-user"></i> {{ app.user.identity }}</a>
                     <a href="{{ path('logout') }}" class="btn btn-danger text-white btn-sm"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 {% else %}
                     <a href="{{ path('login') }}" class="btn btn-primary btn-sm">Connexion</a>

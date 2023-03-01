@@ -7,12 +7,15 @@ use App\Entity\Data\Nutrition;
 use App\Form\Data\NutritionType;
 use App\Repository\DailyReportRepository;
 use App\Repository\Data\NutritionRepository;
+use App\Security\Main\Voter\DailyReportVoter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/main/data/nutrition')]
+#[IsGranted('ROLE_CLIENT')]
 class NutritionController extends AbstractController
 {
     #[Route('/', name: 'app_main_data_nutrition_index', methods: ['GET'])]
@@ -27,6 +30,8 @@ class NutritionController extends AbstractController
     #[Route('/new/{id}', name: 'app_main_data_nutrition_new', methods: ['GET', 'POST'])]
     public function new(DailyReport $dailyReport,Request $request, NutritionRepository $nutritionRepository, DailyReportRepository $dailyReportRepository): Response
     {
+        $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
+
         $nutrition = new Nutrition();
         $form = $this->createForm(NutritionType::class, $nutrition);
         $form->handleRequest($request);
@@ -36,7 +41,7 @@ class NutritionController extends AbstractController
 
             $nutritionRepository->save($nutrition, true);
             $dailyReportRepository->save($dailyReport, true);
-
+            $this->addFlash('success', 'Votre nutrition du jour à était ajoutée');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -51,13 +56,15 @@ class NutritionController extends AbstractController
     #[Route('/{id}/edit', name: 'app_main_data_nutrition_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Nutrition $nutrition, NutritionRepository $nutritionRepository): Response
     {
+        $dailyReport = $nutrition->getDailyReport();
+        $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
+
         $form = $this->createForm(NutritionType::class, $nutrition);
         $form->handleRequest($request);
-        $dailyReport = $nutrition->getDailyReport();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nutritionRepository->save($nutrition, true);
-
+            $this->addFlash('success', 'Votre nutrition du jour à était modifié');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -68,13 +75,15 @@ class NutritionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_main_data_nutrition_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_main_data_nutrition_delete', methods: ['GET'])]
     public function delete(Request $request, Nutrition $nutrition, NutritionRepository $nutritionRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$nutrition->getId(), $request->request->get('_token'))) {
-            $nutritionRepository->remove($nutrition, true);
-        }
+        $dailyReport = $nutrition->getDailyReport();
+        $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
-        return $this->redirectToRoute('app_main_data_nutrition_index', [], Response::HTTP_SEE_OTHER);
+        $nutritionRepository->remove($nutrition, true);
+        $this->addFlash('success', 'Votre nutrition du jour à était supprimé');
+
+        return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
     }
 }

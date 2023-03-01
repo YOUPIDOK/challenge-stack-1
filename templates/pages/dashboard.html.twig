@@ -9,79 +9,45 @@
 	{% endfor %}
 {% endblock %}
 {% block body %}
-	<a class="btn btn-primary" href="{{ path('foods') }}">Ma nourritures</a>
-	<a class="btn btn-primary" href="{{ path('activities') }}">Mes activités</a>
-	<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a>
-	<section id="body-pd">
-		<div class="header" id="header">
-			<div class="header_toggle">
-				<i class="fa-solid fa-bars" id="header-toggle"></i>
+	{# <a class="btn btn-primary" href="{{ path('foods') }}">Ma nourritures</a>
+			<a class="btn btn-primary" href="{{ path('activities') }}">Mes activités</a>
+			<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a> #}
+
+	<!--Container Main start-->
+		<div class="height-100 col-9"> <h4>Main Components</h4>
+	</div>
+	<!--Container Main end-->
+
+	<div class="profile-card col-1">
+		<div class="profile-card-header">
+			<h3>Mon profil</h3>
+			<div class="avatar">
+				<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
+				Nom Prénom
 			</div>
-
-
-		</div>
-		<div class="l-navbar col-1" id="nav-bar">
-			<nav class="nav">
-				<div>
-					<a href="#" class="nav_logo">
-						<i class="fa-solid fa-layer-group nav_logo-icon"></i>
-						<span class="nav_logo-name">MyFitLog</span>
-					</a>
-					<div class="nav_list">
-						<a href="#" class="nav_link active">
-							<i class="fa-solid fa-grip nav_icon"></i>
-							<span class="nav_name">Dashboard</span>
-						</a>
-
-						<a href="#" class="nav_link">
-							<i class="fa-solid fa-chart-simple nav_icon"></i>
-							<span class="nav_name">Stats</span>
-						</a>
-					</div>
+			<div class="profile-info">
+				<div class="profile-info-title">
+					<p>Poids</p>
+					<p>Age</p>
+					<p>Taille</p>
 				</div>
-				<a href="#" class="nav_link">
-					<i class="fa-solid fa-right-from-bracket nav_icon"></i>
-					<span class="nav_name">Déconnexion</span>
-				</a>
-			</nav>
-		</div>
-		<!--Container Main start-->
-		<div class="height-100 col-9">
-			<h4>Main Components</h4>
-		</div>
-		<!--Container Main end-->
-
-		<div class="profile-card col-1">
-			<div class="profile-card-header">
-				<h3>Mon profil</h3>
-				<div class="avatar">
-					<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
-					Nom Prénom
-				</div>
-				<div class="profile-info">
-					<div class="profile-info-title">
-						<p>Poids</p>
-						<p>Age</p>
-						<p>Taille</p>
-					</div>
-					<div class="profile-info-value">
-						<p>85kg</p>
-						<p>40ans</p>
-						<p>1m90</p>
-					</div>
-				</div>
-			</div>
-			<div class="profile-card-body">
-				<h4>Mes objectifs</h4>
-				<div
-					class="accordion" id="accordionExample">
-					{# {% for objectif in objectifs %}
-
-																																																																																																																																																																																								            {% endfor %} #}
-					{% include "components/objectif.html.twig" %}
+				<div class="profile-info-value">
+					<p>85kg</p>
+					<p>40ans</p>
+					<p>1m90</p>
 				</div>
 			</div>
 		</div>
+		<div class="profile-card-body">
+			<h4>Mes objectifs</h4>
+			<div
+				class="accordion" id="accordionExample">
+				{# {% for objectif in objectifs %}
+														
+																																																																																																																																																																																																						            {% endfor %} #}
+				{% include "components/objectif.html.twig" %}
+			</div>
+		</div>
+	</div>
 
-	</section>
 {% endblock %}

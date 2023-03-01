@@ -20,6 +20,27 @@
 .navbar-toggler {
   background-color: var(--blue);
 }
+
+.dropdown-menu[data-bs-popper] {
+  top: 120%;
+  left: -40%;
+}
+.dropdown-item {
+  color:var(--font-color);
+}
+.dropdown-item:hover {
+  background-color: var(--blue);
+  color:var(--blanc);
+}
+.dropdown-menu.show {
+  background-color: var(--bg-menu_profile);
+  
+}
+
+img#img_profile {
+  background-color: var(--blanc);
+  border-radius: 25px;
+}
 a.btn-connexion {
   font-family:urbanist;
   text-transform: uppercase;

@@ -10,9 +10,11 @@
     --success:#70B77E;
     --secondary:#2D3047;
     --light: #F4EBD9;
+    --bg-menu_profile: #ffffff;
   }
   [data-bs-theme="dark"]{
     --bg-nav: #272729;
     --font-color: white;
+    --bg-menu_profile: #2c3e50;
     // --blue: white;
   }

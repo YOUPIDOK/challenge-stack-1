@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('sidebarcss', null,'main') }}
+{% endblock %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('sidebar',null, 'main') }}
+{% endblock %}
+{% block main_body %}
+	{% include "partials/_sidebar.html.twig" %}
+	{% block body %}{% endblock %}
+{% endblock %}

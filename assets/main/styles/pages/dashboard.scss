@@ -1,17 +1,20 @@
 .profile-card {
-    background: white;
+    box-shadow: var(--bg-menu_profile) 0px 25px 50px -12px;
+    background: var(--bg-menu_profile);
+    color:var(--font-color);
     border-radius: 30px;
     min-height: 50vh;
     max-height: auto;
-    width: 350px;
+    width: 300px;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
+    
 }
 
 body{
-    background: rgb(230, 230, 230);
+    background: var(--white-color);
 }
 .avatar{
     display: flex;

@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
+        "fzaninotto/faker": "^1.5",
         "gedmo/doctrine-extensions": "^3.8",
         "knplabs/knp-menu-bundle": "^3.2",
         "php-translation/symfony-bundle": "^0.12.6",

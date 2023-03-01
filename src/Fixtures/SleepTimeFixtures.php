@@ -13,6 +13,7 @@ use Faker\Generator;
 class SleepTimeFixtures extends Fixture
 {
     private Generator $faker;
+
     public function __construct()
     {
         $this->faker = Factory::create('fr_FR');
@@ -20,7 +21,6 @@ class SleepTimeFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-
         $client = $manager->getRepository(Client::class)->findAll();   
         $dailyReport = DailyReportRepository;   
 

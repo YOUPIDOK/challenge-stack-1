@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon profile{% endblock %}
+{% block body %}
+    <div>{{ app.user.client.birthdate | date("d/m/y H:i")}}</div>
+    <div>{{ app.user.client.height }} cm</div>
+    {% if weight is not null %}
+        <div>{{ weight.weight }} kg</div>
+    {% endif %}
+    <div>{{ app.user.client.registeredAt | date("d/m/y H:i") }}</div>
+    <div>{{ app.user.firstname }}</div>
+    <div>{{ app.user.lastname }}</div>
+    <div>{{ app.user.email }}</div>
+    <div>{{ app.user.genderValue }}</div>
+    <a href="{{ path('profile_update') }}">Modifier</a>
+{% endblock %}

@@ -4,15 +4,17 @@ namespace App\Entity\Data;
 
 use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\SleepTimeRepository;
+use App\Repository\Data\WeightRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: SleepTimeRepository::class)]
-#[ORM\Table(name: 'data__sleep_times')]
-class SleepTime
+#[ORM\Entity(repositoryClass: WeightRepository::class)]
+#[ORM\Table(name: 'data__weights')]
+class Weight
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,13 +23,10 @@ class SleepTime
 
     #[ORM\Column()]
     #[NotNull]
-    private ?\DateTime $asleepAt = null;
+    #[Range(min: 20, max: 400)]
+    private ?float $weight = null;
 
-    #[ORM\Column()]
-    #[NotNull]
-    private ?\DateTime $awakeAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
+    #[ORM\ManyToOne(inversedBy: 'weights')]
     private ?DailyReport $dailyReport = null;
 
     public function __construct()
@@ -39,26 +38,14 @@ class SleepTime
         return $this->id;
     }
 
-    public function getAsleepAt(): ?\DateTime
+    public function getWeight(): ?float
     {
-        return $this->asleepAt;
+        return $this->weight;
     }
 
-    public function setAsleepAt(?\DateTime $asleepAt): self
+    public function setWeight(?float $weight): self
     {
-        $this->asleepAt = $asleepAt;
-
-        return $this;
-    }
-
-    public function getAwakeAt(): ?\DateTime
-    {
-        return $this->awakeAt;
-    }
-
-    public function setAwakeAt(?\DateTime $awakeAt): self
-    {
-        $this->awakeAt = $awakeAt;
+        $this->weight = $weight;
 
         return $this;
     }

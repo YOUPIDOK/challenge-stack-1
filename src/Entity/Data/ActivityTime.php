@@ -3,24 +3,21 @@
 namespace App\Entity\Data;
 
 use App\Entity\Activity;
+use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\ActivityTimesRepository;
+use App\Repository\Data\ActivityTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Entity(repositoryClass: ActivityTimeRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
-class ActivityTimes
+class ActivityTime
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
-    #[NotNull]
-    private ?Client $client = null;
 
     #[ORM\Column()]
     #[NotNull]
@@ -39,22 +36,16 @@ class ActivityTimes
     #[Range(min: 0)]
     private ?float $distance = null;
 
+    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
+    private ?DailyReport $dailyReport = null;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getStartAt(): ?\DateTime
@@ -110,6 +101,18 @@ class ActivityTimes
     public function setDistance(?float $distance): self
     {
         $this->distance = $distance;
+
+        return $this;
+    }
+
+    public function getDailyReport(): ?DailyReport
+    {
+        return $this->dailyReport;
+    }
+
+    public function setDailyReport(?DailyReport $dailyReport): self
+    {
+        $this->dailyReport = $dailyReport;
 
         return $this;
     }

@@ -61,7 +61,8 @@ final class ClientAdmin extends AbstractAdmin
             ->add('birthdate', DateType::class, [
                 'widget' => 'single_text',
                 'constraints' => [
-                    new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans'])
+                    new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans']),
+                    new GreaterThanOrEqual(['value' => new DateTime('-150years'), 'message' => 'Maximum 150 ans']),
                 ]
             ])
             ->add('height', null, ['help' => 'En cm'])

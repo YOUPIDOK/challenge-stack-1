@@ -1,0 +1,10 @@
+{% if pager.nbResults > pager.maxPerPage %}
+    <nav aria-label="pagination">
+        {{ pagerfanta(pager, 'twitter_bootstrap5', {
+            'prev_message': '<i class="fa-solid fa-angle-left"></i>',
+            'next_message': '<i class="fa-solid fa-angle-right"></i>',
+            'proximity': 0,
+            'pageParameter': pageParameter is defined ? '[' ~ pageParameter ~ ']' : '[page]'
+        }) }}
+    </nav>
+{% endif %}

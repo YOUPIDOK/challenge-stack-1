@@ -51,17 +51,17 @@ class RegisterController extends AbstractController
 
             $now = new DateTime('now');
 
+            $weight = (new Weight())->setWeight($form->get('weight')->getData());
+
+            $em->persist($weight);
+            $em->flush();
+
             $dailyReport = (new DailyReport())
                 ->setDate($now)
                 ->setClient($user->getClient())
+                ->setWeight($weight)
             ;
 
-            $weight = (new Weight())
-                ->setWeight($form->get('weight')->getData())
-                ->setDailyReport($dailyReport)
-            ;
-
-            $em->persist($weight);
             $em->persist($dailyReport);
             $em->flush();
 

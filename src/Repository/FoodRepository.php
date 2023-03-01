@@ -56,7 +56,6 @@ class FoodRepository extends ServiceEntityRepository
         }
 
         return $qb;
-
     }
 
 //    /**

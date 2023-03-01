@@ -3,81 +3,90 @@
 namespace App\Controller\Main;
 
 use App\Entity\Activity;
-use App\Form\ActivityType;
+use App\Form\Activity\ActivityType;
+use App\Form\Activity\SearchActivityType;
 use App\Repository\ActivityRepository;
+use App\Security\Main\Voter\ActivityVoter;
+use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/activity')]
+#[Route('/activités')]
 class ActivityController extends AbstractController
 {
-    #[Route('/', name: 'app_activity_index', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/', name: 'activities', methods: ['GET'])]
+    public function activities(ActivityRepository $activityRepo, Request $request): Response
     {
-        $client = $this->getUser()->getClient();
+        $form = $this->createForm(SearchActivityType::class);
+        $form->handleRequest($request);
 
-        return $this->render('pages/activity/index.html.twig', [
-            'activities' => $client->getActivities(),
+        $adapter = new QueryAdapter($activityRepo->searchActivityQb($this->getUser()->getClient(), $form->get('label')->getData()));
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($request->query->get('page', 1));
+
+        return $this->render('pages/activity/activities.html.twig', [
+            'form' => $form->createView(),
+            'pager' => $pager
         ]);
     }
 
-    #[Route('/new', name: 'app_activity_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ActivityRepository $activityRepository): Response
+    #[Route('/creer', name: 'activity_create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
-        $activity = new Activity();
+        $activity = (new Activity())->setClient($this->getUser()->getClient());
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = $this->getUser()->getClient();
-            $activity->setClient($client);
+            $em->persist($activity);
+            $em->flush();
 
-            $activityRepository->save($activity, true);
+            $this->addFlash('success', "L'activité a bien été ajoutée.");
 
-            return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('activities');
         }
 
-        return $this->renderForm('pages/activity/new.html.twig', [
+        return $this->renderForm('pages/activity/create.html.twig', [
             'activity' => $activity,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
-    #[Route('/{id}', name: 'app_activity_show', methods: ['GET'])]
-    public function show(Activity $activity): Response
+    #[Route('/modifier/{id}', name: 'activity_update', methods: ['GET', 'POST'])]
+    public function update(Request $request, Activity $activity, EntityManagerInterface $em): Response
     {
-        return $this->render('pages/activity/show.html.twig', [
-            'activity' => $activity,
-        ]);
-    }
+        $this->denyAccessUnlessGranted(ActivityVoter::ACCESS, $activity);
 
-    #[Route('/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
-    {
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $activityRepository->save($activity, true);
+            $em->flush();
 
-            return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'La nourriture a bien été modifiée.');
         }
 
-        return $this->renderForm('pages/activity/edit.html.twig', [
+        return $this->renderForm('pages/activity/update.html.twig', [
             'activity' => $activity,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
-    #[Route('/{id}', name: 'app_activity_delete', methods: ['POST'])]
-    public function delete(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
+    #[Route('/supprimer/{id}', name: 'activity_delete')]
+    public function delete(Activity $activity, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
-            $activityRepository->remove($activity, true);
-        }
+        $this->denyAccessUnlessGranted(ActivityVoter::ACCESS, $activity);
 
-        return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
+        $em->remove($activity);
+        $em->flush();
+
+        $this->addFlash('success', "L'activité a bien été supprimée.");
+
+        return $this->redirectToRoute('foods',);
     }
 }

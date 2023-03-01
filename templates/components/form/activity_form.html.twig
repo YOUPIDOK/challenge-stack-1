@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.label) }}</div>
+    <div class="col-md-3">{{ form_row(form.heartRate) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-3">{{ form_row(form.isDistance) }}</div>
+</div>
+<a class="btn btn-primary me-2" href="{{ path('activities') }}">Retour</a>
+<button class="btn btn-outline-primary">{{ btn_label }}</button>
+{{ form_end(form) }}

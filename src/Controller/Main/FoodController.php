@@ -28,7 +28,7 @@ class FoodController extends AbstractController
 
         $adapter = new QueryAdapter($foodRepo->searchFoodQb($this->getUser()->getClient(), $form->get('label')->getData()));
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(2);
+        $pager->setMaxPerPage(10);
         $pager->setCurrentPage($request->query->get('page', 1));
 
         return $this->render('pages/food/foods.html.twig', [

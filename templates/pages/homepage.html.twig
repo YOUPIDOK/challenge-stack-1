@@ -33,20 +33,44 @@
                 <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
             </div>
         </section>
-        <section class="concept mt-5">
+        <section class="concept">
         <h2>Concept</h2>
-        <p>
+        <p class="w-75 mt-3 mb-3">
         Bienvenue sur MyFitLog, l'application de surveillance de la santé qui vous accompagne
          dans votre parcours de bien-être et de condition physique. Nous avons créé cette application pour
           aider les utilisateurs à suivre leur santé et leur progression de manière simple et pratique.
            Voici quelques points de concept clés de notre application :
         </p>
-        <div>
-            <div class="clo-md-3"></div>
-            <div class="clo-md-3"></div>
-            <div class="clo-md-3"></div>
-            <div class="clo-md-3"></div>
-        </div>
+        <ul class="row mt-5">
+            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+                <img src="{{ asset('build/main/images/fitness.svg', 'main')}}" alt="Activité physique" height="150" width="150px">
+                <h4 class="mt-4">Suivi de l'activité physique</h4>
+                <p class="text-center mt-3">MyFitLog permet aux utilisateurs de suivre leur activité physique en enregistrant le nombre de pas,
+                la distance parcourue, les calories brûlées et bien plus encore. Les graphiques et tableaux de l'application
+                vous aideront à visualiser vos progrès et à atteindre vos objectifs de condition physique.
+                </p>
+            </li>
+            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+                <img src="{{ asset('build/main/images/nourriture.svg', 'main')}}" alt="Alimentation" height="150" width="150px">
+                <h4 class="mt-4">Suivi de l'alimentation</h4>
+                <p class="text-center mt-3">L'application vous permet de suivre votre consommation de nourriture, de surveiller les calories,
+                les nutriments et l'apport en eau. Vous pouvez également ajouter des photos de vos repas pour mieux suivre votre alimentation.
+                </p>
+            </li>
+            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+                <img src="{{ asset('build/main/images/sleep.svg', 'main')}}" alt="Sommeil" height="150" width="150px">
+                <h4 class="mt-4">Suivi du sommeil</h4>
+                <p class="text-center mt-3">MyFitLog vous aide à suivre votre sommeil, en enregistrant le temps de sommeil, la qualité du sommeil et les cycles de sommeil.
+                Vous pourrez ainsi mieux comprendre votre sommeil et trouver des moyens pour améliorer votre qualité de sommeil.
+                </p>
+            </li>
+            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+                <img src="{{ asset('build/main/images/masse.svg', 'main')}}" alt="Poids" height="150" width="150px">
+                <h4 class="mt-4">Suivi de la masse</h4>
+                <p class="text-center mt-3">Nous vous aidons à suivre votre masse en enregistrant quotidiennement votre masse afin d'avoir un aperçu global sur votre poids. Nous 
+                calculons également votre indice de masse corporel pour avoir une idée sur la composition graisseuse, musculaire et osseuse de votre corps.</p>
+            </li>
+        </ul>
         </section>
     </div>
 {% endblock %}

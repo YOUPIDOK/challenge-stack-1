@@ -1,4 +1,4 @@
-.header-description {
+.header-description, p {
     font-family:'urbanist';
 }
 .btn-header{
@@ -12,5 +12,10 @@
 
 }
 h2 {
-    font-family:'urbanist-bold';
+    font-family:'urbanist';
+    font-size: 38px;
+    color:var(--bluesky);
+}
+.concept{
+    margin-top: 170px;
 }

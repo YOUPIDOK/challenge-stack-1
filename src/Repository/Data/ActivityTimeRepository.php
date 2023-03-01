@@ -39,6 +39,21 @@ class ActivityTimeRepository extends ServiceEntityRepository
         }
     }
 
+      /**
+     * @return ActivityTime[] Returns an array of ActivityTime objects
+     */
+    public function findActivityTimeByUser($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return ActivityTime[] Returns an array of ActivityTime objects
 //     */

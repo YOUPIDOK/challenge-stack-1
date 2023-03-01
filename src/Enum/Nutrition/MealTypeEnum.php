@@ -10,10 +10,10 @@ class MealTypeEnum
     const SNACK = 'SNACK';
 
     public static array $types = [
-        self::BREAKFAST => 'Homme',
-        self::LUNCH => 'Femme',
-        self::DINNER => 'Non-binaire',
-        self::SNACK => 'Non-binaire',
+        self::BREAKFAST => 'Breakfast',
+        self::LUNCH => 'Lunch',
+        self::DINNER => 'Dinner',
+        self::SNACK => 'Snack',
     ];
 
     public static function getType($key): string

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ActivityTime{% endblock %}
+
+{% block body %}
+    <h1>Edit ActivityTime</h1>
+
+    {{ include('pages/data/activity_time/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+
+{% endblock %}

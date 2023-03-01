@@ -42,32 +42,28 @@ class NutritionController extends AbstractController
 
         return $this->renderForm('pages/data/nutrition/new.html.twig', [
             'nutrition' => $nutrition,
+            'dailyReport' => $dailyReport,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_main_data_nutrition_show', methods: ['GET'])]
-    public function show(Nutrition $nutrition): Response
-    {
-        return $this->render('pages/data/nutrition/show.html.twig', [
-            'nutrition' => $nutrition,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_main_data_nutrition_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Nutrition $nutrition, NutritionRepository $nutritionRepository): Response
     {
         $form = $this->createForm(NutritionType::class, $nutrition);
         $form->handleRequest($request);
+        $dailyReport = $nutrition->getDailyReport();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nutritionRepository->save($nutrition, true);
 
-            return $this->redirectToRoute('app_main_data_nutrition_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/nutrition/edit.html.twig', [
             'nutrition' => $nutrition,
+            'dailyReport' => $dailyReport,
             'form' => $form,
         ]);
     }

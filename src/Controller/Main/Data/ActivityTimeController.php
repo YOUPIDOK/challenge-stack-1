@@ -28,13 +28,15 @@ class ActivityTimeController extends AbstractController
     public function new(DailyReport $dailyReport, Request $request, ActivityTimeRepository $activityTimeRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $activityTime = new ActivityTime();
+        $activityTime->setDailyReport($dailyReport);
         $form = $this->createForm(ActivityTimeType::class, $activityTime);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($activityTime);
             $activityTime->setTimeFromDates();
 
-            $dailyReport->addActivityTime($activityTime);
             $activityTimeRepository->save($activityTime, true);
             $dailyReportRepository->save($dailyReport, true);
 
@@ -43,15 +45,8 @@ class ActivityTimeController extends AbstractController
 
         return $this->renderForm('pages/data/activity_time/new.html.twig', [
             'activity_time' => $activityTime,
+            'dailyReport' => $dailyReport,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_main_data_activity_time_show', methods: ['GET'])]
-    public function show(ActivityTime $activityTime): Response
-    {
-        return $this->render('pages/data/activity_time/show.html.twig', [
-            'activity_time' => $activityTime,
         ]);
     }
 
@@ -60,15 +55,17 @@ class ActivityTimeController extends AbstractController
     {
         $form = $this->createForm(ActivityTimeType::class, $activityTime);
         $form->handleRequest($request);
+        $dailyReport = $activityTime->getDailyReport();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $activityTimeRepository->save($activityTime, true);
 
-            return $this->redirectToRoute('app_main_data_activity_time_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/activity_time/edit.html.twig', [
             'activity_time' => $activityTime,
+            'dailyReport' => $dailyReport,
             'form' => $form,
         ]);
     }

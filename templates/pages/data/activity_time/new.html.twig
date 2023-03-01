@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Create new ActivityTime</h1>
 
-    {{ include('main/data/activity_time/_form.html.twig') }}
+    {{ include('pages/data/activity_time/_form.html.twig') }}
 
-    <a href="{{ path('app_main_data_activity_time_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 {% endblock %}

@@ -5,9 +5,7 @@
 {% block body %}
     <h1>Edit SleepTime</h1>
 
-    {{ include('main/data/sleep_time/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('pages/data/sleep_time/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_main_data_sleep_time_index') }}">back to list</a>
-
-    {{ include('main/data/sleep_time/_delete_form.html.twig') }}
+    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 {% endblock %}

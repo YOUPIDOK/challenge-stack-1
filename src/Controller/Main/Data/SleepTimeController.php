@@ -28,13 +28,13 @@ class SleepTimeController extends AbstractController
     public function new(DailyReport $dailyReport,Request $request, SleepTimeRepository $sleepTimeRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $sleepTime = new SleepTime();
+        $sleepTime->setDailyReport($dailyReport);
         $form = $this->createForm(SleepTimeType::class, $sleepTime);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sleepTime->setTimeFromDates();
 
-            $dailyReport->addSleepTime($sleepTime);
             $sleepTimeRepository->save($sleepTime, true);
             $dailyReportRepository->save($dailyReport, true);
 
@@ -43,15 +43,8 @@ class SleepTimeController extends AbstractController
 
         return $this->renderForm('pages/data/sleep_time/new.html.twig', [
             'sleep_time' => $sleepTime,
+            'dailyReport' => $dailyReport,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_main_data_sleep_time_show', methods: ['GET'])]
-    public function show(SleepTime $sleepTime): Response
-    {
-        return $this->render('pages/data/sleep_time/show.html.twig', [
-            'sleep_time' => $sleepTime,
         ]);
     }
 
@@ -60,15 +53,17 @@ class SleepTimeController extends AbstractController
     {
         $form = $this->createForm(SleepTimeType::class, $sleepTime);
         $form->handleRequest($request);
+        $dailyReport = $sleepTime->getDailyReport();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sleepTimeRepository->save($sleepTime, true);
 
-            return $this->redirectToRoute('app_main_data_sleep_time_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/sleep_time/edit.html.twig', [
             'sleep_time' => $sleepTime,
+            'dailyReport' => $dailyReport,
             'form' => $form,
         ]);
     }

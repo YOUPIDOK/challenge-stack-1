@@ -41,15 +41,8 @@ class WeightController extends AbstractController
 
         return $this->renderForm('pages/data/weight/new.html.twig', [
             'weight' => $weight,
+            'dailyReport' => $dailyReport,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_main_data_weight_show', methods: ['GET'])]
-    public function show(Weight $weight): Response
-    {
-        return $this->render('pages/data/weight/show.html.twig', [
-            'weight' => $weight,
         ]);
     }
 
@@ -58,15 +51,17 @@ class WeightController extends AbstractController
     {
         $form = $this->createForm(WeightType::class, $weight);
         $form->handleRequest($request);
+        $dailyReport = $weight->getDailyReport();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $weightRepository->save($weight, true);
 
-            return $this->redirectToRoute('app_main_data_weight_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/weight/edit.html.twig', [
             'weight' => $weight,
+            'dailyReport' => $dailyReport,
             'form' => $form,
         ]);
     }

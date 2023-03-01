@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\DailyReport;
+use App\Entity\User\Client;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,7 +41,31 @@ class DailyReportRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
+    public function searchDailyReportQb(Client $client, ?DateTime $start = null, ?DateTime $end = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('daily_report')
+            ->where('daily_report.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('daily_report.date', 'ASC');
+
+        if ($start !== null) {
+            $qb
+                ->andWhere('daily_report.date >= :start')
+                ->setParameter('start', $start);
+        }
+
+        if ($end !== null) {
+            $qb
+                ->andWhere('daily_report.date <= :end')
+                ->setParameter('end', $end);
+        }
+
+        return $qb;
+    }
+
+
+    //    /**
 //     * @return DailyReport[] Returns an array of DailyReport objects
 //     */
 //    public function findByExampleField($value): array

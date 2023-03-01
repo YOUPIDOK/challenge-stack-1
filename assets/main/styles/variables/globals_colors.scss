@@ -3,6 +3,7 @@
     --font-color: black;
     --blue: rgba(50,98,255,1);
     --bg-blue: rgba(50,98,255,1);
+    --watermelon: rgb(255, 89, 94);
     --blanc: white;
     --dodgerblue: rgba(41, 132,255,1);
     --bluesky: rgba(88, 127, 253, 1);
@@ -13,6 +14,7 @@
     --light: #F4EBD9;
     --white-color: #F7F6FB;
     --bg-menu_profile: #ffffff;
+
   }
   [data-bs-theme="dark"]{
     --bg-nav: #272729;
@@ -20,5 +22,5 @@
     --font-color: white;
     --bg-menu_profile: #272729;
     --white-color:rgb(0, 0, 0);
-    
+
   }

@@ -1,0 +1,24 @@
+.header-description, p {
+    font-family:'urbanist';
+}
+.btn-header{
+    background-color: var(--bluesky);
+    border: 1px solid var(--bluesky);
+    transition: 0.3s;
+}
+.btn-header:hover{
+    color: var(--bluesky)!important;
+    background-color: transparent;
+
+}
+h2 {
+    font-family:'urbanist';
+    font-size: 38px;
+    color:var(--bluesky);
+}
+.concept{
+    margin-top: 130px;
+}
+p {
+    font-size: 18px;
+}

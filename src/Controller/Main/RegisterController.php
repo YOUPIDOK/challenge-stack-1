@@ -57,7 +57,6 @@ class RegisterController extends AbstractController
             ;
 
             $weight = (new Weight())
-                ->setClient($user->getClient())
                 ->setWeight($form->get('weight')->getData())
                 ->setDailyReport($dailyReport)
             ;

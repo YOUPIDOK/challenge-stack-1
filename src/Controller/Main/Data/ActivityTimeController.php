@@ -17,15 +17,10 @@ class ActivityTimeController extends AbstractController
     #[Route('/', name: 'app_main_data_activity_time_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
-
-            return $this->render('main/data/activity_time/index.html.twig', [
+        $client = $this->getUser()->getClient();
+        return $this->render('main/data/activity_time/index.html.twig', [
                 'activity_times' => $client->getActivityTime(),
             ]);
-        }
-        return $this->render('pages/homepage.html.twig');
     }
 
     #[Route('/new', name: 'app_main_data_activity_time_new', methods: ['GET', 'POST'])]
@@ -41,8 +36,8 @@ class ActivityTimeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
-            if ($user !== null && $dailyReport !== null) {
-                $client = $user->getClient();
+            if ($dailyReport !== null) {
+                $client = $this->getUser()->getClient();
                 $activityTime->setTimeFromDates();
                 $activityTime->setClient($client);
                 $dailyReport->setClient($client);

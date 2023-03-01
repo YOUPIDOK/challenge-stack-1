@@ -17,15 +17,11 @@ class NutritionController extends AbstractController
     #[Route('/', name: 'app_data_nutrition_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
+        $client = $this->getUser()->getClient();
 
-            return $this->render('pages/data/nutrition/index.html.twig', [
-                'nutrition' => $client->getNutritions(),
-            ]);
-        }
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('pages/data/nutrition/index.html.twig', [
+            'nutrition' => $client->getNutritions(),
+        ]);
     }
 
     #[Route('/new', name: 'app_data_nutritions_new', methods: ['GET', 'POST'])]
@@ -39,10 +35,9 @@ class NutritionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
 
-            if ($user !== null && $dailyReport !== null) {
-                $client = $user->getClient();
+            if ($dailyReport !== null) {
+                $client = $this->getUser()->getClient();
                 $dailyReport->setClient($client);
                 $nutrition->setClient($client);
                 $nutrition->setDate(new \DateTime());

@@ -16,15 +16,11 @@ class FoodController extends AbstractController
     #[Route('/', name: 'app_food_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
+        $client = $this->getUser()->getClient();
 
-            return $this->render('food/index.html.twig', [
-                'food' => $client->getFood(),
-            ]);
-        }
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('food/index.html.twig', [
+            'food' => $client->getFood(),
+        ]);
     }
 
     #[Route('/new', name: 'app_food_new', methods: ['GET', 'POST'])]
@@ -35,14 +31,10 @@ class FoodController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
+            $client = $this->getUser()->getClient();
+            $food->setClient($client);
 
-            if ($user !== null) {
-                $client = $user->getClient();
-                $food->setClient($client);
-
-                $foodRepository->save($food, true);
-            }
+            $foodRepository->save($food, true);
 
             return $this->redirectToRoute('app_food_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -17,15 +17,11 @@ class SleepTimeController extends AbstractController
     #[Route('/', name: 'app_main_data_sleep_time_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
+        $client = $this->getUser()->getClient();
 
-            return $this->render('main/data/sleep_time/index.html.twig', [
-                'sleep_times' => $client->getSleepTimes(),
-            ]);
-        }
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('main/data/sleep_time/index.html.twig', [
+            'sleep_times' => $client->getSleepTimes(),
+        ]);
     }
 
     #[Route('/new', name: 'app_main_data_sleep_time_new', methods: ['GET', 'POST'])]
@@ -39,10 +35,8 @@ class SleepTimeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
-            if ($user !== null && $dailyReport !== null) {
-                $client = $user->getClient();
+            if ($dailyReport !== null) {
+                $client = $this->getUser()->getClient();
                 $sleepTime->setClient($client);
                 $sleepTime->setTimeFromDates();
                 $dailyReport->setClient($client);

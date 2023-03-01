@@ -16,15 +16,11 @@ class ActivityController extends AbstractController
     #[Route('/', name: 'app_activity_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
+        $client = $this->getUser()->getClient();
 
-            return $this->render('pages/activity/index.html.twig', [
-                'activities' => $client->getActivities(),
-            ]);
-        }
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('pages/activity/index.html.twig', [
+            'activities' => $client->getActivities(),
+        ]);
     }
 
     #[Route('/new', name: 'app_activity_new', methods: ['GET', 'POST'])]
@@ -35,14 +31,10 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
+            $client = $this->getUser()->getClient();
+            $activity->setClient($client);
 
-            if ($user !== null) {
-                $client = $user->getClient();
-                $activity->setClient($client);
-
-                $activityRepository->save($activity, true);
-            }
+            $activityRepository->save($activity, true);
 
             return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -3,6 +3,7 @@
 namespace App\Repository\Data;
 
 use App\Entity\Data\Weight;
+use App\Entity\User\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Weight[]    findAll()
  * @method Weight[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WeightsRepository extends ServiceEntityRepository
+class WeightRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,6 +38,19 @@ class WeightsRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findLastWeightByClient(Client $client)
+    {
+        return $this
+            ->createQueryBuilder('weight')
+            ->innerJoin('weight.dailyReport', 'dailyReport')
+            ->where('dailyReport.client = :client')
+            ->setParameter('client', $client)
+            ->setMaxResults(1)
+            ->orderBy('dailyReport.date', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

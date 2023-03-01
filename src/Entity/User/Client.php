@@ -45,41 +45,26 @@ class Client
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class, cascade: ['remove'])]
-    private Collection $food;
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objective::class, cascade: ['remove'])]
     private Collection $objectives;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: SleepTime::class, cascade: ['remove'])]
-    private Collection $sleepTimes;
-
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Weight::class, cascade: ['remove'])]
-    private Collection $weights;
-
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Nutrition::class, cascade: ['remove'])]
-    private Collection $nutritions;
-
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActivityTime::class, cascade: ['remove'])]
-    private Collection $activityTime;
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
     #[ORM\OrderBy(['date' => 'DESC'])]
     private Collection $dailyReports;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class)]
+    #[ORM\OrderBy(['label' => 'ASC'])]
+    private Collection $foods;
+
     public function __construct()
     {
-        $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->objectives = new ArrayCollection();
-        $this->sleepTimes = new ArrayCollection();
-        $this->weights = new ArrayCollection();
-        $this->nutritions = new ArrayCollection();
-        $this->activityTime = new ArrayCollection();
         $this->dailyReports = new ArrayCollection();
+        $this->foods = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -151,36 +136,6 @@ class Client
     }
 
     /**
-     * @return Collection<int, Food>
-     */
-    public function getFood(): Collection
-    {
-        return $this->food;
-    }
-
-    public function addFood(Food $food): self
-    {
-        if (!$this->food->contains($food)) {
-            $this->food->add($food);
-            $food->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFood(Food $food): self
-    {
-        if ($this->food->removeElement($food)) {
-            // set the owning side to null (unless already changed)
-            if ($food->getClient() === $this) {
-                $food->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Activity>
      */
     public function getActivities(): Collection
@@ -222,25 +177,7 @@ class Client
     {
         if (!$this->objectives->contains($objective)) {
             $this->objectives->add($objective);
-            $objective->setClientId($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getSleepTimes(): Collection
-    {
-        return $this->sleepTimes;
-    }
-
-    public function addSleepTime(SleepTime $sleepTime): self
-    {
-        if (!$this->sleepTimes->contains($sleepTime)) {
-            $this->sleepTimes->add($sleepTime);
-            $sleepTime->setClient($this);
+            $objective->setClient($this);
         }
 
         return $this;
@@ -251,112 +188,10 @@ class Client
     {
         if ($this->objectives->removeElement($objective)) {
             // set the owning side to null (unless already changed)
-            if ($objective->getClientId() === $this) {
-                $objective->setClientId(null);
+            if ($objective->getClient() === $this) {
+                $objective->setClient(null);
             }
         }
-        return $this;
-    }
-
-    public function removeSleepTime(SleepTime $sleepTime): self
-    {
-        if ($this->sleepTimes->removeElement($sleepTime)) {
-            // set the owning side to null (unless already changed)
-            if ($sleepTime->getClient() === $this) {
-                $sleepTime->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Weight>
-     */
-    public function getWeights(): Collection
-    {
-        return $this->weights;
-    }
-
-    public function addWeight(Weight $weight): self
-    {
-        if (!$this->weights->contains($weight)) {
-            $this->weights->add($weight);
-            $weight->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWeight(Weight $weight): self
-    {
-        if ($this->weights->removeElement($weight)) {
-            // set the owning side to null (unless already changed)
-            if ($weight->getClient() === $this) {
-                $weight->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Nutrition>
-     */
-    public function getNutritions(): Collection
-    {
-        return $this->nutritions;
-    }
-
-    public function addNutrition(Nutrition $nutrition): self
-    {
-        if (!$this->nutritions->contains($nutrition)) {
-            $this->nutritions->add($nutrition);
-            $nutrition->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNutrition(Nutrition $nutrition): self
-    {
-        if ($this->nutritions->removeElement($nutrition)) {
-            // set the owning side to null (unless already changed)
-            if ($nutrition->getClient() === $this) {
-                $nutrition->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ActivityTime>
-     */
-    public function getActivityTime(): Collection
-    {
-        return $this->activityTime;
-    }
-
-    public function addActivityTime(ActivityTime $activityTime): self
-    {
-        if (!$this->activityTime->contains($activityTime)) {
-            $this->activityTime->add($activityTime);
-            $activityTime->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActivityTime(ActivityTime $activityTime): self
-    {
-        if ($this->activityTime->removeElement($activityTime)) {
-            // set the owning side to null (unless already changed)
-            if ($activityTime->getClient() === $this) {
-                $activityTime->setClient(null);
-            }
-        }
-
         return $this;
     }
 
@@ -395,10 +230,43 @@ class Client
      */
     public function getCurrentDailyReport(): ?DailyReport {
         $dailyReport = $this->dailyReports->first();
+        if ($dailyReport === false) {
+            return null;
+        }
         $today = new DateTime();
         if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
             return $dailyReport;
         }
         return null;
+    }
+
+    /**
+     * @return Collection<int, Food>
+     */
+    public function getFoods(): Collection
+    {
+        return $this->foods;
+    }
+
+    public function addFood(Food $food): self
+    {
+        if (!$this->foods->contains($food)) {
+            $this->foods->add($food);
+            $food->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFood(Food $food): self
+    {
+        if ($this->foods->removeElement($food)) {
+            // set the owning side to null (unless already changed)
+            if ($food->getClient() === $this) {
+                $food->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

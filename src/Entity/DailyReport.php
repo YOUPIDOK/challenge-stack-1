@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: DailyReportRepository::class)]
+#[ORM\Table(name: 'daily_reports')]
 class DailyReport
 {
     #[ORM\Id]
@@ -39,15 +40,18 @@ class DailyReport
     #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: ActivityTime::class, cascade: ['remove'])]
     private Collection $activityTimes;
 
-    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: Weight::class, cascade: ['remove'])]
-    private Collection $weights;
+    #[ORM\OneToOne(inversedBy: 'dailyReport', cascade: ['persist', 'remove'])]
+    private ?Weight $weight = null;
+
+    private ?int $spentCalories = null;
+    private ?int $eatCalories = null;
+    private ?int $differenceCalories = null;
 
     public function __construct()
     {
         $this->sleepTimes = new ArrayCollection();
         $this->nutritions = new ArrayCollection();
         $this->activityTimes = new ArrayCollection();
-        $this->weights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,7 +91,40 @@ class DailyReport
         return $this->sleepTimes;
     }
 
-    public function addSleepTime(SleepTime $sleepTime): self
+    public function getSpentCalories(): int
+    {
+        if ($this->spentCalories === null) {
+            $this->spentCalories = 0;
+            /** @Var ActivityTime $activityTime */
+            foreach ($this->activityTimes as $activityTime) {
+//                $this->spentCalories += $activityTime->get;
+            }
+        }
+
+        return $this->spentCalories;
+    }
+
+    public function getEatCalories(): int
+    {
+        if ($this->eatCalories === null)  {
+            $this->eatCalories = 0;
+            /** @Var Nutrition $nutrition */
+            foreach ($this->nutritions as $nutrition) {
+                $this->eatCalories += $nutrition->getFood()->getCalorieByGramme() * $nutrition->getFoodWeight();
+            }
+        }
+
+        return $this->eatCalories;
+    }
+
+    public function getDifferenceCalories(): int
+    {
+        if ($this->differenceCalories === null) $this->differenceCalories = $this->getEatCalories() - $this->getSpentCalories();
+
+        return $this->differenceCalories;
+    }
+
+        public function addSleepTime(SleepTime $sleepTime): self
     {
         if (!$this->sleepTimes->contains($sleepTime)) {
             $this->sleepTimes->add($sleepTime);
@@ -169,32 +206,14 @@ class DailyReport
         return $this;
     }
 
-    /**
-     * @return Collection<int, Weight>
-     */
-    public function getWeights(): Collection
+    public function getWeight(): ?Weight
     {
-        return $this->weights;
+        return $this->weight;
     }
 
-    public function addWeight(Weight $weight): self
+    public function setWeight(?Weight $weight): self
     {
-        if (!$this->weights->contains($weight)) {
-            $this->weights->add($weight);
-            $weight->setDailyReport($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWeight(Weight $weight): self
-    {
-        if ($this->weights->removeElement($weight)) {
-            // set the owning side to null (unless already changed)
-            if ($weight->getDailyReport() === $this) {
-                $weight->setDailyReport(null);
-            }
-        }
+        $this->weight = $weight;
 
         return $this;
     }

@@ -5,14 +5,12 @@ namespace App\Entity\Data;
 use App\Entity\Activity;
 use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\ActivityTimesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\Data\ActivityTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ActivityTimesRepository::class)]
+#[ORM\Entity(repositoryClass: ActivityTimeRepository::class)]
 #[ORM\Table(name: 'data__activity_times')]
 class ActivityTime
 {
@@ -20,10 +18,6 @@ class ActivityTime
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'activityTimes')]
-    #[NotNull]
-    private ?Client $client = null;
 
     #[ORM\Column()]
     #[NotNull]
@@ -45,6 +39,10 @@ class ActivityTime
     #[ORM\ManyToOne(inversedBy: 'activityTimes')]
     private ?DailyReport $dailyReport = null;
 
+    #[ORM\Column]
+    #[Range(min: 0)]
+    private ?int $time = null;
+
     public function __construct()
     {
     }
@@ -52,18 +50,6 @@ class ActivityTime
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getStartAt(): ?\DateTime
@@ -102,15 +88,6 @@ class ActivityTime
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getActivityDuration(): int
-    {
-        $interval = date_diff($this->startAt, $this->endAt);
-        return ($interval->d * 24 * 60) + ($interval->h * 60) + $interval->i;
-    }
-
     public function getDistance(): ?float
     {
         return $this->distance;
@@ -131,6 +108,30 @@ class ActivityTime
     public function setDailyReport(?DailyReport $dailyReport): self
     {
         $this->dailyReport = $dailyReport;
+
+        return $this;
+    }
+
+    public function getTime(): ?int
+    {
+        return $this->time;
+    }
+
+    public function setTime(?int $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function setTimeFromDates(): self
+    {
+        $interval = $this->startAt->diff($this->endAt);
+        $minutes = $interval->format('%a') * 24 * 60;
+        $minutes .= $interval->format('%h') * 60;
+        $minutes .= $interval->format('%i');
+
+        $this->time = intval($minutes) / 10;
 
         return $this;
     }

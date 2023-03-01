@@ -64,9 +64,6 @@ class RegisterType extends AbstractType
                 'label' => 'Confirmation du mot de passe',
             ],
             'invalid_message' => 'Les mots de passe sont différents',
-            'constraints' => [
-                new Length(['min' => 8])
-            ]
         ]);
 
         $builder->add('client', ClientType::class);

@@ -19,10 +19,6 @@ class SleepTime
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
-    #[NotNull]
-    private ?Client $client = null;
-
     #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $asleepAt = null;
@@ -34,6 +30,9 @@ class SleepTime
     #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
     private ?DailyReport $dailyReport = null;
 
+    #[ORM\Column]
+    private ?int $time = null;
+
     public function __construct()
     {
     }
@@ -41,18 +40,6 @@ class SleepTime
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getAsleepAt(): ?\DateTime
@@ -87,6 +74,30 @@ class SleepTime
     public function setDailyReport(?DailyReport $dailyReport): self
     {
         $this->dailyReport = $dailyReport;
+
+        return $this;
+    }
+
+    public function getTime(): ?int
+    {
+        return $this->time;
+    }
+
+    public function setTime(?int $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function setTimeFromDates(): self
+    {
+        $interval = $this->asleepAt->diff($this->awakeAt);
+        $minutes = $interval->format('%a') * 24 * 60;
+        $minutes .= $interval->format('%h') * 60;
+        $minutes .= $interval->format('%i');
+
+        $this->time = intval($minutes) / 10;
 
         return $this;
     }

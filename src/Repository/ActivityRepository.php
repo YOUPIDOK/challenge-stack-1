@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\User\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,25 @@ class ActivityRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function searchActivityQb(Client $client, ?string $label = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('activity')
+            ->where('activity.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('activity.label', 'ASC');
+
+        if ($label !== null) {
+            $qb
+                ->andWhere('activity.label LIKE :label')
+                ->setParameter('label', '%' . $label . '%')
+            ;
+        }
+
+        return $qb;
+
     }
 
 //    /**

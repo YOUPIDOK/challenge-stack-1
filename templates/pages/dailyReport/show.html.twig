@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rapport journalier{% endblock %}
+
+{% block body %}
+    <h1>Rapport journalier du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
+    <a class="btn btn-primary" href="{{ path('app_main_data_nutrition_new', {'id': dailyReport.id}) }}">Nutrition</a>
+    <a class="btn btn-primary" href="{{ path('app_main_data_sleep_time_new', {'id': dailyReport.id}) }}">Sommeil</a>
+    <a class="btn btn-primary" href="{{ path('app_main_data_weight_new', {'id': dailyReport.id}) }}">Poid</a>
+    <a class="btn btn-primary" href="{{ path('app_main_data_activity_time_new', {'id': dailyReport.id}) }}">Activité</a>
+
+    <div>
+        <h2>Mon récapitulatif de la journée</h2>
+        {% if dailyReport.weight is not null%}
+            <div>
+                <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
+                <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier mon poids</a>
+            </div>
+        {% endif %}
+        <div>Calories mangées : {{ dailyReport.eatCalories }} kcal</div>
+        <div>Calories dépensées : {{ dailyReport.spentCalories }} kcal</div>
+        <div>Différence calorifique : {{ dailyReport.differenceCalories }} kcal</div>
+        <div>Temps dormis : 0 min</div>
+        <div>Temps d'activités éffectué: 0 min</div>
+    </div>
+
+    <h2>Nutritions</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hove border">
+            <thead>
+            <tr>
+                <th scope="col">Label</th>
+                <th scope="col">Food label</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Glucide</th>
+                <th scope="col">Lipide</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Poids</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for nutrition in dailyReport.nutritions %}
+                <tr>
+                    <th scope="row">{{ nutrition.mealType }}</th>
+                    <td>{{ nutrition.food.label }}</td>
+                    <td>{{ nutrition.food.calories }}</td>
+                    <td>{{ nutrition.food.carbohydrates }}</td>
+                    <td>{{ nutrition.food.lipids }}</td>
+                    <td>{{ nutrition.food.proteins }}</td>
+                    <td>{{ nutrition.foodWeight }}</td>
+                    <td>
+                        <a href="{{ path('app_main_data_nutrition_edit', {id: nutrition.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-nutrition-{{ nutrition.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas de nutrition ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Activité</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hove border">
+            <thead>
+                <tr>
+                    <th scope="col">Debut</th>
+                    <th scope="col">Fin</th>
+                    <th scope="col">Distance</th>
+                    <th scope="col">Temps (minutes)</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Frequence cardiaque</th>
+                    <th scope="col">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for activity in dailyReport.activityTimes %}
+                <tr>
+                    <th scope="row">{{ activity.startAt ? activity.startAt|date('Y-m-d H:i:s') : '' }}</th>
+                    <td>{{ activity.endAt ? activity.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ activity.distance }}</td>
+                    <td>{{ activity.time }}</td>
+                    <td>{{ activity.activity.label }}</td>
+                    <td>{{ activity.activity.heartRate }}</td>
+                    <td>
+                        <a href="{{ path('app_main_data_activity_time_edit', {id: activity.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-activity-time-{{ activity.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas d'activité ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Sommeil</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hove border">
+            <thead>
+            <tr>
+                <th scope="col">Commencé le </th>
+                <th scope="col">Finis le </th>
+                <th scope="col">Temps de sommeil</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sleepTime in dailyReport.sleepTimes %}
+                <tr>
+                    <th scope="row">{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.time }}</td>
+                    <td>
+                        <a href="{{ path('app_main_data_sleep_time_edit', {id: sleepTime.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-sleep-time-{{ sleepTime.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas de temps de sommeil ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block modals %}
+    {% for nutrition in dailyReport.nutritions %}
+        <div class="modal fade" id="delete-nutrition-{{ nutrition.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez vous vraimenet supprimer cette nutrition ?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ path('app_main_data_nutrition_delete', {id: nutrition.id}) }}" class="text-danger">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for activityTime in dailyReport.activityTimes %}
+        <div class="modal fade" id="delete-activity-time-{{ activityTime.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez vous vraimenet supprimer cette activité ?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ path('app_main_data_activity_time_delete', {id: activityTime.id}) }}" class="text-danger">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for sleepTime in dailyReport.sleepTimes %}
+        <div class="modal fade" id="delete-sleep-time-{{ sleepTime.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez vous vraimenet supprimer ce sommeil ?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ path('app_main_data_sleep_time_delete', {id: sleepTime.id}) }}" class="text-danger">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

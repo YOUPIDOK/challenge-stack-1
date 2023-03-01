@@ -7,15 +7,13 @@ use App\Entity\Food;
 use App\Entity\User\Client;
 use App\Enum\Nutrition\MealTypeEnum;
 use App\Enum\Objective\ObjectiveTypeEnum;
-use App\Repository\Data\NutritionsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\Data\NutritionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: NutritionsRepository::class)]
+#[ORM\Entity(repositoryClass: NutritionRepository::class)]
 #[ORM\Table(name: 'data__nutritions')]
 class Nutrition
 {
@@ -27,10 +25,6 @@ class Nutrition
     #[ORM\ManyToOne(inversedBy: 'nutritions')]
     #[NotNull]
     private ?Food $food = null;
-
-    #[ORM\ManyToOne(inversedBy: 'nutritions')]
-    #[NotNull]
-    private ?Client $client = null;
 
     #[ORM\Column(length: 50)]
     #[NotNull]
@@ -62,18 +56,6 @@ class Nutrition
     public function setFood(?Food $food): self
     {
         $this->food = $food;
-
-        return $this;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
 
         return $this;
     }

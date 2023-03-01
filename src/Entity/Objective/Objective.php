@@ -3,7 +3,7 @@
 namespace App\Entity\Objective;
 
 use App\Entity\User\Client;
-use App\Repository\Objective\ObjectivesRepository;
+use App\Repository\Objective\ObjectiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: ObjectivesRepository::class)]
+#[ORM\Entity(repositoryClass: ObjectiveRepository::class)]
 #[ORM\Table(name: 'objective__objectives')]
 class Objective
 {
@@ -98,7 +98,7 @@ class Objective
         return $this->client;
     }
 
-    public function setClientId(?Client $client): self
+    public function setClient(?Client $client): self
     {
         $this->client = $client;
 

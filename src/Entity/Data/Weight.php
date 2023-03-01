@@ -4,7 +4,7 @@ namespace App\Entity\Data;
 
 use App\Entity\DailyReport;
 use App\Entity\User\Client;
-use App\Repository\Data\WeightsRepository;
+use App\Repository\Data\WeightRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Entity(repositoryClass: WeightsRepository::class)]
+#[ORM\Entity(repositoryClass: WeightRepository::class)]
 #[ORM\Table(name: 'data__weights')]
 class Weight
 {
@@ -21,16 +21,12 @@ class Weight
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'weights')]
-    #[NotNull]
-    private ?Client $client = null;
-
     #[ORM\Column()]
     #[NotNull]
     #[Range(min: 20, max: 400)]
     private ?float $weight = null;
 
-    #[ORM\ManyToOne(inversedBy: 'weights')]
+    #[ORM\OneToOne(mappedBy: 'weight', cascade: ['persist', 'remove'])]
     private ?DailyReport $dailyReport = null;
 
     public function __construct()
@@ -40,18 +36,6 @@ class Weight
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getWeight(): ?float
@@ -73,6 +57,16 @@ class Weight
 
     public function setDailyReport(?DailyReport $dailyReport): self
     {
+        // unset the owning side of the relation if necessary
+        if ($dailyReport === null && $this->dailyReport !== null) {
+            $this->dailyReport->setWeight(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($dailyReport !== null && $dailyReport->getWeight() !== $this) {
+            $dailyReport->setWeight($this);
+        }
+
         $this->dailyReport = $dailyReport;
 
         return $this;

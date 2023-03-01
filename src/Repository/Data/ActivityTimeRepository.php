@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ActivityTime[]    findAll()
  * @method ActivityTime[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ActivityTimesRepository extends ServiceEntityRepository
+class ActivityTimeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,6 +37,21 @@ class ActivityTimesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+      /**
+     * @return ActivityTime[] Returns an array of ActivityTime objects
+     */
+    public function findActivityTimeByUser($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

@@ -45,9 +45,6 @@ class Client
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class, cascade: ['remove'])]
-    private Collection $food;
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
@@ -58,12 +55,16 @@ class Client
     #[ORM\OrderBy(['date' => 'DESC'])]
     private Collection $dailyReports;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class)]
+    #[ORM\OrderBy(['label' => 'ASC'])]
+    private Collection $foods;
+
     public function __construct()
     {
-        $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->objectives = new ArrayCollection();
         $this->dailyReports = new ArrayCollection();
+        $this->foods = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -130,36 +131,6 @@ class Client
         }
 
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Food>
-     */
-    public function getFood(): Collection
-    {
-        return $this->food;
-    }
-
-    public function addFood(Food $food): self
-    {
-        if (!$this->food->contains($food)) {
-            $this->food->add($food);
-            $food->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFood(Food $food): self
-    {
-        if ($this->food->removeElement($food)) {
-            // set the owning side to null (unless already changed)
-            if ($food->getClient() === $this) {
-                $food->setClient(null);
-            }
-        }
 
         return $this;
     }
@@ -264,5 +235,35 @@ class Client
             return $dailyReport;
         }
         return null;
+    }
+
+    /**
+     * @return Collection<int, Food>
+     */
+    public function getFoods(): Collection
+    {
+        return $this->foods;
+    }
+
+    public function addFood(Food $food): self
+    {
+        if (!$this->foods->contains($food)) {
+            $this->foods->add($food);
+            $food->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFood(Food $food): self
+    {
+        if ($this->foods->removeElement($food)) {
+            // set the owning side to null (unless already changed)
+            if ($food->getClient() === $this) {
+                $food->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

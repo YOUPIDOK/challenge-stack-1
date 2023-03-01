@@ -43,6 +43,10 @@ class DailyReport
     #[ORM\OneToOne(inversedBy: 'dailyReport', cascade: ['persist', 'remove'])]
     private ?Weight $weight = null;
 
+    private ?int $spentCalories = null;
+    private ?int $eatCalories = null;
+    private ?int $differenceCalories = null;
+
     public function __construct()
     {
         $this->sleepTimes = new ArrayCollection();
@@ -87,7 +91,40 @@ class DailyReport
         return $this->sleepTimes;
     }
 
-    public function addSleepTime(SleepTime $sleepTime): self
+    public function getSpentCalories(): int
+    {
+        if ($this->spentCalories === null) {
+            $this->spentCalories = 0;
+            /** @Var ActivityTime $activityTime */
+            foreach ($this->activityTimes as $activityTime) {
+//                $this->spentCalories += $activityTime->get;
+            }
+        }
+
+        return $this->spentCalories;
+    }
+
+    public function getEatCalories(): int
+    {
+        if ($this->eatCalories === null)  {
+            $this->eatCalories = 0;
+            /** @Var Nutrition $nutrition */
+            foreach ($this->nutritions as $nutrition) {
+                $this->eatCalories += $nutrition->getFood()->getCalorieByGramme() * $nutrition->getFoodWeight();
+            }
+        }
+
+        return $this->eatCalories;
+    }
+
+    public function getDifferenceCalories(): int
+    {
+        if ($this->differenceCalories === null) $this->differenceCalories = $this->getEatCalories() - $this->getSpentCalories();
+
+        return $this->differenceCalories;
+    }
+
+        public function addSleepTime(SleepTime $sleepTime): self
     {
         if (!$this->sleepTimes->contains($sleepTime)) {
             $this->sleepTimes->add($sleepTime);

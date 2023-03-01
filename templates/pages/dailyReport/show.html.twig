@@ -17,6 +17,11 @@
                 <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier mon poids</a>
             </div>
         {% endif %}
+        <div>Calories mangées : {{ dailyReport.eatCalories }} kcal</div>
+        <div>Calories dépensées : {{ dailyReport.spentCalories }} kcal</div>
+        <div>Différence calorifique : {{ dailyReport.differenceCalories }} kcal</div>
+        <div>Temps dormis : 0 min</div>
+        <div>Temps d'activités éffectué: 0 min</div>
     </div>
 
     <h2>Nutritions</h2>

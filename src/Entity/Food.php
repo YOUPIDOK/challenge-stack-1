@@ -53,9 +53,20 @@ class Food
     #[ORM\ManyToOne(inversedBy: 'foods')]
     private ?Client $client = null;
 
+    private ?float $caloriesByGramme = null;
+
     public function __construct()
     {
         $this->nutritions = new ArrayCollection();
+    }
+
+    public function getCalorieByGramme(): float
+    {
+        if ($this->caloriesByGramme === null) {
+            $this->caloriesByGramme = $this->calories / 100.0;
+        }
+
+        return $this->caloriesByGramme;
     }
 
     public function __toString(): string

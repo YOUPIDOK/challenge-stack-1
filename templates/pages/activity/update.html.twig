@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier une activitée</h1>
+        {% include 'components/form/activity_form.html.twig' with {btn_label : 'Modifier'} %}
+    </div>
+{% endblock %}

@@ -26,7 +26,7 @@ class Weight
     #[Range(min: 20, max: 400)]
     private ?float $weight = null;
 
-    #[ORM\ManyToOne(inversedBy: 'weights')]
+    #[ORM\OneToOne(mappedBy: 'weight', cascade: ['persist', 'remove'])]
     private ?DailyReport $dailyReport = null;
 
     public function __construct()
@@ -57,6 +57,16 @@ class Weight
 
     public function setDailyReport(?DailyReport $dailyReport): self
     {
+        // unset the owning side of the relation if necessary
+        if ($dailyReport === null && $this->dailyReport !== null) {
+            $this->dailyReport->setWeight(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($dailyReport !== null && $dailyReport->getWeight() !== $this) {
+            $dailyReport->setWeight($this);
+        }
+
         $this->dailyReport = $dailyReport;
 
         return $this;

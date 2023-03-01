@@ -23,9 +23,6 @@ class Food
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'food')]
-    private ?Client $client = null;
-
     #[ORM\Column(length: 255)]
     #[NotNull]
     private ?string $label = null;
@@ -53,31 +50,35 @@ class Food
     #[Range(min: 0)]
     private ?float $proteins = null;
 
+    #[ORM\ManyToOne(inversedBy: 'foods')]
+    private ?Client $client = null;
+
+    private ?float $caloriesByGramme = null;
+
     public function __construct()
     {
         $this->nutritions = new ArrayCollection();
     }
 
+    public function getCalorieByGramme(): float
+    {
+        if ($this->caloriesByGramme === null) {
+            $this->caloriesByGramme = $this->calories / 100.0;
+        }
+
+        return $this->caloriesByGramme;
+    }
+
     public function __toString(): string
     {
-        return '' . $this->label;
+        $calories = $this->calories ? (' (' . $this->calories . 'kcal)') : '';
+
+        return '' . $this->label . $calories;
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getLabel(): ?string
@@ -166,6 +167,18 @@ class Food
     public function setProteins(?float $proteins): self
     {
         $this->proteins = $proteins;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

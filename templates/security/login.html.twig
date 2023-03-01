@@ -31,11 +31,9 @@
 				<label class="form-check-label" for="remember_me">Se souvenir de moi</label>
 			</div>
 
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-			<button class="btn w-100 btn-primary" type="submit">Connexion</button>
-			<div class="mt-2">Pas encore inscrit ?
-				<a href="{{ path('register') }}">Créer un compte</a>
-			</div>
-		</form>
-	</div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button class="btn w-100 btn-primary" type="submit">Connexion</button>
+            <div class="mt-2">Pas encore inscrit ? <a href="{{ path('register') }}">Créer un compte</a></div>
+        </form>
+    </div>
 {% endblock %}

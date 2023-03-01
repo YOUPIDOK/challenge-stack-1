@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="icon" href="/app_icon/icon_32px.png">
-        {% block stylesheets %}{{ encore_entry_link_tags('main', null, 'main') }}{% endblock %}
-        {% block javascripts %}{{ encore_entry_script_tags('main', null, 'main')  }}{% endblock %}
-        <link rel="manifest" href="/manifest.webmanifest">
-    </head>
-    <body>
-        {% include "partials/_header.html.twig" %}
-        {% include "partials/_navbar.html.twig" %}
-        <main>
-            {% block header %}{% endblock %}
+<html lang="{{ app.request.locale }}" data-bs-theme="">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<link rel="icon" href="/app_icon/icon_32px.png">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('main', null, 'main') }}
+		{% endblock %}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('main', null, 'main')  }}
+		{% endblock %}
+		<link rel="manifest" href="/manifest.webmanifest">
+	</head>
+	<body>
+		{% include "partials/_header.html.twig" %}
+		{% include "partials/_navbar.html.twig" %}
+		<main>
+			{% block header %}{% endblock %}
 
-            {% include "partials/_flash_messages.html.twig" %}
-            <div class="p-2">
-                {% block body %}{% endblock %}
-            </div>
-        </main>
-        {% include "partials/_footer.html.twig" %}
-        {% block modals %}{% endblock %}
-    </body>
-</html>
+			{% include "partials/_flash_messages.html.twig" %}
+			<div class="p-2"> {% block body %}{% endblock %}
+				</div>
+			</main>
+			{% include "partials/_footer.html.twig" %}
+			{% block modals %}{% endblock %}
+		</body>
+	</html>

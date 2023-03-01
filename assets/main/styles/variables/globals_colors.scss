@@ -1,0 +1,18 @@
+:root{
+    --bg-nav:#ffffff;
+    --font-color: black;
+    --blue: rgba(50,98,255,1);
+    --blanc: white;
+    --dodgerblue: rgba(41, 132,255,1);
+    --bluesky: rgba(88, 127, 253, 1);
+    --warning: #f39c12;
+    --info:#129490;
+    --success:#70B77E;
+    --secondary:#2D3047;
+    --light: #F4EBD9;
+  }
+  [data-bs-theme="dark"]{
+    --bg-nav: #272729;
+    --font-color: white;
+    // --blue: white;
+  }

@@ -27,6 +27,7 @@
         "@hotwired/turbo": "^7.0.1",
         "@popperjs/core": "^2.11.5",
         "bootstrap": "5.2.0",
-        "choices.js": "^10.1.0"
+        "choices.js": "^10.1.0",
+        "stimulus-chartjs": "^5.0.0"
     }
 }

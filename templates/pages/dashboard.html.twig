@@ -9,49 +9,45 @@
 	{% endfor %}
 {% endblock %}
 {% block body %}
-	<a class="btn btn-primary" href="{{ path('foods') }}">Ma nourritures</a>
-	<a class="btn btn-primary" href="{{ path('activities') }}">Mes activités</a>
-	<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a>
-	<section
-		id="body-pd">
+	{# <a class="btn btn-primary" href="{{ path('foods') }}">Ma nourritures</a>
+			<a class="btn btn-primary" href="{{ path('activities') }}">Mes activités</a>
+			<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a> #}
 
-		<!--Container Main start-->
-		<div class="height-100 col-9">
-			<h4>Main Components</h4>
-		</div>
-		<!--Container Main end-->
+	<!--Container Main start-->
+		<div class="height-100 col-9"> <h4>Main Components</h4>
+	</div>
+	<!--Container Main end-->
 
-		<div class="profile-card col-1">
-			<div class="profile-card-header">
-				<h3>Mon profil</h3>
-				<div class="avatar">
-					<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
-					Nom Prénom
-				</div>
-				<div class="profile-info">
-					<div class="profile-info-title">
-						<p>Poids</p>
-						<p>Age</p>
-						<p>Taille</p>
-					</div>
-					<div class="profile-info-value">
-						<p>85kg</p>
-						<p>40ans</p>
-						<p>1m90</p>
-					</div>
-				</div>
+	<div class="profile-card col-1">
+		<div class="profile-card-header">
+			<h3>Mon profil</h3>
+			<div class="avatar">
+				<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
+				Nom Prénom
 			</div>
-			<div class="profile-card-body">
-				<h4>Mes objectifs</h4>
-				<div
-					class="accordion" id="accordionExample">
-					{# {% for objectif in objectifs %}
-					
-																																																																																																																																																																																													            {% endfor %} #}
-					{% include "components/objectif.html.twig" %}
+			<div class="profile-info">
+				<div class="profile-info-title">
+					<p>Poids</p>
+					<p>Age</p>
+					<p>Taille</p>
+				</div>
+				<div class="profile-info-value">
+					<p>85kg</p>
+					<p>40ans</p>
+					<p>1m90</p>
 				</div>
 			</div>
 		</div>
+		<div class="profile-card-body">
+			<h4>Mes objectifs</h4>
+			<div
+				class="accordion" id="accordionExample">
+				{# {% for objectif in objectifs %}
+														
+																																																																																																																																																																																																						            {% endfor %} #}
+				{% include "components/objectif.html.twig" %}
+			</div>
+		</div>
+	</div>
 
-	</section>
 {% endblock %}

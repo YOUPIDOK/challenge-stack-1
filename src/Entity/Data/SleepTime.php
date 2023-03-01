@@ -19,10 +19,6 @@ class SleepTime
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sleepTimes')]
-    #[NotNull]
-    private ?Client $client = null;
-
     #[ORM\Column()]
     #[NotNull]
     private ?\DateTime $asleepAt = null;
@@ -41,18 +37,6 @@ class SleepTime
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     public function getAsleepAt(): ?\DateTime

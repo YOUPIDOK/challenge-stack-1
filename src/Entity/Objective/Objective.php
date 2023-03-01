@@ -98,7 +98,7 @@ class Objective
         return $this->client;
     }
 
-    public function setClientId(?Client $client): self
+    public function setClient(?Client $client): self
     {
         $this->client = $client;
 

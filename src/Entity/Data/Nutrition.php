@@ -26,10 +26,6 @@ class Nutrition
     #[NotNull]
     private ?Food $food = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nutritions')]
-    #[NotNull]
-    private ?Client $client = null;
-
     #[ORM\Column(length: 50)]
     #[NotNull]
     private ?string $mealType = null;
@@ -60,18 +56,6 @@ class Nutrition
     public function setFood(?Food $food): self
     {
         $this->food = $food;
-
-        return $this;
-    }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
 
         return $this;
     }

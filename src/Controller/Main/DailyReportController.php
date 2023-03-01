@@ -17,50 +17,35 @@ class DailyReportController extends AbstractController
     #[Route('/', name: 'daily_report_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if (isset($user)) {
-            $client = $user->getClient();
-            $dailyReports = $client->getDailyReports();
+        $client = $this->getUser()->getClient();
+        $dailyReports = $client->getDailyReports();
 
-            return $this->render('pages/dailyReport/index.html.twig', [
+        return $this->render('pages/dailyReport/index.html.twig', [
                 'dailyReports' => $dailyReports,
             ]);
-        }
-        // Pas connecté :
-        return $this->render('pages/homepage.html.twig');
     }
 
     #[Route('/', name: 'daily_report_show_current')]
     public function showOrCreateCurrent(Request $request, DailyReportRepository $dailyReportRepository): Response
     {
-        $user = $this->getUser();
-        if (isset($user)) {
-            $client = $user->getClient();
-            $dailyReport = $client->getCurrentDailyReport();
+        $client = $this->getUser()->getClient();
+        $dailyReport = $client->getCurrentDailyReport();
 
-            // Création du rapport du jour s'il n'existe pas
-            if ($dailyReport === null) {
-                $dailyReport = new DailyReport();
-                $dailyReport->setDate(new \DateTime());
-                $dailyReport->setClient($this->getUser()->getClient());
-                $dailyReportRepository->save($dailyReport, true);
-            }
-
-            $request->getSession()->set('current_daily_report_id', $dailyReport->getId());
-            return $this->render('pages/dailyReport/show.html.twig' ,
-            [
-                'dailyReport' => $dailyReport
-            ]);
+        if ($dailyReport === null) {
+            $dailyReport = new DailyReport();
+            $dailyReport->setDate(new \DateTime());
+            $dailyReport->setClient($this->getUser()->getClient());
+            $dailyReportRepository->save($dailyReport, true);
         }
 
-        // Pas connecté :
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('pages/dailyReport/show.html.twig' , [
+            'dailyReport' => $dailyReport
+        ]);
     }
 
     #[Route('/{id}', name: 'daily_report_show', methods: ['GET'])]
     public function show(Request $request, DailyReport $dailyReport): Response
     {
-        $request->getSession()->set('current_daily_report_id', $dailyReport->getId());
         return $this->render('pages/dailyReport/show.html.twig', [
             'dailyReport' => $dailyReport,
         ]);

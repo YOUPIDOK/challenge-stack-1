@@ -25,14 +25,14 @@
         </div>
             <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
         </section> #}
-        <section class="header row vh-75">
+        <section class="header-section row vh-75">
             <div class="col-md-7 d-flex flex-column justify-content-center align-items-center">
                 <img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
                 <p class="header-description w-75">Améliorez votre santé en surveillant votre activité physique,
                 votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
                 </p>
                 <div class="d-flex justify-content-center">
-                    <button class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Get started</button>
+                    <a href="{{ app.user is null ? path('login') : path('dashboard') }}" class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Commencer maintenant</a>
                 </div>
             </div>
             <div class="col-md-5 d-flex justify-content-center">
@@ -102,14 +102,16 @@
             </p>
         </div>
         </section>
-        <section class="inscription mt-5 mb-5">
-            <h2 class="mt-5">Inscription</h2>
-            <p class="mt-5">Améliorez votre santé et votre condition physique avec MyFitLog. L'inscription est simple et gratuite, alors inscrivez-vous dès aujourd'hui et
-             commencez à améliorer votre santé et votre condition physique.
-            </p>
-            <div class="d-flex justify-content-center mt-4">
-            <button class="btn-header text-white rounded-pill px-4 py-2">M'incrire maintenant</button>
-            </div>
-        </section>
+        {% if app.user is null%}
+            <section class="inscription mt-5 mb-5">
+                <h2 class="mt-5">Inscription</h2>
+                <p class="mt-5">Améliorez votre santé et votre condition physique avec MyFitLog. L'inscription est simple et gratuite, alors inscrivez-vous dès aujourd'hui et
+                    commencez à améliorer votre santé et votre condition physique.
+                </p>
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn-header text-white rounded-pill px-4 py-2">M'incrire maintenant</button>
+                </div>
+            </section>
+        {% endif %}
     </div>
 {% endblock %}

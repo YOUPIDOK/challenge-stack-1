@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-nav px-5">
+<nav class="navbar navbar-expand-lg navbar-dark bg-nav px-5 sticky-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('homepage') }}"><img id="logo" src="{{ asset('app_icon/logo.png') }}" width="150px"></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,17 +10,17 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<img id="img_profile" src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="25" width="25">
-							Fabien
+							{{ app.user.identity }}
 						</a>
 						<ul class="dropdown-menu">
-							<li>
-								<a class="dropdown-item" href="#">Mon profil</a>
+							<li >
+								<a class="dropdown-item" href="{{ path('profile') }}">Mon profil</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">Mon rapport journalier</a>
+								<a class="dropdown-item" href="{{ path('daily_report_show_current') }}">Mon rapport journalier</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">Mon dashboard</a>
+								<a class="dropdown-item" href="{{ path('dashboard') }}">Mon dashboard</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>

@@ -9,7 +9,6 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
-
 class ClientFixtures extends Fixture
 {
     private Generator $faker;

@@ -3,17 +3,16 @@
 namespace App\Fixtures;
 
 use App\Entity\Data\Nutrition;
-use App\Entity\Data\nutrition;
 use App\Entity\Food;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
-
 class NutritionFixtures extends Fixture
 {
     private Generator $faker;
+
     public function __construct()
     {
         $this->faker = Factory::create('fr_FR');

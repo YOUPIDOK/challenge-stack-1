@@ -268,46 +268,4 @@ class Client
         }
         return $this;
     }
-
-    /**
-     * @return Collection<int, DailyReport>
-     */
-    public function getDailyReports(): Collection
-    {
-        return $this->dailyReports;
-    }
-
-    public function addDailyReport(DailyReport $dailyReport): self
-    {
-        if (!$this->dailyReports->contains($dailyReport)) {
-            $this->dailyReports->add($dailyReport);
-            $dailyReport->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDailyReport(DailyReport $dailyReport): self
-    {
-        if ($this->dailyReports->removeElement($dailyReport)) {
-            // set the owning side to null (unless already changed)
-            if ($dailyReport->getClient() === $this) {
-                $dailyReport->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return DailyReport|null
-     */
-    public function getCurrentDailyReport(): ?DailyReport {
-        $dailyReport = $this->dailyReports->first();
-        $today = new DateTime();
-        if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
-            return $dailyReport;
-        }
-        return null;
-    }
 }

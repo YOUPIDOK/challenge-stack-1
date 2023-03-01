@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/navbar_layout.html.twig' %}
 {% block title %}Mon profile{% endblock %}
 {% block body %}
     <div>{{ app.user.client.birthdate | date("d/m/y H:i")}}</div>

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Food;
+use App\Entity\User\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,25 @@ class FoodRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function searchFoodQb(Client $client, ?string $label = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('food')
+            ->where('food.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('food.label', 'ASC');
+
+        if ($label !== null) {
+            $qb
+                ->andWhere('food.label LIKE :label')
+                ->setParameter('label', '%' . $label . '%')
+            ;
+        }
+
+        return $qb;
+
     }
 
 //    /**

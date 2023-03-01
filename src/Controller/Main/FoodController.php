@@ -3,10 +3,13 @@
 namespace App\Controller\Main;
 
 use App\Entity\Food;
-use App\Form\FoodType;
+use App\Form\Food\FoodType;
+use App\Form\Food\SearchFoodType;
 use App\Repository\FoodRepository;
 use App\Security\Main\Voter\FoodVoter;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +21,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class FoodController extends AbstractController
 {
     #[Route('/', name: 'foods', methods: ['GET'])]
-    public function foods(): Response
+    public function foods(FoodRepository $foodRepo, Request $request): Response
     {
-        return $this->render('pages/food/foods.html.twig');
+        $form = $this->createForm(SearchFoodType::class);
+        $form->handleRequest($request);
+
+        $adapter = new QueryAdapter($foodRepo->searchFoodQb($this->getUser()->getClient(), $form->get('label')->getData()));
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(2);
+        $pager->setCurrentPage($request->query->get('page', 1));
+
+        return $this->render('pages/food/foods.html.twig', [
+            'form' => $form->createView(),
+            'pager' => $pager
+        ]);
     }
 
     #[Route('/creer', name: 'food_create', methods: ['GET', 'POST'])]

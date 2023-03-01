@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Food;
 
 use App\Entity\Food;
-use SebastianBergmann\CodeCoverage\Report\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

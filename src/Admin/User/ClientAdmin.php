@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 final class ClientAdmin extends AbstractAdmin
 {
@@ -60,10 +61,11 @@ final class ClientAdmin extends AbstractAdmin
             ->add('birthdate', DateType::class, [
                 'widget' => 'single_text',
                 'constraints' => [
-                    new GreaterThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans'])
+                    new LessThanOrEqual(['value' => new DateTime('-15years'), 'message' => 'Minimum 15 ans']),
+                    new GreaterThanOrEqual(['value' => new DateTime('-150years'), 'message' => 'Maximum 150 ans']),
                 ]
             ])
-            ->add('height')
+            ->add('height', null, ['help' => 'En cm'])
             ;
     }
 }

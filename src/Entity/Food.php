@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Data\Nutrition;
 use App\Entity\User\Client;
 use App\Repository\FoodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -12,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Unique;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
 #[UniqueEntity(fields: ['label', 'client'])]
+#[ORM\Table(name: 'foods')]
 class Food
 {
     #[ORM\Id]
@@ -26,25 +30,33 @@ class Food
     #[NotNull]
     private ?string $label = null;
 
-    #[ORM\Column]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $calories = null;
-
-    #[ORM\Column]
-    #[NotNull]
-    #[Range(min: 0)]
-    private ?int $carbohydrates = null;
+    #[ORM\OneToMany(mappedBy: 'food', targetEntity: Nutrition::class, cascade: ['remove'])]
+    private Collection $nutritions;
 
     #[ORM\Column()]
     #[NotNull]
     #[Range(min: 0)]
-    private ?int $lipids = null;
+    private ?float $calories = null;
 
     #[ORM\Column()]
     #[NotNull]
     #[Range(min: 0)]
-    private ?int $proteins = null;
+    private ?float $carbohydrates = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $lipids = null;
+
+    #[ORM\Column()]
+    #[NotNull]
+    #[Range(min: 0)]
+    private ?float $proteins = null;
+
+    public function __construct()
+    {
+        $this->nutritions = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -80,48 +92,78 @@ class Food
         return $this;
     }
 
-    public function getCalories(): ?int
+    /**
+     * @return Collection<int, Nutrition>
+     */
+    public function getNutritions(): Collection
+    {
+        return $this->nutritions;
+    }
+
+    public function addNutrition(Nutrition $nutrition): self
+    {
+        if (!$this->nutritions->contains($nutrition)) {
+            $this->nutritions->add($nutrition);
+            $nutrition->setFood($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNutrition(Nutrition $nutrition): self
+    {
+        if ($this->nutritions->removeElement($nutrition)) {
+            // set the owning side to null (unless already changed)
+            if ($nutrition->getFood() === $this) {
+                $nutrition->setFood(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCalories(): ?float
     {
         return $this->calories;
     }
 
-    public function setCalories(?int $calories): self
+    public function setCalories(?float $calories): self
     {
         $this->calories = $calories;
 
         return $this;
     }
 
-    public function getCarbohydrates(): ?int
+    public function getCarbohydrates(): ?float
     {
         return $this->carbohydrates;
     }
 
-    public function setCarbohydrates(?int $carbohydrates): self
+    public function setCarbohydrates(?float $carbohydrates): self
     {
         $this->carbohydrates = $carbohydrates;
 
         return $this;
     }
 
-    public function getLipids(): ?int
+    public function getLipids(): ?float
     {
         return $this->lipids;
     }
 
-    public function setLipids(?int $lipids): self
+    public function setLipids(?float $lipids): self
     {
         $this->lipids = $lipids;
 
         return $this;
     }
 
-    public function getProteins(): ?int
+    public function getProteins(): ?float
     {
         return $this->proteins;
     }
 
-    public function setProteins(?int $proteins): self
+    public function setProteins(?float $proteins): self
     {
         $this->proteins = $proteins;
 

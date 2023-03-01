@@ -3,7 +3,13 @@
 namespace App\Entity\User;
 
 use App\Entity\Activity;
+use App\Entity\DailyReport;
+use App\Entity\Data\ActivityTime;
+use App\Entity\Data\Nutrition;
+use App\Entity\Data\SleepTime;
+use App\Entity\Data\Weight;
 use App\Entity\Food;
+use App\Entity\Objective\Objective;
 use App\Repository\User\ClientRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,10 +51,19 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Activity::class, cascade: ['remove'])]
     private Collection $activities;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objective::class, cascade: ['remove'])]
+    private Collection $objectives;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
+    #[ORM\OrderBy(['date' => 'DESC'])]
+    private Collection $dailyReports;
+
     public function __construct()
     {
         $this->food = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->objectives = new ArrayCollection();
+        $this->dailyReports = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -177,5 +192,77 @@ class Client
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Objective>
+     */
+    public function getObjectives(): Collection
+    {
+        return $this->objectives;
+    }
+
+    public function addObjective(Objective $objective): self
+    {
+        if (!$this->objectives->contains($objective)) {
+            $this->objectives->add($objective);
+            $objective->setClient($this);
+        }
+
+        return $this;
+    }
+
+
+    public function removeObjective(Objective $objective): self
+    {
+        if ($this->objectives->removeElement($objective)) {
+            // set the owning side to null (unless already changed)
+            if ($objective->getClient() === $this) {
+                $objective->setClient(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DailyReport>
+     */
+    public function getDailyReports(): Collection
+    {
+        return $this->dailyReports;
+    }
+
+    public function addDailyReport(DailyReport $dailyReport): self
+    {
+        if (!$this->dailyReports->contains($dailyReport)) {
+            $this->dailyReports->add($dailyReport);
+            $dailyReport->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDailyReport(DailyReport $dailyReport): self
+    {
+        if ($this->dailyReports->removeElement($dailyReport)) {
+            // set the owning side to null (unless already changed)
+            if ($dailyReport->getClient() === $this) {
+                $dailyReport->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return DailyReport|null
+     */
+    public function getCurrentDailyReport(): ?DailyReport {
+        $dailyReport = $this->dailyReports->first();
+        $today = new DateTime();
+        if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
+            return $dailyReport;
+        }
+        return null;
     }
 }

@@ -2,6 +2,7 @@
     --bg-nav:#ffffff;
     --font-color: black;
     --blue: rgba(50,98,255,1);
+    --watermelon: rgb(255, 89, 94);
     --blanc: white;
     --dodgerblue: rgba(41, 132,255,1);
     --bluesky: rgba(88, 127, 253, 1);
@@ -11,10 +12,10 @@
     --secondary:#2D3047;
     --light: #F4EBD9;
     --bg-menu_profile: #ffffff;
+
   }
   [data-bs-theme="dark"]{
     --bg-nav: #272729;
     --font-color: white;
     --bg-menu_profile: #2c3e50;
-    // --blue: white;
   }

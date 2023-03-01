@@ -4,12 +4,14 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || "dev");
 }
 
-Encore.setOutputPath("public/build/main")
-    .setPublicPath("/build/main")
-    .addEntry("main", "./assets/main/app.js")
-    .addStyleEntry("login", "./assets/main/styles/pages/login.scss")
+Encore
+    .setOutputPath('public/build/main')
+    .setPublicPath('/build/main' )
+    .addEntry('main', './assets/main/app.js')
+    .addStyleEntry('login', './assets/main/styles/pages/login.scss')
+    .addStyleEntry('home', './assets/main/styles/pages/home.scss')
     .addStyleEntry("dashboard", "./assets/main/styles/pages/dashboard.scss")
-    .enableStimulusBridge("./assets/main/controllers.json")
+    .enableStimulusBridge('./assets/main/controllers.json')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

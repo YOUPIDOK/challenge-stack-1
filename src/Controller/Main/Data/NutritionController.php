@@ -2,8 +2,10 @@
 
 namespace App\Controller\Main\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\Data\Nutrition;
 use App\Form\Data\NutritionType;
+use App\Repository\DailyReportRepository;
 use App\Repository\Data\NutritionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +16,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class NutritionController extends AbstractController
 {
     #[Route('/', name: 'app_main_data_nutrition_index', methods: ['GET'])]
-    public function index(NutritionRepository $nutritionRepository): Response
+    public function index(Request $request, NutritionRepository $nutritionRepository): Response
     {
+        $nutritions = $nutritionRepository->findBy(['dailyReport.client.id' => $request->getUser()->getClient()->getId()]);
         return $this->render('pages/data/nutrition/index.html.twig', [
-            'nutrition' => $nutritionRepository->findAll(),
+            'nutritions' => $nutritions,
         ]);
     }
 
-    #[Route('/new', name: 'app_main_data_nutrition_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, NutritionRepository $nutritionRepository): Response
+    #[Route('/new/{id}', name: 'app_main_data_nutrition_new', methods: ['GET', 'POST'])]
+    public function new(DailyReport $dailyReport,Request $request, NutritionRepository $nutritionRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $nutrition = new Nutrition();
         $form = $this->createForm(NutritionType::class, $nutrition);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $nutritionRepository->save($nutrition, true);
+            $dailyReport->addNutrition($nutrition);
 
-            return $this->redirectToRoute('app_main_data_nutrition_index', [], Response::HTTP_SEE_OTHER);
+            $nutritionRepository->save($nutrition, true);
+            $dailyReportRepository->save($dailyReport, true);
+
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/nutrition/new.html.twig', [

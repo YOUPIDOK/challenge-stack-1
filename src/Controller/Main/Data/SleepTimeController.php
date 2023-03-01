@@ -2,8 +2,10 @@
 
 namespace App\Controller\Main\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\Data\SleepTime;
 use App\Form\Data\SleepTimeType;
+use App\Repository\DailyReportRepository;
 use App\Repository\Data\SleepTimeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +16,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class SleepTimeController extends AbstractController
 {
     #[Route('/', name: 'app_main_data_sleep_time_index', methods: ['GET'])]
-    public function index(SleepTimeRepository $sleepTimeRepository): Response
+    public function index(Request $request, SleepTimeRepository $sleepTimeRepository): Response
     {
+        $sleepTimes = $sleepTimeRepository->findBy(['dailyReport.client.id' => $request->getUser()->getClient()->getId()]);
         return $this->render('pages/data/sleep_time/index.html.twig', [
-            'sleep_times' => $sleepTimeRepository->findAll(),
+            'sleep_times' => $sleepTimes,
         ]);
     }
 
-    #[Route('/new', name: 'app_main_data_sleep_time_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SleepTimeRepository $sleepTimeRepository): Response
+    #[Route('/new/{id}', name: 'app_main_data_sleep_time_new', methods: ['GET', 'POST'])]
+    public function new(DailyReport $dailyReport,Request $request, SleepTimeRepository $sleepTimeRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $sleepTime = new SleepTime();
         $form = $this->createForm(SleepTimeType::class, $sleepTime);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sleepTimeRepository->save($sleepTime, true);
+            $sleepTime->setTimeFromDates();
 
-            return $this->redirectToRoute('app_main_data_sleep_time_index', [], Response::HTTP_SEE_OTHER);
+            $dailyReport->addSleepTime($sleepTime);
+            $sleepTimeRepository->save($sleepTime, true);
+            $dailyReportRepository->save($dailyReport, true);
+
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/sleep_time/new.html.twig', [

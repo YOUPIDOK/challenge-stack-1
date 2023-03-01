@@ -2,8 +2,10 @@
 
 namespace App\Controller\Main\Data;
 
+use App\Entity\DailyReport;
 use App\Entity\Data\Weight;
 use App\Form\Data\WeightType;
+use App\Repository\DailyReportRepository;
 use App\Repository\Data\WeightRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +16,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class WeightController extends AbstractController
 {
     #[Route('/', name: 'app_main_data_weight_index', methods: ['GET'])]
-    public function index(WeightRepository $weightRepository): Response
+    public function index(Request $request, WeightRepository $weightRepository): Response
     {
+        $weights = $weightRepository->findBy(['dailyReport.client.id' => $request->getUser()->getClient()->getId()]);
         return $this->render('pages/data/weight/index.html.twig', [
-            'weights' => $weightRepository->findAll(),
+            'weights' => $weights,
         ]);
     }
 
-    #[Route('/new', name: 'app_main_data_weight_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, WeightRepository $weightRepository): Response
+    #[Route('/new/{id}', name: 'app_main_data_weight_new', methods: ['GET', 'POST'])]
+    public function new(DailyReport $dailyReport,Request $request, WeightRepository $weightRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $weight = new Weight();
         $form = $this->createForm(WeightType::class, $weight);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dailyReport->setWeight($weight);
             $weightRepository->save($weight, true);
+            $dailyReportRepository->save($dailyReport, true);
 
-            return $this->redirectToRoute('app_main_data_weight_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/data/weight/new.html.twig', [

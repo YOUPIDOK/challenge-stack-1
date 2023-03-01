@@ -17,15 +17,11 @@ class WeightController extends AbstractController
     #[Route('/', name: 'app_main_data_weight_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user !== null) {
-            $client = $user->getClient();
+        $client = $this->getUser()->getClient();
 
-            return $this->render('main/data/weight/index.html.twig', [
-                'weights' => $client->getWeights(),
-            ]);
-        }
-        return $this->render('pages/homepage.html.twig');
+        return $this->render('main/data/weight/index.html.twig', [
+            'weights' => $client->getWeights(),
+        ]);
     }
 
     #[Route('/new', name: 'app_main_data_weight_new', methods: ['GET', 'POST'])]
@@ -39,10 +35,8 @@ class WeightController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
-            if ($user !== null && $dailyReport !== null) {
-                $client = $user->getClient();
+            if ($dailyReport !== null) {
+                $client = $this->getUser()->getClient();
                 $weight->setClient($client);
                 $dailyReport->setClient($client);
                 $weight->setDate(new \DateTime());

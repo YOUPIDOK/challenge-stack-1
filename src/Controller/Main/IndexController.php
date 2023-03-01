@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', name: 'index', options: ['sitemap' => true])]
+    #[Route('/dashboard', name: 'index', options: ['sitemap' => true])]
     public function index(): Response
     {
         return $this->render('pages/dashboard.html.twig');

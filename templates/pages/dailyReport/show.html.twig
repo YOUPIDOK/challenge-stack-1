@@ -3,7 +3,7 @@
 {% block title %}Rapport journalier{% endblock %}
 
 {% block body %}
-    <h1>Rapport journalier du {{ dailyReport.date | date('Y-m-d') }}</h1>
+    <h1>Rapport journalier du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
     <a class="btn btn-primary" href="">Nutrition</a>
     <a class="btn btn-primary" href="">Sommeil</a>
     <a class="btn btn-primary" href="">Poid</a>
@@ -12,10 +12,12 @@
 
     <div>
         <h2>Mon récapitulatif de la journée</h2>
-        <div>
-            <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
-            <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier</a>
-        </div>
+        {% if dailyReport.weight is not null%}
+            <div>
+                <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
+                <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier</a>
+            </div>
+        {% endif %}
     </div>
 
     <div>
@@ -74,8 +76,8 @@
             <tbody>
             {% for activity in dailyReport.activityTimes %}
                 <tr>
-                    <td>{{ activity.startAt | date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ activity.endAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ activity.startAt ? activity.startAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ activity.endAt ? activity.endAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ activity.distance }}</td>
                     <td>{{ activity.time }}</td>
                     <td>{{ activity.activity.label }}</td>
@@ -107,8 +109,8 @@
             <tbody>
             {% for sleepTime in dailyReport.sleepTimes %}
                 <tr>
-                    <td>{{ sleepTime.asleepAt | date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ sleepTime.awakeAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ sleepTime.time }}</td>
                     <td>
                         <a href="{{ path('app_main_data_sleep_time_show', {'id': sleepTime.id}) }}">show</a>

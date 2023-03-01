@@ -259,6 +259,9 @@ class Client
      */
     public function getCurrentDailyReport(): ?DailyReport {
         $dailyReport = $this->dailyReports->first();
+        if ($dailyReport === false) {
+            return null;
+        }
         $today = new DateTime();
         if ( date_format($dailyReport->getDate(), 'Y-m-d') === date_format($today, 'Y-m-d')) {
             return $dailyReport;

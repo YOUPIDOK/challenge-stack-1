@@ -25,7 +25,7 @@ class DailyReportController extends AbstractController
             ]);
     }
 
-    #[Route('/', name: 'daily_report_show_current')]
+    #[Route('/current', name: 'daily_report_show_current')]
     public function showOrCreateCurrent(Request $request, DailyReportRepository $dailyReportRepository): Response
     {
         $client = $this->getUser()->getClient();

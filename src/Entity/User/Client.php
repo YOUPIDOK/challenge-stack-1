@@ -303,7 +303,7 @@ class Client
     /**
      * @return Collection<int, Nutrition>
      */
-    public function getNutritions(): Collection
+        public function getNutritions(): Collection
     {
         return $this->nutritions;
     }

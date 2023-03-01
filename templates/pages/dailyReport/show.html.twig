@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rapport journalier{% endblock %}
+
+{% block body %}
+    <h1>Rapport journalier du {{ dailyReport.date | date('Y-m-d') }}</h1>
+    <a class="btn btn-primary" href="">Nutrition</a>
+    <a class="btn btn-primary" href="">Sommeil</a>
+    <a class="btn btn-primary" href="">Poid</a>
+    <a class="btn btn-primary" href="">Activité</a>
+
+
+    <div>
+        <h2>Mon récapitulatif de la journée</h2>
+        <div>
+            <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
+            <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier</a>
+        </div>
+    </div>
+
+    <div>
+        <h2>Nutritions</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Label</th>
+                <th>Poids</th>
+                <th>Food label</th>
+                <th>Calories</th>
+                <th>Glucide</th>
+                <th>Lipide</th>
+                <th>Protein</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for nutrition in dailyReport.nutritions %}
+                <tr>
+                    <td>{{ nutrition.mealType }}</td>
+                    <td>{{ nutrition.foodWeight }}</td>
+                    <td>{{ nutrition.food.label }}</td>
+                    <td>{{ nutrition.food.calories }}</td>
+                    <td>{{ nutrition.food.carbohydrates }}</td>
+                    <td>{{ nutrition.food.lipids }}</td>
+                    <td>{{ nutrition.food.proteins }}</td>
+                    <td>
+                        <a href="{{ path('app_food_show', {'id': nutrition.id}) }}">show</a>
+                        <a href="{{ path('app_food_edit', {'id': nutrition.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas de nutrition ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h2>Acitivtés</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>Distance</th>
+                <th>Temps (minutes)</th>
+                <th>Type</th>
+                <th>Frequence cardiaque</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activity in dailyReport.activityTimes %}
+                <tr>
+                    <td>{{ activity.startAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ activity.endAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ activity.distance }}</td>
+                    <td>{{ activity.time }}</td>
+                    <td>{{ activity.activity.label }}</td>
+                    <td>{{ activity.activity.heartRate }}</td>
+                    <td>
+                        <a href="{{ path('app_main_data_activity_time_show', {'id': activity.id}) }}">show</a>
+                        <a href="{{ path('app_main_data_activity_time_edit', {'id': activity.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas d'activité ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h2>Temps de sommeil</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Commencé le </th>
+                <th>Finis le </th>
+                <th>Temps de sommeil</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sleepTime in dailyReport.sleepTimes %}
+                <tr>
+                    <td>{{ sleepTime.asleepAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.awakeAt | date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ sleepTime.time }}</td>
+                    <td>
+                        <a href="{{ path('app_main_data_sleep_time_show', {'id': sleepTime.id}) }}">show</a>
+                        <a href="{{ path('app_main_data_sleep_time_edit', {'id': sleepTime.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Pas de temps de sommeil ajouté</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+{% endblock %}

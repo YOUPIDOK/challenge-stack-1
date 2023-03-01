@@ -49,7 +49,7 @@ class DailyReportController extends AbstractController
             $request->getSession()->set('current_daily_report_id', $dailyReport->getId());
             return $this->render('pages/dailyReport/show.html.twig' ,
             [
-                'dailyReports' => $dailyReport
+                'dailyReport' => $dailyReport
             ]);
         }
 

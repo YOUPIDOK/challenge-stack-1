@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ActivityTime{% endblock %}
+
+{% block body %}
+    <h1>Create new ActivityTime</h1>
+
+    {{ include('main/data/activity_time/_form.html.twig') }}
+
+    <a href="{{ path('app_main_data_activity_time_index') }}">back to list</a>
+{% endblock %}

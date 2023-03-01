@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Weight{% endblock %}
+
+{% block body %}
+    <h1>Edit Weight</h1>
+
+    {{ include('main/data/weight/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_main_data_weight_index') }}">back to list</a>
+
+    {{ include('main/data/weight/_delete_form.html.twig') }}
+{% endblock %}

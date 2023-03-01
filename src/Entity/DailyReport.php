@@ -39,15 +39,14 @@ class DailyReport
     #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: ActivityTime::class, cascade: ['remove'])]
     private Collection $activityTimes;
 
-    #[ORM\OneToMany(mappedBy: 'dailyReport', targetEntity: Weight::class, cascade: ['remove'])]
-    private Collection $weights;
+    #[ORM\OneToOne(inversedBy: 'dailyReport', cascade: ['persist', 'remove'])]
+    private ?Weight $weight = null;
 
     public function __construct()
     {
         $this->sleepTimes = new ArrayCollection();
         $this->nutritions = new ArrayCollection();
         $this->activityTimes = new ArrayCollection();
-        $this->weights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,32 +168,14 @@ class DailyReport
         return $this;
     }
 
-    /**
-     * @return Collection<int, Weight>
-     */
-    public function getWeights(): Collection
+    public function getWeight(): ?Weight
     {
-        return $this->weights;
+        return $this->weight;
     }
 
-    public function addWeight(Weight $weight): self
+    public function setWeight(?Weight $weight): self
     {
-        if (!$this->weights->contains($weight)) {
-            $this->weights->add($weight);
-            $weight->setDailyReport($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWeight(Weight $weight): self
-    {
-        if ($this->weights->removeElement($weight)) {
-            // set the owning side to null (unless already changed)
-            if ($weight->getDailyReport() === $this) {
-                $weight->setDailyReport(null);
-            }
-        }
+        $this->weight = $weight;
 
         return $this;
     }

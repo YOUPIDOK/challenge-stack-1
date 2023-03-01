@@ -4,6 +4,7 @@ namespace App\Controller\Data;
 
 use App\Entity\Data\Nutrition;
 use App\Form\Data\NutritionType;
+use App\Repository\DailyReportRepository;
 use App\Repository\Data\NutritionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class NutritionController extends AbstractController
 {
     #[Route('/', name: 'app_data_nutrition_index', methods: ['GET'])]
-    public function index(NutritionsRepository $nutritionsRepository): Response
+    public function index(): Response
     {
-        return $this->render('pages/data/nutrition/index.html.twig', [
-            'nutrition' => $nutritionsRepository->findAll(),
-        ]);
+        $user = $this->getUser();
+        if ($user !== null) {
+            $client = $user->getClient();
+
+            return $this->render('pages/data/nutrition/index.html.twig', [
+                'nutrition' => $client->getNutritions(),
+            ]);
+        }
+        return $this->render('pages/homepage.html.twig');
     }
 
     #[Route('/new', name: 'app_data_nutritions_new', methods: ['GET', 'POST'])]
@@ -32,9 +39,14 @@ class NutritionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = $this->getUser()->getClient();
+            $user = $this->getUser();
 
-            if ($dailyReport !== null) {
+            if ($user !== null && $dailyReport !== null) {
+                $client = $user->getClient();
+                $dailyReport->setClient($client);
+                $nutrition->setClient($client);
+                $nutrition->setDate(new \DateTime());
+
                 $dailyReport->addNutrition($nutrition);
                 $nutritionsRepository->save($nutrition, true);
                 $dailyReportRepository->save($dailyReport, true);

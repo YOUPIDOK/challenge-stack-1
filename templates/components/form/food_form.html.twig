@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.label) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-3">{{ form_row(form.calories) }}</div>
+    <div class="col-md-3">{{ form_row(form.carbohydrates) }}</div>
+    <div class="col-md-3">{{ form_row(form.lipids) }}</div>
+    <div class="col-md-3">{{ form_row(form.proteins) }}</div>
+</div>
+<a class="btn btn-primary me-2" href="{{ path('foods') }}">Retour</a>
+<button class="btn btn-outline-primary">{{ btn_label }}</button>
+{{ form_end(form) }}

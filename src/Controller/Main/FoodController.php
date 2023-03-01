@@ -5,79 +5,76 @@ namespace App\Controller\Main;
 use App\Entity\Food;
 use App\Form\FoodType;
 use App\Repository\FoodRepository;
+use App\Security\Main\Voter\FoodVoter;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/food')]
+#[Route('nourritures')]
+#[IsGranted('ROLE_CLIENT')]
 class FoodController extends AbstractController
 {
-    #[Route('/', name: 'app_food_index', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/', name: 'foods', methods: ['GET'])]
+    public function foods(): Response
     {
-        $client = $this->getUser()->getClient();
-
-        return $this->render('food/index.html.twig', [
-            'food' => $client->getFood(),
-        ]);
+        return $this->render('pages/food/foods.html.twig');
     }
 
-    #[Route('/new', name: 'app_food_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, FoodRepository $foodRepository): Response
+    #[Route('/creer', name: 'food_create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
-        $food = new Food();
+        $food = (new Food())->setClient($this->getUser()->getClient());
         $form = $this->createForm(FoodType::class, $food);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = $this->getUser()->getClient();
-            $food->setClient($client);
+            $em->persist($food);
+            $em->flush();
 
-            $foodRepository->save($food, true);
+            $this->addFlash('success', 'La nourriture a bien été ajoutée.');
 
-            return $this->redirectToRoute('app_food_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('foods');
         }
 
-        return $this->renderForm('food/new.html.twig', [
+        return $this->renderForm('pages/food/create.html.twig', [
             'food' => $food,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
-    #[Route('/{id}', name: 'app_food_show', methods: ['GET'])]
-    public function show(Food $food): Response
+    #[Route('/modifier/{id}', name: 'food_update', methods: ['GET', 'POST'])]
+    public function update(Request $request, Food $food, EntityManagerInterface $em): Response
     {
-        return $this->render('food/show.html.twig', [
-            'food' => $food,
-        ]);
-    }
+        $this->denyAccessUnlessGranted(FoodVoter::ACCESS, $food);
 
-    #[Route('/{id}/edit', name: 'app_food_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Food $food, FoodRepository $foodRepository): Response
-    {
         $form = $this->createForm(FoodType::class, $food);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $foodRepository->save($food, true);
+            $em->flush();
 
-            return $this->redirectToRoute('app_food_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'La nourriture a bien été modifiée.');
         }
 
-        return $this->renderForm('food/edit.html.twig', [
+        return $this->renderForm('pages/food/update.html.twig', [
             'food' => $food,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
-    #[Route('/{id}', name: 'app_food_delete', methods: ['POST'])]
-    public function delete(Request $request, Food $food, FoodRepository $foodRepository): Response
+    #[Route('/supprimer/{id}', name: 'food_delete')]
+    public function delete(Food $food, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$food->getId(), $request->request->get('_token'))) {
-            $foodRepository->remove($food, true);
-        }
+        $this->denyAccessUnlessGranted(FoodVoter::ACCESS, $food);
 
-        return $this->redirectToRoute('app_food_index', [], Response::HTTP_SEE_OTHER);
+        $em->remove($food);
+        $em->flush();
+
+        $this->addFlash('success', 'La nourriture a bien été supprimée.');
+
+        return $this->redirectToRoute('foods',);
     }
 }

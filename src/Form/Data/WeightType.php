@@ -13,6 +13,7 @@ class WeightType extends AbstractType
     {
         $builder
             ->add('weight')
+            ->add('dailyReport')
         ;
     }
 

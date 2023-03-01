@@ -14,6 +14,8 @@ class SleepTimeType extends AbstractType
         $builder
             ->add('asleepAt')
             ->add('awakeAt')
+            ->add('time')
+            ->add('dailyReport')
         ;
     }
 

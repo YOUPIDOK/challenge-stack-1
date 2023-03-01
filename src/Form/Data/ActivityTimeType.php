@@ -15,7 +15,9 @@ class ActivityTimeType extends AbstractType
             ->add('startAt')
             ->add('endAt')
             ->add('distance')
+            ->add('time')
             ->add('activity')
+            ->add('dailyReport')
         ;
     }
 

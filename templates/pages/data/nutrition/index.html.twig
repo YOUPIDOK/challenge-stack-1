@@ -10,7 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>MealType</th>
-                <th>Date</th>
                 <th>FoodWeight</th>
                 <th>actions</th>
             </tr>
@@ -20,20 +19,19 @@
             <tr>
                 <td>{{ nutrition.id }}</td>
                 <td>{{ nutrition.mealType }}</td>
-                <td>{{ nutrition.date ? nutrition.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ nutrition.foodWeight }}</td>
                 <td>
-                    <a href="{{ path('app_data_nutrition_show', {'id': nutrition.id}) }}">show</a>
-                    <a href="{{ path('app_data_nutrition_edit', {'id': nutrition.id}) }}">edit</a>
+                    <a href="{{ path('app_main_data_nutrition_show', {'id': nutrition.id}) }}">show</a>
+                    <a href="{{ path('app_main_data_nutrition_edit', {'id': nutrition.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_data_nutrition_new') }}">Create new</a>
+    <a href="{{ path('app_main_data_nutrition_new') }}">Create new</a>
 {% endblock %}

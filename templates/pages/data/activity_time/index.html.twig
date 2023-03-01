@@ -11,8 +11,8 @@
                 <th>Id</th>
                 <th>StartAt</th>
                 <th>EndAt</th>
-                <th>Temps</th>
                 <th>Distance</th>
+                <th>Time</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,8 +22,8 @@
                 <td>{{ activity_time.id }}</td>
                 <td>{{ activity_time.startAt ? activity_time.startAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ activity_time.endAt ? activity_time.endAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sleep_time.time }}</td>
                 <td>{{ activity_time.distance }}</td>
+                <td>{{ activity_time.time }}</td>
                 <td>
                     <a href="{{ path('app_main_data_activity_time_show', {'id': activity_time.id}) }}">show</a>
                     <a href="{{ path('app_main_data_activity_time_edit', {'id': activity_time.id}) }}">edit</a>
@@ -31,7 +31,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

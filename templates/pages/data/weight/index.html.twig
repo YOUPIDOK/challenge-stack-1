@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Date</th>
                 <th>Weight</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +17,6 @@
         {% for weight in weights %}
             <tr>
                 <td>{{ weight.id }}</td>
-                <td>{{ weight.date ? weight.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ weight.weight }}</td>
                 <td>
                     <a href="{{ path('app_main_data_weight_show', {'id': weight.id}) }}">show</a>
@@ -27,7 +25,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

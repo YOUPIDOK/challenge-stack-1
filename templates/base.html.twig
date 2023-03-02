@@ -11,13 +11,14 @@
 		{% block stylesheets %}{% endblock %}
 		{{ encore_entry_script_tags('main', null, 'main')  }}
 		{% block javascripts %}{% endblock %}
+		<meta name="turbo-cache-control" content="no-cache">
 		<link rel="manifest" href="/manifest.webmanifest">
 	</head>
 	<body>
 		<main>
-			<div class="sticky">
+			<div class="sticky" data-controller="components--darkmod">
 				{% block main_body %}{% endblock %}
-				</div>
+			</div>
 			</main>
 			{% include "partials/_footer.html.twig" %}
 			{% block modals %}{% endblock %}

@@ -31,8 +31,8 @@ class FoodController extends AbstractController
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($request->query->get('page', 1));
 
-        return $this->render('pages/food/foods.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('pages/food/foods.html.twig', [
+            'form' => $form,
             'pager' => $pager
         ]);
     }
@@ -71,6 +71,9 @@ class FoodController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'La nourriture a bien été modifiée.');
+
+            return $this->redirectToRoute('foods');
+
         }
 
         return $this->renderForm('pages/food/update.html.twig', [

@@ -34,9 +34,9 @@ class DailyReportController extends AbstractController
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($request->query->get('page', 1));
 
-        return $this->render('pages/dailyReport/index.html.twig', [
+        return $this->renderForm('pages/dailyReport/index.html.twig', [
             'pager' => $pager,
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 

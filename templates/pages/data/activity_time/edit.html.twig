@@ -6,8 +6,6 @@
 {% block body %}
 	<h1>Modification d'une Activité</h1>
 
-	{{ include('pages/data/activity_time/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+	{{ include('pages/data/activity_time/_form.html.twig', {'button_label': 'Modifier'}) }}
 
 {% endblock %}

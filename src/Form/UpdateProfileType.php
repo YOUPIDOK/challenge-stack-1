@@ -41,7 +41,7 @@ class UpdateProfileType extends AbstractType
             'required' => true,
         ]);
 
-        $builder->add('gender', ChoiceType::class, [
+        $builder->add('gender', SelectChoicesType::class, [
             'label' => 'Genre',
             'disabled' => true,
             'choices' => GenderEnum::getChoices()

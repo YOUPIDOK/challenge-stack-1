@@ -33,8 +33,8 @@ class ObjectiveController extends AbstractController
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($request->query->get('page', 1));
 
-        return $this->render('pages/objective/index.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('pages/objective/index.html.twig', [
+            'form' => $form,
             'pager' => $pager
         ]);
     }

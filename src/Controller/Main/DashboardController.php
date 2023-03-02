@@ -41,14 +41,14 @@ class DashboardController extends AbstractController
         $eatCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::EAT_CALORIES, 'Apport calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
         $spentCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::SPENT_CALORIES, 'Dépense calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
 
-        return $this->render('pages/dashboard.html.twig', [
+        return $this->renderForm('pages/dashboard.html.twig', [
             'client' => $client,
             'weight' => $weight,
             'weightChart' => $weightChart,
             'sleepTimeChart' => $sleepTimeChart,
             'eatCaloriesChart' => $eatCaloriesChart,
             'spentCaloriesChart' => $spentCaloriesChart,
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 }

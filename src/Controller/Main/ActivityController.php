@@ -31,8 +31,8 @@ class ActivityController extends AbstractController
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($request->query->get('page', 1));
 
-        return $this->render('pages/activity/activities.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('pages/activity/activities.html.twig', [
+            'form' => $form,
             'pager' => $pager
         ]);
     }
@@ -71,6 +71,8 @@ class ActivityController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'L\'activité a bien été modifiée.');
+
+            return $this->redirectToRoute('activities');
         }
 
         return $this->renderForm('pages/activity/update.html.twig', [

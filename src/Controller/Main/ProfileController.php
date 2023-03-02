@@ -55,10 +55,12 @@ class ProfileController extends AbstractController
 
             $this->addFlash('success', 'Votre profil a bien été modifié.');
             $em->flush();
+
+            return $this->redirectToRoute('profile');
         }
 
-        return $this->render('pages/profile/profile_update.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('pages/profile/profile_update.html.twig', [
+            'form' => $form,
             'weight' => $weight
         ]);
     }

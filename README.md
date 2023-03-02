@@ -1,20 +1,21 @@
 # Challenge stack 1
 > https://challenge-stack-1.pidok-server.fr
 ## Documentation
-### Requirement
+### Exigences
 * PHP ``8.1``
 * Node ``16``
-### Install
+### Installation
+Copier le fichier `.env` en `.env.local` et odifier la ligne `DATABASE_URL="mysql://root:root@127.0.0.1:3306/forum"` pour correspondre a vos infos de BDD
 ```shell
 composer install
 php bin/console doctrine:database:create
-php bin/console doctrine:schema:update --force
+php bin/console doctrine:migrations:migrate       # ou :  php bin/console doc:sch:up -f   
 php bin/console doctrine:fixtures:load            # Peut être un peu long à cause du hash des passwords et de la masse de données généré
 yarn install
 yarn build
 ```
-### Commands
-#### Tool
+### Commandes
+#### Outils
 ```shell
 php bin/console user:create # Create user
 ```

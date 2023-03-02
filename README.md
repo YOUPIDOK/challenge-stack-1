@@ -25,6 +25,8 @@ php bin/console user:create # Create user
 - Super admin
     - email : admin@mail.fr
     - mot de passe : password
+    - Lien de connexion : https://challenge-stack-1.pidok-server.fr/admin/login
 - Client
     - email : client1@mail.fr
     - mot de passe : password
+    - Lien de connexion : https://challenge-stack-1.pidok-server.fr/connexion

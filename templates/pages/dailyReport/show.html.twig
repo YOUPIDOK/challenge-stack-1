@@ -110,10 +110,10 @@
 					<tr>
 						<th scope="row">{{ nutrition.mealType }}</th>
 						<td>{{ nutrition.food.label }}</td>
-						<td>{{ nutrition.food.calories }}</td>
-						<td>{{ nutrition.food.carbohydrates }}</td>
-						<td>{{ nutrition.food.lipids }}</td>
-						<td>{{ nutrition.food.proteins }}</td>
+						<td>{{ nutrition.food.calories / 100 * nutrition.foodWeight }}</td>
+						<td>{{ nutrition.food.carbohydrates / 100 * nutrition.foodWeight  }}</td>
+						<td>{{ nutrition.food.lipids / 100 * nutrition.foodWeight  }}</td>
+						<td>{{ nutrition.food.proteins / 100 * nutrition.foodWeight  }}</td>
 						<td>{{ nutrition.foodWeight }}</td>
 						<td>
 							<a href="{{ path('app_main_data_nutrition_edit', {id: nutrition.id}) }}">
@@ -150,9 +150,9 @@
 			<tbody>
 				{% for activity in dailyReport.activityTimes %}
 					<tr>
-						<th scope="row">{{ activity.startAt ? activity.startAt|date('d/m/Y H:i:s') : '' }}</th>
-						<td>{{ activity.endAt ? activity.endAt|date('') : '' }}</td>
-						<td>{{ activity.distance }}</td>
+			 				<th scope="row">{{ activity.startAt ? activity.startAt|date('d/m/Y H:i:s') : '' }}</th>
+						<td>{{ activity.endAt ? activity.endAt|date('d/m/Y H:i:s') : '' }}</td>
+						<td>{{ activity.distance is null ? '' : activity.distance ~ ' m' }} </td>
 						<td>{{ activity.time }}</td>
 						<td>{{ activity.activity.label }}</td>
 						<td>{{ activity.activity.heartRate }}</td>

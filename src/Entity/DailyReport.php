@@ -50,7 +50,7 @@ class DailyReport
     private ?float $totalCaloriesSpent = 0;
 
     #[ORM\Column]
-    private ?float $totalCaloriesEat = 0;
+    private ?float  $totalCaloriesEat = 0;
 
     public function __construct()
     {
@@ -94,39 +94,6 @@ class DailyReport
     public function getSleepTimes(): Collection
     {
         return $this->sleepTimes;
-    }
-
-    public function getSpentCalories(): int
-    {
-        if ($this->spentCalories === null) {
-            $this->spentCalories = 0;
-            /** @Var ActivityTime $activityTime */
-            foreach ($this->activityTimes as $activityTime) {
-//                $this->spentCalories += $activityTime->get;
-            }
-        }
-
-        return $this->spentCalories;
-    }
-
-    public function getEatCalories(): int
-    {
-        if ($this->eatCalories === null)  {
-            $this->eatCalories = 0;
-            /** @Var Nutrition $nutrition */
-            foreach ($this->nutritions as $nutrition) {
-                $this->eatCalories += $nutrition->getFood()->getCalorieByGramme() * $nutrition->getFoodWeight();
-            }
-        }
-
-        return $this->eatCalories;
-    }
-
-    public function getDifferenceCalories(): int
-    {
-        if ($this->differenceCalories === null) $this->differenceCalories = $this->getEatCalories() - $this->getSpentCalories();
-
-        return $this->differenceCalories;
     }
 
     public function updateDailyNutrition(): void

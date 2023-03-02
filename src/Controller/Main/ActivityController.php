@@ -91,6 +91,6 @@ class ActivityController extends AbstractController
 
         $this->addFlash('success', "L'activité a bien été supprimée.");
 
-        return $this->redirectToRoute('foods',);
+        return $this->redirectToRoute('activities',);
     }
 }

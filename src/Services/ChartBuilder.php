@@ -75,7 +75,7 @@ class ChartBuilder
 
     public function isValid()
     {
-        return count($this->data) > 0;
+        return count($this->data) > 1;
     }
 
 

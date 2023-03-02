@@ -24,5 +24,6 @@ class NutritionEvent
         $dailyReport =  $nutrition->getDailyReport();
         $event->getObjectManager()->refresh($dailyReport);
         $dailyReport->updateDailyNutrition();
+        $event->getObjectManager()->flush();
     }
 }

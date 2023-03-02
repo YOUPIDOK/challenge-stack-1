@@ -22,10 +22,10 @@ class FoodType extends AbstractType
                 'label' => 'Calories',
                 'required' => true,
                 'scale' => 2,
-                'help' => 'En kcal pour 100g'
+                'help' => 'En Kcal pour 100g'
             ])
             ->add('carbohydrates', NumberType::class, [
-                'label' => 'Glucide',
+                'label' => 'Glucides',
                 'required' => true,
                 'scale' => 2,
                 'help' => 'Pour 100g'
@@ -41,8 +41,7 @@ class FoodType extends AbstractType
                 'required' => true,
                 'scale' => 2,
                 'help' => 'Pour 100g'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

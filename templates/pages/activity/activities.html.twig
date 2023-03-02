@@ -24,8 +24,9 @@
 			<thead>
 				<tr>
 					<th scope="col">Activité</th>
-					<th scope="col">Fréquence cardiaque par minute</th>
-					<th scope="col">Se mesure en distance</th>
+					<th scope="col">Fréquence cardiaque</th>
+					<th scope="col">Distance
+					</th>
 					<th scope="col">Actions</th>
 				</tr>
 			</thead>
@@ -34,7 +35,13 @@
 					<tr>
 						<th scope="row">{{ activity.label }}</th>
 						<td>{{ activity.heartRate }}/min</td>
-						<td>{{ activity.isDistance }}</td>
+						<td>
+							{% if activity.isDistance == 1 %}
+								Oui
+							{% else %}
+								Non
+							{% endif %}
+						</td>
 						<td>
 							<a href="{{ path('activity_update', {id: activity.id}) }}">
 								<i class="fa-solid fa-pen-to-square text-primary"></i>

@@ -1,12 +1,13 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}Edit Nutrition{% endblock %}
+{% block title %}Modification Aliment - Repas
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Nutrition</h1>
+	<h1>Modification Aliment - Repas</h1>
 
-    {{ include('pages/data/nutrition/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('pages/data/nutrition/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+	<a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 
 {% endblock %}

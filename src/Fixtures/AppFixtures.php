@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
     {
         $this->faker = Factory::create('fr_FR');
         $this->today = new DateTime('now');
-        $this->todayFormated = ( new DateTime('now'))->format('Y-m-d');
+        $this->todayFormated = (new DateTime('now'))->format('Y-m-d');
         $this->commonActivities = new ArrayCollection();
         $this->commonFoods = new ArrayCollection();
         $this->genders = [GenderEnum::MAN, GenderEnum::WOMAN, GenderEnum::NON_BINARY];
@@ -64,31 +64,32 @@ class AppFixtures extends Fixture
     private function commonActivities(): void
     {
         $activities = [
-          ['label' => 'Tennis', 'heartRate' => 160, 'isDistance' => false],
-          ['label' => 'Football', 'heartRate' => 130, 'isDistance' => false],
-          ['label' => 'Course à pied', 'heartRate' => 140, 'isDistance' => true],
-          ['label' => 'Escalade', 'heartRate' => 150, 'isDistance' => false],
-          ['label' => 'Judo', 'heartRate' => 150, 'isDistance' => false],
-          ['label' => 'Boxe', 'heartRate' => 180, 'isDistance' => false],
-          ['label' => 'Basket', 'heartRate' => 170, 'isDistance' => false],
-          ['label' => 'Natation', 'heartRate' => 160, 'isDistance' => true],
-          ['label' => 'Velo', 'heartRate' => 150, 'isDistance' => true],
+            ['label' => 'Tennis', 'heartRate' => 160, 'isDistance' => false],
+            ['label' => 'Football', 'heartRate' => 130, 'isDistance' => false],
+            ['label' => 'Course à pied', 'heartRate' => 140, 'isDistance' => true],
+            ['label' => 'Escalade', 'heartRate' => 150, 'isDistance' => false],
+            ['label' => 'Judo', 'heartRate' => 150, 'isDistance' => false],
+            ['label' => 'Boxe', 'heartRate' => 180, 'isDistance' => false],
+            ['label' => 'Basket', 'heartRate' => 170, 'isDistance' => false],
+            ['label' => 'Natation', 'heartRate' => 160, 'isDistance' => true],
+            ['label' => 'Velo', 'heartRate' => 150, 'isDistance' => true],
         ];
 
         foreach ($activities as $activityData) {
-           $activity = (new Activity())
-            ->setLabel($activityData['label'])
-            ->setHeartRate($activityData['heartRate'])
-            ->setIsDistance($activityData['isDistance']);
+            $activity = (new Activity())
+                ->setLabel($activityData['label'])
+                ->setHeartRate($activityData['heartRate'])
+                ->setIsDistance($activityData['isDistance']);
 
-           $this->manager->persist($activity);
-           $this->commonActivities->add($activity);
+            $this->manager->persist($activity);
+            $this->commonActivities->add($activity);
         }
 
         $this->manager->flush();
     }
 
-    private function objectives(Client $client, int $number): void {
+    private function objectives(Client $client, int $number): void
+    {
         $type = $this->objectivesType[array_rand($this->objectivesType)];
         $objective = (new Objective())
             ->setClient($client)
@@ -96,16 +97,16 @@ class AppFixtures extends Fixture
             ->setType($type)
             ->setStartAt($this->faker->dateTimeBetween('-1 years', '+1 month'));
 
-            if ($type === 'AVERAGE_HOUR_SLEEP_PER_DAY') {
-                $objective->setObjectiveValue($this->faker->numberBetween(1, 24));
-            } else {
-                $objective->setObjectiveValue($this->faker->numberBetween(0, 400));
-            }
-            if ($number % 3 === 0) {
-                $objective->setEndAt(null);
-            } else {
-                $objective->setEndAt($this->faker->dateTimeBetween('+2 month', '+1 year'));
-            }
+        if ($type === 'AVERAGE_HOUR_SLEEP_PER_DAY') {
+            $objective->setObjectiveValue($this->faker->numberBetween(1, 24));
+        } else {
+            $objective->setObjectiveValue($this->faker->numberBetween(0, 400));
+        }
+        if ($number % 3 === 0) {
+            $objective->setEndAt(null);
+        } else {
+            $objective->setEndAt($this->faker->dateTimeBetween('+2 month', '+1 year'));
+        }
 
         $this->manager->persist($objective);
         $this->manager->flush();
@@ -114,7 +115,7 @@ class AppFixtures extends Fixture
     private function commonFoods(): void
     {
         $foodLabels = [
-            'Chocolat', 'Champignon', 'Carotte', 'Saumon' , 'Miel', 'Pain', 'Fromage de chèvre', 'Poire', 'Steack haché', 'Pates', 'Riz'
+            'Chocolat', 'Champignon', 'Carotte', 'Saumon', 'Miel', 'Pain', 'Fromage de chèvre', 'Poire', 'Steack haché', 'Pâtes', 'Riz'
         ];
 
         foreach ($foodLabels as $foodLabel) {
@@ -168,10 +169,9 @@ class AppFixtures extends Fixture
     private function client(User $user): void
     {
         $client = (new Client())
-            ->setHeight(random_int(145,205))
+            ->setHeight(random_int(145, 205))
             ->setBirthdate($this->faker->dateTimeBetween(new DateTime('now -60 years'), new DateTime('now -16 years')))
-            ->setRegisteredAt(new DateTime('now -8months'))
-        ;
+            ->setRegisteredAt(new DateTime('now -8months'));
 
         $user->setClient($client);
 
@@ -188,8 +188,8 @@ class AppFixtures extends Fixture
         $dailyReportDate = $client->getRegisteredAt();
         $weight = random_int(40, 150);
 
-        while($dailyReportDate->format('Y-m-d') != $this->todayFormated) {
-            switch (random_int(0,2)) {
+        while ($dailyReportDate->format('Y-m-d') != $this->todayFormated) {
+            switch (random_int(0, 2)) {
                 case 0:
                     $weight += 0.4; // Le client a grossi
                     break;
@@ -215,7 +215,7 @@ class AppFixtures extends Fixture
             ->setDate($date);
 
         // Poids
-        $weight = random_int(0,5) > 1 ? $weight : null; // Est ce que le client a penser à saisir sont poid ?
+        $weight = random_int(0, 5) > 1 ? $weight : null; // Est ce que le client a penser à saisir sont poid ?
         if ($weight !== null) {
             $weight = (new Weight())->setWeight($weight);
             $dailyReport->setWeight($weight);
@@ -236,7 +236,7 @@ class AppFixtures extends Fixture
         }
 
         // Nuit de sommeille
-        if (random_int(0,5) > 1) { // Est ce que le client a pensé à saisir son temps de someille
+        if (random_int(0, 5) > 1) { // Est ce que le client a pensé à saisir son temps de someille
             $this->clientSleepTime($dailyReport);
         }
 
@@ -263,9 +263,9 @@ class AppFixtures extends Fixture
         $activityTime = (new ActivityTime())
             ->setDailyReport($dailyReport)
             ->setActivity($activity)
-            ->setStartAt((clone $dailyReportDate)->modify('+' . 600 + $midActivityDuration . ' minutes' ))
-            ->setEndAt((clone $dailyReportDate)->modify('+' . 600 + $midActivityDuration * 2 . ' minutes' ))
-            ->setDistance($activity->isIsDistance() ? random_int(1, $midActivityDuration * 100): null);
+            ->setStartAt((clone $dailyReportDate)->modify('+' . 600 + $midActivityDuration . ' minutes'))
+            ->setEndAt((clone $dailyReportDate)->modify('+' . 600 + $midActivityDuration * 2 . ' minutes'))
+            ->setDistance($activity->isIsDistance() ? random_int(1, $midActivityDuration * 100) : null);
 
         $this->manager->persist($activityTime);
         $this->manager->flush();
@@ -279,7 +279,7 @@ class AppFixtures extends Fixture
         $nutrition = (new Nutrition())
             ->setDailyReport($dailyReport)
             ->setFood($foods[0])
-            ->setFoodWeight(random_int(50,1000))
+            ->setFoodWeight(random_int(50, 1000))
             ->setMealType($this->mealTypes[0]);
 
         $this->manager->persist($nutrition);
@@ -288,7 +288,7 @@ class AppFixtures extends Fixture
 
     private function clientSleepTime(DailyReport $dailyReport)
     {
-        $midSleepTime = random_int(210,240);
+        $midSleepTime = random_int(210, 240);
         if ($midSleepTime % 2 === 1) $midSleepTime -= 1;
 
         $asleepAt = ((clone $dailyReport->getDate())->modify('-' . $midSleepTime . ' minutes'));
@@ -309,7 +309,7 @@ class AppFixtures extends Fixture
             ->setClient($client)
             ->setLabel('Mon activité ' . $number)
             ->setHeartRate(random_int(140, 180))
-            ->setIsDistance(random_int(0,1) === 1);
+            ->setIsDistance(random_int(0, 1) === 1);
 
         $this->manager->persist($activity);
         $this->manager->flush();

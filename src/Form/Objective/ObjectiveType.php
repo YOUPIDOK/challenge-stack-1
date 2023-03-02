@@ -58,11 +58,11 @@ class ObjectiveType extends AbstractType
                 ]
             ])
             ->add('label', TextType::class, [
-                'label' => 'Nom de votre objectif',
+                'label' => 'Votre objectif',
                 'required' => true
             ])
             ->add('type', SelectChoicesType::class, [
-                'label' => 'Votre objectif',
+                'label' => 'Sélectionner le type de votre objectif',
                 'required' => true,
                 'choices' => ObjectiveTypeEnum::getChoices()
             ])
@@ -71,7 +71,7 @@ class ObjectiveType extends AbstractType
                 'required' => true,
                 'scale' => 2,
                 'constraints' => [
-                    new Range( ['min' => 0]),
+                    new Range(['min' => 0]),
                     new Callback([
                         'callback' => static function (?int $value, ExecutionContextInterface $context) {
                             /** @var Objective $objective */
@@ -80,7 +80,7 @@ class ObjectiveType extends AbstractType
                                 case 'AVERAGE_HOUR_SLEEP_PER_DAY':
                                     if ($value > 24) {
                                         $context
-                                            ->buildViolation('L\'heure de sommeil moyenne ne peut pas être supérieur à 24h')
+                                            ->buildViolation('L\'heure de sommeil moyenne ne peut pas être supérieure à 24h')
                                             ->atPath('objectiveValue')
                                             ->addViolation();
                                     }
@@ -88,8 +88,7 @@ class ObjectiveType extends AbstractType
                         }
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

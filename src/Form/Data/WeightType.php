@@ -18,12 +18,11 @@ class WeightType extends AbstractType
                 'label' => 'Poids',
                 'required' => true,
                 'scale' => 2,
-                'help' => 'En kilo',
+                'help' => 'En kilos',
                 'constraints' => [
-                    new Range( ['min' => 0, 'max' => 400])
+                    new Range(['min' => 0, 'max' => 400])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

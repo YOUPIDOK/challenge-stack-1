@@ -1,11 +1,12 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}New Nutrition{% endblock %}
+{% block title %}Ajout Alimentation
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Nutrition</h1>
+	<h1>Ajout Aliment - Repas</h1>
 
-    {{ include('pages/data/nutrition/_form.html.twig') }}
+	{{ include('pages/data/nutrition/_form.html.twig') }}
 
-    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+	<a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 {% endblock %}

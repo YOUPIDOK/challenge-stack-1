@@ -7,7 +7,7 @@
 	<h1>Vos Objectifs</h1>
 
 	<div class="my-2">
-	<a class="btn btn-primary mb-2" href="{{ path('app_main_objective_new') }}">Ajouter</a>
+		<a class="btn btn-primary mb-2" href="{{ path('app_main_objective_new') }}">Ajouter</a>
 		{{ form_start(form) }}
 		<div class="input-group">
 			{{ form_widget(form.label) }}
@@ -16,7 +16,7 @@
 			</button>
 		</div>
 		<div class="mt-3">
-			<span>Selectionner la periode</span>
+			<span>Sélectionner la période</span>
 			<div class="input-group">
 				{{ form_widget(form.start) }}
 				{{ form_widget(form.end) }}
@@ -35,11 +35,11 @@
 				<tr>
 					<th scope="col">Nom</th>
 					<th scope="col">Type</th>
-					<th scope="col">Valeur</th>
+					<th scope="col">Objectif</th>
 					<th scope="col">Date de début</th>
 					<th scope="col">Date de fin</th>
 					<th scope="col">Actif</th>
-					<th scope="col">actions</th>
+					<th scope="col">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -73,7 +73,7 @@
 					</tr>
 				{% else %}
 					<tr>
-						<td colspan="8">Vous n'avez pas d'objectif</td>
+						<td colspan="8">Vous n'avez pas d'objectifs</td>
 					</tr>
 				{% endfor %}
 			</tbody>

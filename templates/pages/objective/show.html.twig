@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Fin de l'objectif</th>
-                <td>{{ objective.endAt ? objective.endAt|date('d/m/Y') : '' }}</td>
+                <td>{{ objective.endAt ? objective.endAt|date('d/m/Y') : 'Pas de fin pour cet objectif' }}</td>
             </tr>
             <tr>
                 <th>Nom de l'objectif</th>
@@ -53,7 +53,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Voulez vous vraiment supprimer cet objectif ?
+                        Voulez vous vraiment supprimer cet objectif : {{ objective.label }} ?
                     </div>
                     <div class="modal-footer">
                         <a href="{{ path('app_main_objective_delete', {id: objective.id}) }}" class="text-danger">Supprimer</a>

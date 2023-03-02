@@ -3,10 +3,14 @@
 namespace App\Controller\Main;
 
 use App\Entity\Objective\Objective;
+use App\Form\Activity\SearchActivityType;
 use App\Form\Objective\ObjectiveType;
+use App\Form\Objective\SearchObjectiveType;
 use App\Repository\Objective\ObjectiveRepository;
 use App\Security\Main\Voter\DailyReportVoter;
 use App\Security\Main\Voter\ObjectiveVoter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +22,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class ObjectiveController extends AbstractController
 {
     #[Route('/', name: 'app_main_objective_index', methods: ['GET'])]
-    public function index(ObjectiveRepository $objectiveRepository): Response
+    public function index(Request $request, ObjectiveRepository $objectiveRepository): Response
     {
-        $myObjectives = $objectiveRepository->findBy(['client' => $this->getUser()->getClient()]);
+        $form = $this->createForm(SearchObjectiveType::class);
+        $form->handleRequest($request);
+
+        $adapter = new QueryAdapter($objectiveRepository->searchObjectifQb($this->getUser()->getClient(), $form->get('label')->getData(), $form->get('start')->getData(), $form->get('end')->getData()));
+        $pager = new Pagerfanta($adapter);
+
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($request->query->get('page', 1));
+
         return $this->render('pages/objective/index.html.twig', [
-            'myObjectives' => $myObjectives,
+            'form' => $form->createView(),
+            'pager' => $pager
         ]);
     }
 

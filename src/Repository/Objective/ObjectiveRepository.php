@@ -3,6 +3,7 @@
 namespace App\Repository\Objective;
 
 use App\Entity\Objective\Objective;
+use App\Entity\User\Client;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,6 +50,37 @@ class ObjectiveRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function searchObjectifQb(Client $client, ?string $label = null, ?DateTime $start = null, ?DateTime $end = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('obj')
+            ->where('obj.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('obj.endAt', 'ASC');
+
+        if ($label !== null) {
+            $qb
+                ->andWhere('obj.label LIKE :label')
+                ->setParameter('label', '%' . $label . '%')
+            ;
+        }
+
+        if ($start !== null) {
+            $qb
+                ->andWhere('obj.startAt >= :start')
+                ->setParameter('start', $start);
+        }
+
+        if ($end !== null) {
+            $qb
+                ->andWhere('obj.endAt <= :end')
+                ->setParameter('end', $end);
+        }
+
+        return $qb;
+
     }
 
 

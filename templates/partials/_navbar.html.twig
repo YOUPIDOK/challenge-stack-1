@@ -7,6 +7,15 @@
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				{% if is_granted('ROLE_CLIENT') %}
+				<li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ path('dashboard') }}">Dashboard</a>
+                </li>
+				<li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ path('app_main_objective_index') }}">Mes objectifs</a>
+                </li>
+				<li class="nav-item mx-auto">
+                    <a class="nav-link" aria-current="page" href="{{ path('daily_report_show_current') }}">Mon rapport du jour</a>
+                </li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<img src="{{ asset('images/user/' ~ app.user.gender ~ '.jpg')}}" alt="user" height="25" width="25">
@@ -16,13 +25,6 @@
 							<li>
 								<a class="dropdown-item" href="{{ path('profile') }}">Mon profil</a>
 							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('daily_report_show_current') }}">Mon rapport journalier</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('dashboard') }}">Mon dashboard</a>
-							</li>
-							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="{{ path('logout') }}">Déconnexion</a>
 							</li>
@@ -34,7 +36,7 @@
 						<a class="navbar-brand btn btn-connexion" href="{{ path('login') }}">Connexion</a>
 					</li>
 					<li class="nav-item">
-						<a class="navbar-brand btn btn-inscription" href=" ">S'inscrire</a>
+						<a class="navbar-brand btn btn-inscription" href="{{ path("register")}}">S'inscrire</a>
 					</li>
 					<li class="nav-item mt-2">
 						<input type="checkbox" class="demo5" id="demo5">

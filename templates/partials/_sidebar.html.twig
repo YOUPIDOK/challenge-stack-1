@@ -8,14 +8,14 @@
 <div class="l-navbar col-1" id="nav-bar">
 	<nav class="nav">
 		<div>
-			<a href="#" class="nav_logo">
+			<a href="/" class="nav_logo">
 				<i class="fa-solid fa-layer-group nav_logo-icon"></i>
 				<span class="nav_logo-name">MyFitLog</span>
 			</a>
 			<div class="nav_list">
-				<a href="{{ path('foods') }}" class="nav_link active">
+				<a href="{{ path('daily_report_show_current') }}" class="nav_link active">
 					<i class="fa-solid fa-grip nav_icon"></i>
-					<span class="nav_name">Rapport journalier</span>
+					<span class="nav_name">Mon rapport du jour</span>
 				</a>
 
 				<a href="{{ path('activities') }}" class="nav_link">
@@ -24,16 +24,26 @@
 				</a>
 				<a href="{{ path('foods') }}" class="nav_link">
 					<i class="fa-solid fa-utensils nav_icon"></i>
-					<span class="nav_name">Nutrition</span>
+					<span class="nav_name">Mes aliments</span>
 				</a>
 				<a href="{{ path('daily_reports') }}" class="nav_link">
 					<i class="fa-solid fa-chart-simple nav_icon"></i>
 					<span class="nav_name">Mes rapports</span>
 				</a>
+				<a href="{{ path('app_main_objective_index') }}" class="nav_link">
+					<i class="fa-solid fa-bullseye nav_icon"></i>
+					<span class="nav_name">Mes objectifs</span>
+				</a>
+				<a href="{{ path('profile') }}" class="nav_link">
+					<i class="fa-solid fa-user nav_icon"></i>
+					<span class="nav_name">Mon profil</span>
+				</a>
+				<a href="/" class="nav_link">
+					<i class="fa-solid fa-house nav_icon"></i>
+					<span class="nav_name">Accueil</span>
+				</a>
 			</div>
 		</div>
-
-
 		<div class="nav_link">
 			<input type="checkbox" class="demo5" id="demo5">
 			<label for="demo5"></label>

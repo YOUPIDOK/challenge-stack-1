@@ -99,6 +99,9 @@ img#img_user {
 .sticky {
   min-height: calc(100vh - 70px);
 }
+
+
+
 /* ScrollBar part */
 ::-webkit-scrollbar {
   width: 14px;
@@ -109,3 +112,5 @@ img#img_user {
 ::-webkit-scrollbar-thumb {
   background: $primary;
 }
+
+.page-item:first-child .page-link, .page-item:not(:first-child) .page-link, .page-item.active .page-link {   color:var(--font-color)!important;   background-color:var(--bg-menu_profile) ; }

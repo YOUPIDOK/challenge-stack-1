@@ -39,7 +39,7 @@ class DailyReportController extends AbstractController
         ]);
     }
 
-    #[Route('-du-jour', name: 'daily_report_show_current')]
+    #[Route('rapport-du-jour', name: 'daily_report_show_current')]
     public function showOrCreateCurrent(DailyReportRepository $dailyReportRepository): Response
     {
         $client = $this->getUser()->getClient();

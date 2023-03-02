@@ -10,7 +10,6 @@ use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Nutrition::class)]
 #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: Nutrition::class)]
-#[AsEntityListener(event: Events::postRemove, method: 'postRemove', entity: Nutrition::class)]
 class NutritionEvent
 {
     public function postPersist(Nutrition $nutrition, LifecycleEventArgs $event): void
@@ -25,14 +24,5 @@ class NutritionEvent
         $dailyReport =  $nutrition->getDailyReport();
         $event->getObjectManager()->refresh($dailyReport);
         $dailyReport->updateDailyNutrition();
-    }
-
-    public function postRemove(Nutrition $nutrition, LifecycleEventArgs $event): void
-    {
-        $dailyReport =  $nutrition->getDailyReport();
-        $event->getObjectManager()->refresh($dailyReport);
-        $dailyReport->updateDailyNutrition();
-
-        $event->getObjectManager()->flush();
     }
 }

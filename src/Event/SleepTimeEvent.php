@@ -11,7 +11,6 @@ use Doctrine\ORM\Events;
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: SleepTime::class)]
 #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: SleepTime::class)]
 #[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: SleepTime::class)]
-#[AsEntityListener(event: Events::postRemove, method: 'postRemove', entity: SleepTime::class)]
 class SleepTimeEvent
 {
     public function prePersist(SleepTime $sleepTime, LifecycleEventArgs $event): void
@@ -48,15 +47,4 @@ class SleepTimeEvent
         $event->getObjectManager()->refresh($dailyReport);
         $dailyReport->updateDailyReportSleepTime();
     }
-
-    public function postRemove(SleepTime $sleepTime, LifecycleEventArgs $event)
-    {
-        $dailyReport =  $sleepTime->getDailyReport();
-        $event->getObjectManager()->refresh($dailyReport);
-        $dailyReport->updateDailyReportSleepTime();
-
-        $event->getObjectManager()->flush();
-    }
-
-
 }

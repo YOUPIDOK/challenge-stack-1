@@ -8,6 +8,7 @@ use App\Form\Data\NutritionType;
 use App\Repository\DailyReportRepository;
 use App\Repository\Data\NutritionRepository;
 use App\Security\Main\Voter\DailyReportVoter;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class NutritionController extends AbstractController
         ]);
     }
 
-    #[Route('/new/{id}', name: 'app_main_data_nutrition_new', methods: ['GET', 'POST'])]
+    #[Route('/navbnew/{id}', name: 'app_main_data_nutrition_new', methods: ['GET', 'POST'])]
     public function new(DailyReport $dailyReport,Request $request, NutritionRepository $nutritionRepository, DailyReportRepository $dailyReportRepository): Response
     {
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
@@ -76,13 +77,16 @@ class NutritionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_main_data_nutrition_delete', methods: ['GET'])]
-    public function delete(Request $request, Nutrition $nutrition, NutritionRepository $nutritionRepository): Response
+    public function delete(Request $request, Nutrition $nutrition, NutritionRepository $nutritionRepository, EntityManagerInterface $em): Response
     {
         $dailyReport = $nutrition->getDailyReport();
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $nutritionRepository->remove($nutrition, true);
         $this->addFlash('success', 'Votre nutrition du jour à était supprimé');
+
+        $dailyReport->updateDailyNutrition();
+        $em->flush();
 
         return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
     }

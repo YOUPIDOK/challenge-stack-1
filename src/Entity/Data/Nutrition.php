@@ -38,7 +38,6 @@ class Nutrition
     #[ORM\ManyToOne(inversedBy: 'nutritions')]
     private ?DailyReport $dailyReport = null;
 
-
     public function __construct()
     {
     }

@@ -8,12 +8,12 @@ use App\Repository\Data\WeightRepository;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Exception;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: ActivityTime::class)]
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: ActivityTime::class)]
 #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: ActivityTime::class)]
 #[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: ActivityTime::class)]
-#[AsEntityListener(event: Events::postRemove, method: 'postRemove', entity: ActivityTime::class)]
 class ActivityTimeEvent
 {
     public function __construct(private WeightRepository $weightRepo) { }
@@ -51,14 +51,5 @@ class ActivityTimeEvent
         $dailyReport = $activityTime->getDailyReport();
         $event->getObjectManager()->refresh($dailyReport);
         $dailyReport->updateDailyActivityTime($this->weightRepo->findLastWeightByClient($dailyReport->getClient()));
-    }
-
-    public function postRemove(ActivityTime $activityTime, LifecycleEventArgs $event)
-    {
-        $dailyReport = $activityTime->getDailyReport();
-        $event->getObjectManager()->refresh($dailyReport);
-        $dailyReport->updateDailyActivityTime($this->weightRepo->findLastWeightByClient($dailyReport->getClient()));
-
-        $event->getObjectManager()->flush();
     }
 }

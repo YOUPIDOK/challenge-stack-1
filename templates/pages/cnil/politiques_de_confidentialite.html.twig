@@ -1,32 +1,37 @@
-{% extends 'layouts/sidebar_layout.html.twig' %}
+{% extends 'layouts/navbar_layout.html.twig' %}
 
 {% block title %}Homepage{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    {% for file in encore_entry_css_files('home', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
-    <div class="container">
-            <p>
-                Politique de confidentialité
-
+    <div class="container pt-4">
+               <h2 > Politique de confidentialité </h2>
+                <p>
                 La protection de la vie privée de nos utilisateurs est importante pour nous, et nous nous engageons à respecter et à protéger les informations que vous partagez avec nous. Cette politique de confidentialité décrit comment nous collectons, utilisons et partageons les informations personnelles que vous nous fournissez lorsque vous visitez notre site web.
-
-                Collecte de l'information
-                Nous collectons les informations personnelles que vous nous fournissez lorsque vous utilisez notre site web, telles que votre nom, votre adresse e-mail et toute autre information que vous choisissez de nous fournir. Nous collectons également des informations sur l'utilisation de notre site web, telles que le nombre de visites, le temps passé sur le site, les pages consultées, etc.
-
-                Utilisation de l'information
-                Nous utilisons les informations que nous collectons pour améliorer notre site web, personnaliser votre expérience, vous envoyer des communications marketing et répondre à vos demandes. Nous ne vendons ni ne louons vos informations personnelles à des tiers, mais nous pouvons partager ces informations avec des prestataires de services tiers qui nous aident à exploiter notre site web ou à vous fournir des services que vous avez demandés.
-
-                Sécurité des informations
-                Nous prenons des mesures raisonnables pour protéger les informations personnelles que vous nous fournissez contre la perte, l'utilisation abusive et l'accès non autorisé, la divulgation, la modification et la destruction. Toutefois, veuillez noter qu'aucune transmission de données sur Internet ou de stockage électronique n'est totalement sécurisée, et nous ne pouvons garantir la sécurité absolue des informations que vous nous fournissez.
-
-                Cookies et technologies similaires
-                Notre site web utilise des cookies et d'autres technologies similaires pour améliorer votre expérience sur notre site web. Les cookies sont de petits fichiers texte stockés sur votre ordinateur ou votre appareil mobile qui collectent des informations sur votre utilisation de notre site web. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur si vous le souhaitez.
-
-                Modification de notre politique de confidentialité
-                Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Si nous apportons des modifications importantes à cette politique, nous vous en informerons par e-mail ou en publiant une notification sur notre site web.
-
-                Vos droits
-                Vous avez le droit de demander l'accès, la rectification ou la suppression de vos informations personnelles que nous avons collectées. Vous pouvez également vous opposer à l'utilisation de vos informations personnelles à des fins de marketing direct.
-
+                </p>
+                
+                <h2> Collecte de l'information </h2>
+               <p> Nous collectons les informations personnelles que vous nous fournissez lorsque vous utilisez notre site web, telles que votre nom, votre adresse e-mail et toute autre information que vous choisissez de nous fournir. Nous collectons également des informations sur l'utilisation de notre site web, telles que le nombre de visites, le temps passé sur le site, les pages consultées, etc.</p>
+                
+                <h2> Utilisation de l'information </h2>
+               <p> Nous utilisons les informations que nous collectons pour améliorer notre site web, personnaliser votre expérience, vous envoyer des communications marketing et répondre à vos demandes. Nous ne vendons ni ne louons vos informations personnelles à des tiers, mais nous pouvons partager ces informations avec des prestataires de services tiers qui nous aident à exploiter notre site web ou à vous fournir des services que vous avez demandés.
+                </p>
+                <h2> Sécurité des informations </h2>
+               <p> Nous prenons des mesures raisonnables pour protéger les informations personnelles que vous nous fournissez contre la perte, l'utilisation abusive et l'accès non autorisé, la divulgation, la modification et la destruction. Toutefois, veuillez noter qu'aucune transmission de données sur Internet ou de stockage électronique n'est totalement sécurisée, et nous ne pouvons garantir la sécurité absolue des informations que vous nous fournissez.
+                </p>    
+               <h2> Cookies et technologies similaires </h2>
+               <p> Notre site web utilise des cookies et d'autres technologies similaires pour améliorer votre expérience sur notre site web. Les cookies sont de petits fichiers texte stockés sur votre ordinateur ou votre appareil mobile qui collectent des informations sur votre utilisation de notre site web. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur si vous le souhaitez.
+                </p>
+               <h2> Modification de notre politique de confidentialité </h2>
+               <p> Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Si nous apportons des modifications importantes à cette politique, nous vous en informerons par e-mail ou en publiant une notification sur notre site web.
+                </p>
+               <h2> Vos droits </h2>
+               <p> Vous avez le droit de demander l'accès, la rectification ou la suppression de vos informations personnelles que nous avons collectées. Vous pouvez également vous opposer à l'utilisation de vos informations personnelles à des fins de marketing direct.
+                
                 Si vous avez des questions ou des préoccupations concernant notre politique de confidentialité, veuillez nous contacter à l'adresse e-mail suivante : contact@Myftlog.com.
 
                 Dernière mise à jour : 03/03/2023.

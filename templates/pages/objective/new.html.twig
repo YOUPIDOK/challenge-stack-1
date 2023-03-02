@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/sidebar_layout.html.twig' %}
 
 {% block title %}Créer un objectif{% endblock %}
 
 {% block body %}
     <h1>Créer votre objectif</h1>
 
-    {{ include('main/objective/_form.html.twig') }}
+    {{ include('pages/objective/_form.html.twig') }}
 
     <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir au objectif</a>
     <a class="btn btn-primary" href="{{ path('daily_report_show_current') }}">Accèder à mon rapport journalier</a>

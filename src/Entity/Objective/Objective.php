@@ -3,6 +3,8 @@
 namespace App\Entity\Objective;
 
 use App\Entity\User\Client;
+use App\Enum\Objective\ObjectiveTypeEnum;
+use App\Enum\User\GenderEnum;
 use App\Repository\Objective\ObjectiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -50,6 +52,19 @@ class Objective
 
     public function __construct()
     {
+        $this->active = true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getObjectiveTypeValue(): ?string
+    {
+        if ($this->type !== null) {
+            return ObjectiveTypeEnum::getType($this->type);
+        }
+
+        return null;
     }
 
     public function getId(): ?int

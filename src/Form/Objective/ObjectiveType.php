@@ -5,12 +5,15 @@ namespace App\Form\Objective;
 use App\Entity\Data\ActivityTime;
 use App\Entity\Food;
 use App\Entity\Objective\Objective;
+use App\Enum\Nutrition\MealTypeEnum;
 use App\Enum\Objective\ObjectiveTypeEnum;
 use App\Form\CustomType\EntitySelectChoicesType;
+use App\Form\CustomType\SelectChoicesType;
 use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,15 +30,12 @@ class ObjectiveType extends AbstractType
     {
         $minDate = new DateTime();
         $builder
-            ->add('startAt', DateTimeType::class, [
+            ->add('startAt', DateType::class, [
                 'label' => 'Date de début',
                 'required' => true,
                 'widget' => 'single_text',
-                'constraints' => [
-                    new GreaterThanOrEqual(['value' => $minDate]),
-                ]
             ])
-            ->add('endAt', DateTimeType::class, [
+            ->add('endAt', DateType::class, [
                 'label' => 'Date de fin (optionel)',
                 'required' => false,
                 'widget' => 'single_text',
@@ -45,19 +45,26 @@ class ObjectiveType extends AbstractType
                         'callback' => static function (?DateTime $value, ExecutionContextInterface $context) {
                             /** @var Objective $objective */
                             $objective = $context->getObject()->getParent()->getData();
-                            if ($objective->getEndAt() < $objective->getStartAt()) {
-                                $context
-                                    ->buildViolation('La date de fin de l\'objectif doit être inférieur à la date de début')
-                                    ->atPath('endAt')
-                                    ->addViolation();
+                            if ($objective->getEndAt() !== null && $objective->isActive()) {
+                                if ($objective->getEndAt() <= $objective->getStartAt()) {
+                                    $context
+                                        ->buildViolation('La date de fin de l\'objectif doit être inférieur à la date de début')
+                                        ->atPath('endAt')
+                                        ->addViolation();
+                                }
                             }
                         }
                     ])
                 ]
             ])
             ->add('label', TextType::class, [
-                'label' => 'Libellé',
+                'label' => 'Nom de votre objectif',
                 'required' => true
+            ])
+            ->add('type', SelectChoicesType::class, [
+                'label' => 'Votre objectif',
+                'required' => true,
+                'choices' => ObjectiveTypeEnum::getChoices()
             ])
             ->add('objectiveValue', NumberType::class, [
                 'label' => 'Valeur de l\'objectif',
@@ -81,13 +88,6 @@ class ObjectiveType extends AbstractType
                         }
                     ])
                 ]
-            ])
-            ->add('active', CheckboxType::class, [
-                'label' => 'Activer',
-                'required' => false,
-            ])
-            ->add('type', EntitySelectChoicesType::class, [
-                'class' => ObjectiveTypeEnum::class
             ])
         ;
     }

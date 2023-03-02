@@ -99,6 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return null;
     }
+
     public function isMan(): bool
     {
         return $this->gender === GenderEnum::MAN;

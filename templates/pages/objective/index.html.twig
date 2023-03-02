@@ -1,40 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/sidebar_layout.html.twig' %}
 
 {% block title %}Objectif{% endblock %}
 
 {% block body %}
-    <h1>Objectif</h1>
+    <h1>Vos Objectifs</h1>
 
     <div class="table-responsive">
         <table class="table table-striped table-hove border">
             <thead>
                 <tr>
+                    <th scope="col">Nom</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Label</th>
-                    <th scope="col">ObjectiveValue</th>
-                    <th scope="col">Active</th>
-                    <th scope="col">StartAt</th>
-                    <th scope="col">EndAt</th>
+                    <th scope="col">Valeur</th>
+                    <th scope="col">Date de début</th>
+                    <th scope="col">Date de fin</th>
+                    <th scope="col">Actif</th>
                     <th scope="col">actions</th>
                 </tr>
             </thead>
             <tbody>
-            {% for objective in objectives %}
+            {% for objective in myObjectives %}
                 <tr>
-                    <th scope="row">{{ objective.type }}</th>
-                    <td>{{ objective.label }}</td>
+                    <th scope="row">{{ objective.label }}</th>
+                    <td>{{ objective.getObjectiveTypeValue }}</td>
                     <td>{{ objective.objectiveValue }}</td>
-                    <td>{{ objective.active ? 'Yes' : 'No' }}</td>
-                    <td>{{ objective.startAt ? objective.startAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ objective.endAt ? objective.endAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
-                        <a href="{{ path('app_main_objective_show', {'id': objective.id}) }}">show</a>
-                        <a href="{{ path('app_main_objective_edit', {'id': objective.id}) }}">edit</a>
-                    </td>
+                    <td>{{ objective.startAt ? objective.startAt|date('d/m/Y') : '' }}</td>
+                    <td>{{ objective.endAt ? objective.endAt|date('d/m/Y') : '' }}</td>
+                    {% if objective.active %}
+                        <td><button class="btn btn-success"></button></td>
+                    {% else %}
+                        <td><button class="btn btn-danger"></button></td>
+                    {% endif %}
                     <td>
                         <a href="{{ path('app_main_objective_show', {id: objective.id}) }}"><i class="fa-solid fa-eye text-primary"></i></a>
                         <a href="{{ path('app_main_objective_edit', {id: objective.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
-                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-objective-{{ activity.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-objective-{{ objective.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
                     </td>
                 </tr>
             {% else %}
@@ -47,10 +47,11 @@
     </div>
 
     <a class="btn btn-primary" href="{{ path('app_main_objective_new') }}">Ajouter</a>
-    <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir au objectif</a>
+    <a class="btn btn-primary" href="{{ path('dashboard') }}">Revenir à votre dashboard</a>
 {% endblock %}
 
 {% block modals %}
+    {% for objective in myObjectives %}
     <div class="modal fade" id="delete-objective-{{ objective.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -67,4 +68,5 @@
             </div>
         </div>
     </div>
+    {% endfor %}
 {% endblock %}

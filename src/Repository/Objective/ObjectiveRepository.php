@@ -3,6 +3,7 @@
 namespace App\Repository\Objective;
 
 use App\Entity\Objective\Objective;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +39,18 @@ class ObjectiveRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findObjectivesExpired(): array
+    {
+        $today = new DateTime();
+        return $this->createQueryBuilder('obj')
+            ->andWhere('obj.endAt <= :today')
+            ->setParameter('today', $today)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Objective[] Returns an array of Objective objects

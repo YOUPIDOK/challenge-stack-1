@@ -1,82 +1,92 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}Ma nourritures{% endblock %}
+{% block title %}Ma nourritures
+{% endblock %}
 
 {% block body %}
-    <h1>Ma nourritures</h1>
+	<h1>Ma nourritures</h1>
 
-    <a href="{{ path('dashboard') }}" class="btn btn-primary">Dashboard </a>
-    <a href="{{ path('food_create') }}" class="btn btn-primary">Ajouter </a>
+	<a href="{{ path('dashboard') }}" class="btn btn-primary">Dashboard
+	</a>
+	<a href="{{ path('food_create') }}" class="btn btn-primary">Ajouter
+	</a>
 
-    <div class="my-2">
-        {{ form_start(form) }}
-        <div class="input-group">
-            {{ form_widget(form.label) }}
-            <button type="submit" class="input-group-btn btn btn-primary">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
-        {{ form_end(form) }}
-    </div>
+	<div class="my-2">
+		{{ form_start(form) }}
+		<div class="input-group">
+			{{ form_widget(form.label) }}
+			<button type="submit" class="input-group-btn btn btn-primary">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hove border">
-            <thead>
-            <tr>
-                <th scope="col">Nourriture</th>
-                <th scope="col">Calories pour 100g</th>
-                <th scope="col">Glucides</th>
-                <th scope="col">Lipides</th>
-                <th scope="col">Protéines</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for food in pager.currentPageResults %}
-                <tr>
-                    <th scope="row">{{ food.label }}</th>
-                    <td>{{ food.calories }} Kcal</td>
-                    <td>{{ food.carbohydrates }}</td>
-                    <td>{{ food.lipids }}</td>
-                    <td>{{ food.proteins }}</td>
-                    <td>
-                        <a href="{{ path('food_update', {id: food.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
-                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-food-{{ food.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6" class="text-center">Aucune nourriture personalisée.</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+	<div class="table-responsive">
+		<table class="table table-striped  table-hover border">
+			<thead>
+				<tr>
+					<th scope="col">Nourriture</th>
+					<th scope="col">Calories pour 100g</th>
+					<th scope="col">Glucides</th>
+					<th scope="col">Lipides</th>
+					<th scope="col">Protéines</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for food in pager.currentPageResults %}
+					<tr>
+						<th scope="row">{{ food.label }}</th>
+						<td>{{ food.calories }}
+							Kcal</td>
+						<td>{{ food.carbohydrates }}</td>
+						<td>{{ food.lipids }}</td>
+						<td>{{ food.proteins }}</td>
+						<td>
+							<a href="{{ path('food_update', {id: food.id}) }}">
+								<i class="fa-solid fa-pen-to-square text-primary"></i>
+							</a>
+							<a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-food-{{ food.id }}">
+								<i class="fa-solid fa-trash-can text-danger"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="6" class="text-center">Aucune nourriture personalisée.</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-    {% if pager.nbResults > pager.maxPerPage %}
-        <div class="d-flex justify-content-end mt-3">
-            {% include 'components/_pagination.html.twig' %}
-        </div>
-    {% endif %}
+	{% if pager.nbResults > pager.maxPerPage %}
+		<div class="d-flex justify-content-end mt-3">
+			{% include 'components/_pagination.html.twig' %}
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block modals %}
-    {% for food in  pager.currentPageResults %}
-        <div class="modal fade" id="delete-food-{{ food.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Voulez vous vraiment supprimer la nourriture {{ food.label }} ?
-                    </div>
-                    <div class="modal-footer">
-                        <a href="{{ path('food_delete', {id: food.id}) }}" class="text-danger">Supprimer</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
+	{% for food in  pager.currentPageResults %}
+		<div class="modal fade" id="delete-food-{{ food.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Voulez vous vraiment supprimer la nourriture
+						{{ food.label }}
+						?
+					</div>
+					<div class="modal-footer">
+						<a href="{{ path('food_delete', {id: food.id}) }}" class="text-danger">Supprimer</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
 {% endblock %}

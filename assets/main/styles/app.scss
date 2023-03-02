@@ -67,7 +67,16 @@ h4 {
 .form-select:disabled, .form-control:disabled {
   background-color:var(--bg-disabled);
 }
-
+.table {
+  background-color:var(--bg-menu_profile);
+  color:var(--font-color);
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  color:var(--font-color);
+}
+// .table-responsive {
+//  background-color: var(--bg-menu_profile)!important;
+// }
 .sticky {
   min-height: calc(100vh - 70px);
 }

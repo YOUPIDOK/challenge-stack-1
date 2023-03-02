@@ -41,8 +41,11 @@ class WeightRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLastWeightByClient(Client $client)
+    public function findLastWeightByClient(?Client $client)
     {
+        if ($client === null) {
+            return null;
+        }
         return $this
             ->createQueryBuilder('weight')
             ->innerJoin('weight.dailyReport', 'dailyReport')

@@ -7,8 +7,10 @@ use App\Entity\Data\ActivityTime;
 use App\Form\Data\ActivityTimeType;
 use App\Repository\DailyReportRepository;
 use App\Repository\Data\ActivityTimeRepository;
+use App\Repository\Data\WeightRepository;
 use App\Security\Main\Voter\DailyReportVoter;
 use App\Security\Main\Voter\FoodVoter;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,13 +79,16 @@ class ActivityTimeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_main_data_activity_time_delete', methods: ['GET'])]
-    public function delete(Request $request, ActivityTime $activityTime, ActivityTimeRepository $activityTimeRepository): Response
+    public function delete(Request $request, ActivityTime $activityTime, ActivityTimeRepository $activityTimeRepository, EntityManagerInterface $em, WeightRepository $weightRepository): Response
     {
         $dailyReport = $activityTime->getDailyReport();
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $activityTimeRepository->remove($activityTime, true);
         $this->addFlash('success', 'Votre activité du jour à était supprimé');
+
+        $dailyReport->updateDailyActivityTime($weightRepository->findLastWeightByClient($dailyReport->getClient()));
+        $em->flush();
 
         return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
     }

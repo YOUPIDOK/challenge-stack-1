@@ -8,6 +8,7 @@ use App\Form\Data\SleepTimeType;
 use App\Repository\DailyReportRepository;
 use App\Repository\Data\SleepTimeRepository;
 use App\Security\Main\Voter\DailyReportVoter;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,13 +76,16 @@ class SleepTimeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_main_data_sleep_time_delete', methods: ['GET'])]
-    public function delete(Request $request, SleepTime $sleepTime, SleepTimeRepository $sleepTimeRepository): Response
+    public function delete(Request $request, SleepTime $sleepTime, SleepTimeRepository $sleepTimeRepository, EntityManagerInterface $em): Response
     {
         $dailyReport = $sleepTime->getDailyReport();
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $sleepTimeRepository->remove($sleepTime, true);
         $this->addFlash('success', 'Votre temps de sommeil à était supprimé');
+
+        $dailyReport->updateDailyReportSleepTime();
+        $em->flush();
 
         return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
     }

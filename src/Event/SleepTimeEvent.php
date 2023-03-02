@@ -9,6 +9,8 @@ use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: SleepTime::class)]
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: SleepTime::class)]
+#[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: SleepTime::class)]
+#[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: SleepTime::class)]
 class SleepTimeEvent
 {
     public function prePersist(SleepTime $sleepTime, LifecycleEventArgs $event): void
@@ -30,5 +32,19 @@ class SleepTimeEvent
     private function updateTime(SleepTime $sleepTime)
     {
         $sleepTime->updateTime();
+    }
+
+    public function postUpdate(SleepTime $sleepTime, LifecycleEventArgs $event)
+    {
+       $dailyReport =  $sleepTime->getDailyReport();
+       $event->getObjectManager()->refresh($dailyReport);
+       $dailyReport->updateDailyReportSleepTime();
+    }
+
+    public function postPersist(SleepTime $sleepTime, LifecycleEventArgs $event)
+    {
+        $dailyReport =  $sleepTime->getDailyReport();
+        $event->getObjectManager()->refresh($dailyReport);
+        $dailyReport->updateDailyReportSleepTime();
     }
 }

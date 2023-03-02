@@ -31,7 +31,10 @@ class SleepTime
     private ?DailyReport $dailyReport = null;
 
     #[ORM\Column]
-    private ?int $time = null;
+    private ?int $time = 0;
+
+    #[ORM\Column]
+    private ?float $timeInHour = 0;
 
     public function __construct()
     {
@@ -93,6 +96,19 @@ class SleepTime
     public function updateTime(): self
     {
         $this->time = ($this->awakeAt->getTimestamp() - $this->asleepAt->getTimestamp()) / 60;
+        $this->timeInHour = round($this->time / 60.0, 2);
+
+        return $this;
+    }
+
+    public function getTimeInHour(): ?float
+    {
+        return $this->timeInHour;
+    }
+
+    public function setTimeInHour(float $timeInHour): self
+    {
+        $this->timeInHour = $timeInHour;
 
         return $this;
     }

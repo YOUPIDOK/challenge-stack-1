@@ -31,8 +31,7 @@
 							</li>
 						</ul>
 					</li>
-
-				{% else %}
+				{% elseif app.user is null %}
 					<li class="nav-item">
 						<a class="navbar-brand btn btn-connexion" href="{{ path('login') }}">Connexion</a>
 					</li>

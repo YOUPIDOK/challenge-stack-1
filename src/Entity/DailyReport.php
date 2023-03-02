@@ -43,9 +43,14 @@ class DailyReport
     #[ORM\OneToOne(inversedBy: 'dailyReport', cascade: ['persist', 'remove'])]
     private ?Weight $weight = null;
 
-    private ?int $spentCalories = null;
-    private ?int $eatCalories = null;
-    private ?int $differenceCalories = null;
+    #[ORM\Column]
+    private ?float $totalSleepTime = 0;
+
+    #[ORM\Column]
+    private ?float $totalCaloriesSpent = 0;
+
+    #[ORM\Column]
+    private ?float $totalCaloriesEat = 0;
 
     public function __construct()
     {
@@ -122,6 +127,39 @@ class DailyReport
         if ($this->differenceCalories === null) $this->differenceCalories = $this->getEatCalories() - $this->getSpentCalories();
 
         return $this->differenceCalories;
+    }
+
+    public function updateDailyNutrition(): void
+    {
+        $this->totalCaloriesEat = 0;
+
+        /** @var Nutrition $nutrition */
+        foreach ($this->nutritions as $nutrition) {
+            $this->totalCaloriesEat += $nutrition->getFoodWeight() * $nutrition->getFood()->getCalorieByGramme();
+        }
+    }
+
+    public function updateDailyActivityTime(Weight $weight): void
+    {
+        $this->totalCaloriesSpent = 0;
+        $age = date_diff(new \DateTime('now'), $this->getClient()->getBirthdate())->y;
+        /** @var ActivityTime $activityTime */
+        foreach ($this->activityTimes as $activityTime) {
+            $calorieSpent = ((0.2017 * $age) + (0.6309 * $activityTime->getActivity()->getHeartRate()) - (0.09036 * ($weight->getWeight() ?? 50)) - 55.0969) * $activityTime->getTime() / 4.184;
+            $this->totalCaloriesSpent += $calorieSpent;
+        }
+
+        $this->totalCaloriesSpent = round($this->totalCaloriesSpent, 2);
+    }
+
+    public function updateDailyReportSleepTime(): void
+    {
+        $this->totalSleepTime = 0;
+
+        /** @var SleepTime $sleepTime */
+        foreach ($this->sleepTimes as $sleepTime) {
+            $this->totalSleepTime += $sleepTime->getTimeInHour();
+        }
     }
 
         public function addSleepTime(SleepTime $sleepTime): self
@@ -216,5 +254,46 @@ class DailyReport
         $this->weight = $weight;
 
         return $this;
+    }
+
+    public function getTotalSleepTime(): ?float
+    {
+        return $this->totalSleepTime;
+    }
+
+    public function setTotalSleepTime(float $totalSleepTime): self
+    {
+        $this->totalSleepTime = $totalSleepTime;
+
+        return $this;
+    }
+
+    public function getTotalCaloriesSpent(): ?float
+    {
+        return $this->totalCaloriesSpent;
+    }
+
+    public function setTotalCaloriesSpent(float $totalCaloriesSpent): self
+    {
+        $this->totalCaloriesSpent = $totalCaloriesSpent;
+
+        return $this;
+    }
+
+    public function getTotalCaloriesEat(): ?float
+    {
+        return $this->totalCaloriesEat;
+    }
+
+    public function setTotalCaloriesEat(float $totalCaloriesEat): self
+    {
+        $this->totalCaloriesEat = $totalCaloriesEat;
+
+        return $this;
+    }
+
+    public function getCaloricDifferency()
+    {
+        return $this->totalCaloriesEat - $this->totalCaloriesSpent;
     }
 }

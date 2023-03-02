@@ -64,6 +64,32 @@ class DailyReportRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    public function searchByClient(Client $client, ?DateTime $start = null, ?DateTime $end = null)
+    {
+        $qb = $this
+            ->createQueryBuilder('dailyReport')
+            ->where('dailyReport.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('dailyReport.date', 'ASC');
+
+
+        if ($start !== null) {
+            $qb
+                ->andWhere($qb->expr()->gte('dailyReport.date', ':start'))
+                ->setParameter('start', new DateTime($start->format('Y-m-d')));
+        }
+
+        if ($end !== null) {
+            $qb
+                ->andWhere($qb->expr()->lte('dailyReport.date', ':end'))
+                ->setParameter('end', new DateTime($end->format('Y-m-d')));
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
     //    /**

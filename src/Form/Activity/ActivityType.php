@@ -25,10 +25,9 @@ class ActivityType extends AbstractType
                 'required' => true
             ])
             ->add('isDistance', CheckboxType::class, [
-                'label' => 'Se mesure en mètre',
+                'label' => 'Se mesure en mètres',
                 'required' => false
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

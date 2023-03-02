@@ -20,7 +20,6 @@ class DailyReportType extends AbstractType
 {
     public function __construct(private DailyReportRepository $dailyReportRepository)
     {
-
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -48,15 +47,14 @@ class DailyReportType extends AbstractType
 
                             if (count($dailyReportExist) >= 1) {
                                 $context
-                                    ->buildViolation('Un rapport existe déjà pour cette date')
+                                    ->buildViolation('Un rapport existe déjà pour ce jour.')
                                     ->atPath('date')
                                     ->addViolation();
                             }
                         }
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

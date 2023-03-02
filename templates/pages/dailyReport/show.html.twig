@@ -193,7 +193,7 @@
 					<tr>
 						<th scope="row">{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('d/m/Y H:i:s') : '' }}</th>
 						<td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('d/m/Y H:i:s') : '' }}</td>
-						<td>{{ sleepTime.time / 60}}
+						<td>{{ sleepTime.timeInHour}}
 							h</td>
 						<td>
 							<a href="{{ path('app_main_data_sleep_time_edit', {id: sleepTime.id}) }}">

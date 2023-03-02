@@ -13,20 +13,36 @@
 				<span class="nav_logo-name">MyFitLog</span>
 			</a>
 			<div class="nav_list">
-				<a href="#" class="nav_link">
+				<a href="{{ path('foods') }}" class="nav_link active">
 					<i class="fa-solid fa-grip nav_icon"></i>
-					<span class="nav_name">Dashboard</span>
+					<span class="nav_name">Rapport journalier</span>
 				</a>
 
-				<a href="#" class="nav_link">
+				<a href="{{ path('activities') }}" class="nav_link">
+					<i class="fa-solid fa-person-walking nav_icon"></i>
+					<span class="nav_name">Mes activités</span>
+				</a>
+				<a href="{{ path('foods') }}" class="nav_link">
+					<i class="fa-solid fa-utensils nav_icon"></i>
+					<span class="nav_name">Nutrition</span>
+				</a>
+				<a href="{{ path('daily_reports') }}" class="nav_link">
 					<i class="fa-solid fa-chart-simple nav_icon"></i>
-					<span class="nav_name">Stats</span>
+					<span class="nav_name">Mes rapports</span>
 				</a>
 			</div>
 		</div>
-		<a href="#" class="nav_link">
+
+
+		<div class="nav_link">
+			<input type="checkbox" class="demo5" id="demo5">
+			<label for="demo5"></label>
+			<span class="nav_name">Mode Sombre</span>
+		</div>
+		<a href="{{ path('logout') }}" class="nav_link">
 			<i class="fa-solid fa-right-from-bracket nav_icon"></i>
 			<span class="nav_name">Déconnexion</span>
 		</a>
+
 	</nav>
 </div>

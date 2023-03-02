@@ -1,117 +1,117 @@
 {% extends 'layouts/navbar_layout.html.twig' %}
 
-{% block title %}Homepage{% endblock %}
+{% block title %}Homepage
+{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    {% for file in encore_entry_css_files('home', 'main') %}
-        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
-    {% endfor %}
+	{{ parent() }}
+	{% for file in encore_entry_css_files('home', 'main') %}
+		<link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+	{% endfor %}
 {% endblock %}
 {% block body %}
-    <div class="container">
+	<div class="container">
 
-{#        <div class="container">#}
-{#            {% include "components/_chart.html.twig" with {data: '{ "labels": ["January", "February", "March", "April", "May", "June", "July"], "datasets": [{ "label": "My First dataset", "backgroundColor": "transparent", "borderColor": "#3B82F6", "data": [37, 83, 78, 54, 12, 5, 99] }] }'} %}#}
-{#        </div>#}
-        {# {% include "components/_chart.html.twig" with {data: '{ "labels": ["January", "February", "March", "April", "May", "June", "July"], "datasets": [{ "label": "My First dataset", "backgroundColor": "transparent", "borderColor": "#3B82F6", "data": [37, 83, 78, 54, 12, 5, 99] }] }'} %} #}
+		{#        <div class="container">#}
+		{#            {% include "components/_chart.html.twig" with {data: '{ "labels": ["January", "February", "March", "April", "May", "June", "July"], "datasets": [{ "label": "My First dataset", "backgroundColor": "transparent", "borderColor": "#3B82F6", "data": [37, 83, 78, 54, 12, 5, 99] }] }'} %}#}
+		{#        </div>#}
+		{# {% include "components/_chart.html.twig" with {data: '{ "labels": ["January", "February", "March", "April", "May", "June", "July"], "datasets": [{ "label": "My First dataset", "backgroundColor": "transparent", "borderColor": "#3B82F6", "data": [37, 83, 78, 54, 12, 5, 99] }] }'} %} #}
 
-        {# <section class="header d-flex justify-content-around align-items-center">
-        <div class="d-flex flex-column w-50">
-            <img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
-            <p class="header-description">Améliorez votre santé en surveillant votre activité physique,
-            votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
-            </p>
-            <button class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Get started</button>
-        </div>
-            <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
-        </section> #}
-        <section class="header-section row vh-75">
-            <div class="col-md-7 d-flex flex-column justify-content-center align-items-center">
-                <img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
-                <p class="header-description w-75">Améliorez votre santé en surveillant votre activité physique,
-                votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
-                </p>
-                <div class="d-flex justify-content-center">
-                    <a href="{{ app.user is null ? path('login') : path('dashboard') }}" class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Commencer maintenant</a>
-                </div>
-            </div>
-            <div class="col-md-5 d-flex justify-content-center">
-                <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
-            </div>
-        </section>
-        <section class="concept mx-auto">
-        <h2 class="text-lg-start text-center">Concept</h2>
-        <p class="mt-3 mb-3 text-lg-start text-center">
-        Bienvenue sur MyFitLog, l'application de surveillance de la santé qui vous accompagne
-         dans votre parcours de bien-être et de condition physique. Nous avons créé cette application pour
-          aider les utilisateurs à suivre leur santé et leur progression de manière simple et pratique.
-           Voici quelques points de concept clés de notre application :
-        </p>
-        <ul class="row mt-5 ps-0">
-            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
-                <img src="{{ asset('build/main/images/fitness.svg', 'main')}}" alt="Activité physique" height="150" width="150px">
-                <h4 class="mt-4">Suivi de l'activité physique</h4>
-                <p class="text-center mt-3">MyFitLog permet aux utilisateurs de suivre leur activité physique en enregistrant le nombre de pas,
-                la distance parcourue, les calories brûlées et bien plus encore. Les graphiques et tableaux de l'application
-                vous aideront à visualiser vos progrès et à atteindre vos objectifs de condition physique.
-                </p>
-            </li>
-            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
-                <img src="{{ asset('build/main/images/nourriture.svg', 'main')}}" alt="Alimentation" height="150" width="150px">
-                <h4 class="mt-4">Suivi de l'alimentation</h4>
-                <p class="text-center mt-3">L'application vous permet de suivre votre consommation de nourriture, de surveiller les calories,
-                les nutriments et l'apport en eau. Vous pouvez également ajouter des photos de vos repas pour mieux suivre votre alimentation.
-                </p>
-            </li>
-            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
-                <img src="{{ asset('build/main/images/sleep.svg', 'main')}}" alt="Sommeil" height="150" width="150px">
-                <h4 class="mt-4">Suivi du sommeil</h4>
-                <p class="text-center mt-3">MyFitLog vous aide à suivre votre sommeil, en enregistrant le temps de sommeil, la qualité du sommeil et les cycles de sommeil.
-                Vous pourrez ainsi mieux comprendre votre sommeil et trouver des moyens pour améliorer votre qualité de sommeil.
-                </p>
-            </li>
-            <li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
-                <img src="{{ asset('build/main/images/masse.svg', 'main')}}" alt="Poids" height="150" width="150px">
-                <h4 class="mt-4">Suivi de la masse</h4>
-                <p class="text-center mt-3">Nous vous aidons à suivre votre masse en enregistrant quotidiennement votre masse afin d'avoir un aperçu global sur votre poids. Nous
-                calculons également votre indice de masse corporel pour avoir une idée sur la composition graisseuse, musculaire et osseuse de votre corps.</p>
-            </li>
-        </ul>
-        </section>
-        <section class="about mt-5">
-        <h2 class="mt-5">A propos</h2>
-        <div class="container mt-5">
-            <p>Chez MyFitLog, notre équipe est composée de professionnels passionnés par la santé et la condition physique.
-             Nous sommes une équipe multidisciplinaire, avec des développeurs, des designers, des experts en nutrition et en activité physique,
-              des spécialistes du sommeil et bien plus encore. Nous sommes tous unis par la vision de créer une application de surveillance de
-              la santé qui soit à la fois simple et efficace.
-            </p>
-            <p>Notre équipe de développement est composée de programmeurs expérimentés, qui travaillent en étroite collaboration avec les
-             experts en santé et en condition physique pour créer une application intuitive et facile à utiliser. Notre équipe de design
-              s'assure que l'application est à la fois esthétique et conviviale, avec une interface utilisateur simple et élégante.
-            </p>
-            <img src="{{asset('build/main/images/Health.svg', 'main')}}" alt="" height="300" width="300" class="mx-auto d-block">
-            <p>Notre équipe de nutrition et d'activité physique comprend des diététiciens et des entraîneurs personnels qualifiés,
-             qui aident à créer des plans de régime et d'entraînement personnalisés pour les utilisateurs. Notre équipe de sommeil
-              aide à développer des fonctionnalités de suivi du sommeil pour aider les utilisateurs à mieux comprendre leur sommeil
-              et à l'améliorer.
-            </p>
-            <p>Chez MyFitLog, nous sommes tous passionnés par la santé et la condition physique, et nous sommes déterminés à aider
-               les utilisateurs à atteindre leurs objectifs de bien-être. Nous sommes fiers de travailler ensemble pour offrir une
-                expérience utilisateur exceptionnelle à nos utilisateurs.
-            </p>
-        </div>
-        </section>
-        {% if app.user is null%}
-            <section class="inscription mt-5 mb-5">
-                <h2 class="mt-5">Inscription</h2>
-                <p class="mt-5">Améliorez votre santé et votre condition physique avec MyFitLog. L'inscription est simple et gratuite, alors inscrivez-vous dès aujourd'hui et
-                    commencez à améliorer votre santé et votre condition physique.
-                </p>
-                <div class="d-flex justify-content-center mt-4">
-                    <button class="btn-header text-white rounded-pill px-4 py-2">M'incrire maintenant</button>
-                </div>
-            </section>
-        {% endif %}
-    </div>
+		{# <section class="header d-flex justify-content-around align-items-center">
+		        <div class="d-flex flex-column w-50">
+		            <img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
+		            <p class="header-description">Améliorez votre santé en surveillant votre activité physique,
+		            votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
+		            </p>
+		            <button class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Get started</button>
+		        </div>
+		            <img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
+		        </section> #}
+			<section class="header-section row vh-75"> <div class="col-md-7 d-flex flex-column justify-content-center align-items-center">
+				<img src="{{asset('build/main/images/MyFitLog-1.png', 'main')}}" alt="" width="300">
+				<p class="header-description w-75">Améliorez votre santé en surveillant votre activité physique,
+					                votre alimentation et votre sommeil grâce à notre application de surveillance de la santé.
+				</p>
+				<div class="d-flex justify-content-center">
+					<a href="{{ app.user is null ? path('login') : path('dashboard') }}" class="btn-header text-white rounded align-self-center py-2 px-4 mt-2">Commencer maintenant</a>
+				</div>
+			</div>
+			<div class="col-md-5 d-flex justify-content-center">
+				<img src="{{ asset("build/main/images/hero.svg", 'main' )}}" alt="" height="400" width="400">
+			</div>
+		</section>
+		<section class="concept mx-auto">
+			<h2 class="text-lg-start text-center">Concept</h2>
+			<p class="mt-3 mb-3 text-lg-start text-center">
+				Bienvenue sur MyFitLog, l'application de surveillance de la santé qui vous accompagne
+				         dans votre parcours de bien-être et de condition physique. Nous avons créé cette application pour
+				          aider les utilisateurs à suivre leur santé et leur progression de manière simple et pratique.
+				           Voici quelques points de concept clés de notre application :
+			</p>
+			<ul class="row mt-5 ps-0">
+				<li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+					<img src="{{ asset('build/main/images/fitness.svg', 'main')}}" alt="Activité physique" height="150" width="150px">
+					<h4 class="mt-4">Suivi de l'activité physique</h4>
+					<p class="text-center mt-3">MyFitLog permet aux utilisateurs de suivre leur activité physique en enregistrant le nombre de pas,
+						                la distance parcourue, les calories brûlées et bien plus encore. Les graphiques et tableaux de l'application
+						                vous aideront à visualiser vos progrès et à atteindre vos objectifs de condition physique.
+					</p>
+				</li>
+				<li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+					<img src="{{ asset('build/main/images/nourriture.svg', 'main')}}" alt="Alimentation" height="150" width="150px">
+					<h4 class="mt-4">Suivi de l'alimentation</h4>
+					<p class="text-center mt-3">L'application vous permet de suivre votre consommation de nourriture, de surveiller les calories,
+						                les nutriments et l'apport en eau. Vous pouvez également ajouter des photos de vos repas pour mieux suivre votre alimentation.
+					</p>
+				</li>
+				<li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+					<img src="{{ asset('build/main/images/sleep.svg', 'main')}}" alt="Sommeil" height="150" width="150px">
+					<h4 class="mt-4">Suivi du sommeil</h4>
+					<p class="text-center mt-3">MyFitLog vous aide à suivre votre sommeil, en enregistrant le temps de sommeil, la qualité du sommeil et les cycles de sommeil.
+						                Vous pourrez ainsi mieux comprendre votre sommeil et trouver des moyens pour améliorer votre qualité de sommeil.
+					</p>
+				</li>
+				<li class="col-md-3 d-flex flex-column align-items-center justify-content-start">
+					<img src="{{ asset('build/main/images/masse.svg', 'main')}}" alt="Poids" height="150" width="150px">
+					<h4 class="mt-4">Suivi de la masse</h4>
+					<p class="text-center mt-3">Nous vous aidons à suivre votre masse en enregistrant quotidiennement votre masse afin d'avoir un aperçu global sur votre poids. Nous
+						                calculons également votre indice de masse corporel pour avoir une idée sur la composition graisseuse, musculaire et osseuse de votre corps.</p>
+				</li>
+			</ul>
+		</section>
+		<section class="about mt-5">
+			<h2 class="mt-5">A propos</h2>
+			<div class="container mt-5">
+				<p>Chez MyFitLog, notre équipe est composée de professionnels passionnés par la santé et la condition physique.
+					             Nous sommes une équipe multidisciplinaire, avec des développeurs, des designers, des experts en nutrition et en activité physique,
+					              des spécialistes du sommeil et bien plus encore. Nous sommes tous unis par la vision de créer une application de surveillance de
+					              la santé qui soit à la fois simple et efficace.
+				</p>
+				<p>Notre équipe de développement est composée de programmeurs expérimentés, qui travaillent en étroite collaboration avec les
+					             experts en santé et en condition physique pour créer une application intuitive et facile à utiliser. Notre équipe de design
+					              s'assure que l'application est à la fois esthétique et conviviale, avec une interface utilisateur simple et élégante.
+				</p>
+				<img src="{{asset('build/main/images/Health.svg', 'main')}}" alt="" height="300" width="300" class="mx-auto d-block">
+				<p>Notre équipe de nutrition et d'activité physique comprend des diététiciens et des entraîneurs personnels qualifiés,
+					             qui aident à créer des plans de régime et d'entraînement personnalisés pour les utilisateurs. Notre équipe de sommeil
+					              aide à développer des fonctionnalités de suivi du sommeil pour aider les utilisateurs à mieux comprendre leur sommeil
+					              et à l'améliorer.
+				</p>
+				<p>Chez MyFitLog, nous sommes tous passionnés par la santé et la condition physique, et nous sommes déterminés à aider
+					               les utilisateurs à atteindre leurs objectifs de bien-être. Nous sommes fiers de travailler ensemble pour offrir une
+					                expérience utilisateur exceptionnelle à nos utilisateurs.
+				</p>
+			</div>
+		</section>
+		{% if app.user is null%}
+			<section class="inscription mt-5 mb-5">
+				<h2 class="mt-5">Inscription</h2>
+				<p class="mt-5">Améliorez votre santé et votre condition physique avec MyFitLog. L'inscription est simple et gratuite, alors inscrivez-vous dès aujourd'hui et
+					                    commencez à améliorer votre santé et votre condition physique.
+				</p>
+				<div class="d-flex justify-content-center mt-4">
+					<a href="/creer-un-compte" class="btn-header text-white rounded-pill px-4 py-2">M'inscrire maintenant</a>
+				</div>
+			</section>
+		{% endif %}
+	</div>
 {% endblock %}

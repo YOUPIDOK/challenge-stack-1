@@ -1,0 +1,64 @@
+{% extends 'layouts/sidebar_layout.html.twig' %}
+
+{% block title %}Mon objectif{% endblock %}
+
+{% block body %}
+    <h1>Mon objectif</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Début de l'objectif</th>
+                <td>{{ objective.startAt ? objective.startAt|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin de l'objectif</th>
+                <td>{{ objective.endAt ? objective.endAt|date('d/m/Y') : 'Pas de fin pour cet objectif' }}</td>
+            </tr>
+            <tr>
+                <th>Nom de l'objectif</th>
+                <td>{{ objective.label }}</td>
+            </tr>
+            <tr>
+                <th>Valeur de mon objectif</th>
+                <td>{{ objective.objectiveValue }}</td>
+            </tr>
+            <tr>
+                <th>Type d'objectif</th>
+                <td>{{ objective.getObjectiveTypeValue }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                {% if objective.active %}
+                    <td><button class="btn btn-success"></button></td>
+                {% else %}
+                    <td><button class="btn btn-danger"></button></td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir au objectif</a>
+    <a class="btn btn-primary" href="{{ path('app_main_objective_edit', {'id': objective.id}) }}">Modifier</a>
+    <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-objective-{{ objective.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+
+{% endblock %}
+
+{% block modals %}
+        <div class="modal fade" id="delete-objective-{{ objective.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez vous vraiment supprimer cet objectif : {{ objective.label }} ?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ path('app_main_objective_delete', {id: objective.id}) }}" class="text-danger">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

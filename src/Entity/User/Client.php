@@ -51,11 +51,11 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Objective::class, cascade: ['remove'])]
     private Collection $objectives;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DailyReport::class, cascade: ['remove'])]
     #[ORM\OrderBy(['date' => 'DESC'])]
     private Collection $dailyReports;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Food::class, cascade: ['remove'])]
     #[ORM\OrderBy(['label' => 'ASC'])]
     private Collection $foods;
 

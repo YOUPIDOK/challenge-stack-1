@@ -1,24 +1,29 @@
 {% extends 'layouts/navbar_layout.html.twig' %}
 
 {% block title %}Homepage{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    {% for file in encore_entry_css_files('home', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container pt-4">
             <p>
             La CNIL ne fournit pas de texte standard pour les mentions légales d'un site web. Toutefois, voici un exemple de texte qui peut être utilisé comme base pour la rédaction des mentions légales de votre site web :
+            
+           <h2> Mentions légales</h2>
 
-            Mentions légales
-
-            Le présent site web Myftlog est édité par Myftlog, une société 09989879 au capital de 0.0000000000001 euros, immatriculée au Registre du Commerce et des Sociétés de Lyon sous le numéro 8978979, dont le siège social est situé à 12rue Basile par dieu lyon 69003.
+           <p> Le présent site web Myftlog est édité par Myftlog, une société 09989879 au capital de 0.0000000000001 euros, immatriculée au Registre du Commerce et des Sociétés de Lyon sous le numéro 8978979, dont le siège social est situé à 12rue Basile par dieu lyon 69003.
 
             Directeur de la publication : Hallouli
             Adresse e-mail de contact : contact@Myftlog.com
 
-            Le présent site web est hébergé par Hébero.
+           <h2> Le présent site web est hébergé par Hébero.</h2>
 
-            Nous nous engageons à respecter la confidentialité des données personnelles collectées sur le présent site web conformément à notre politique de confidentialité disponible sur le Site.
+           <p> Nous nous engageons à respecter la confidentialité des données personnelles collectées sur le présent site web conformément à notre politique de confidentialité disponible sur le Site.
 
-            Le présent site web est soumis à la loi française. Tout litige découlant de l'utilisation du présent site web sera soumis à la compétence exclusive des tribunaux français.
+           <p> Le présent site web est soumis à la loi française. Tout litige découlant de l'utilisation du présent site web sera soumis à la compétence exclusive des tribunaux français.
 
             Dernière mise à jour : 03/03/2023
 

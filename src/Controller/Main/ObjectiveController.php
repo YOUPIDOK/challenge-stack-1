@@ -98,7 +98,7 @@ class ObjectiveController extends AbstractController
         $this->denyAccessUnlessGranted(ObjectiveVoter::ACCESS, $objective);
 
         $objectiveRepository->remove($objective, true);
-        $this->addFlash('success', 'Votre objectif à était supprimé');
+        $this->addFlash('success', 'Votre objectif a été supprimé.');
 
         return $this->redirectToRoute('app_main_objective_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -41,7 +41,7 @@ class SleepTimeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $sleepTimeRepository->save($sleepTime, true);
             $dailyReportRepository->save($dailyReport, true);
-            $this->addFlash('success', 'Votre temps de sommeil à était ajouté');
+            $this->addFlash('success', 'Votre temps de sommeil a été ajouté.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,7 +64,7 @@ class SleepTimeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $sleepTimeRepository->save($sleepTime, true);
 
-            $this->addFlash('success', 'Votre temps de sommeil à était modifié');
+            $this->addFlash('success', 'Votre temps de sommeil a été modifié.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,7 +82,7 @@ class SleepTimeController extends AbstractController
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $sleepTimeRepository->remove($sleepTime, true);
-        $this->addFlash('success', 'Votre temps de sommeil à était supprimé');
+        $this->addFlash('success', 'Votre temps de sommeil a été supprimé.');
 
         $dailyReport->updateDailyReportSleepTime();
         $em->flush();

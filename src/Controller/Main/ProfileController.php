@@ -53,7 +53,7 @@ class ProfileController extends AbstractController
                 $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPlainPassword()));
             }
 
-            $this->addFlash('success', 'Votre profile a bien été modifié.');
+            $this->addFlash('success', 'Votre profil a bien été modifié.');
             $em->flush();
         }
 

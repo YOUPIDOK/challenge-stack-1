@@ -65,7 +65,7 @@ class RegisterController extends AbstractController
             $em->persist($dailyReport);
             $em->flush();
 
-            $this->addFlash('success', 'Votre compte a bien été créer.');
+            $this->addFlash('success', 'Votre compte a bien été créé.');
 
             return $this->redirectToRoute('login');
         }

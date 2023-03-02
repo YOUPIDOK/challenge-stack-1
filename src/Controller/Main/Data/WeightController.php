@@ -40,7 +40,7 @@ class WeightController extends AbstractController
             $dailyReport->setWeight($weight);
             $weightRepository->save($weight, true);
             $dailyReportRepository->save($dailyReport, true);
-            $this->addFlash('success', 'Votre poid du jour à était ajouté');
+            $this->addFlash('success', 'Votre poids du jour a été ajouté.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,7 +62,7 @@ class WeightController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $weightRepository->save($weight, true);
-            $this->addFlash('success', 'Votre poid du jour à était modifié');
+            $this->addFlash('success', 'Votre poids du jour a été modifié.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,7 +80,7 @@ class WeightController extends AbstractController
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $weightRepository->remove($weight, true);
-        $this->addFlash('success', 'Votre poid du jour à était supprimé');
+        $this->addFlash('success', 'Votre poids du jour a été supprimé.');
 
         return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
     }

@@ -43,7 +43,7 @@ class ActivityTimeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $activityTimeRepository->save($activityTime, true);
             $dailyReportRepository->save($dailyReport, true);
-            $this->addFlash('success', 'Votre activité du jour à était ajouté');
+            $this->addFlash('success', 'Votre activité du jour a été ajoutée.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,7 +67,7 @@ class ActivityTimeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $activityTimeRepository->save($activityTime, true);
 
-            $this->addFlash('success', 'Votre activité du jour à était modifié');
+            $this->addFlash('success', 'Votre activité du jour a été modifiée.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -85,7 +85,7 @@ class ActivityTimeController extends AbstractController
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $activityTimeRepository->remove($activityTime, true);
-        $this->addFlash('success', 'Votre activité du jour à était supprimé');
+        $this->addFlash('success', 'Votre activité du jour a été supprimée.');
 
         $dailyReport->updateDailyActivityTime($weightRepository->findLastWeightByClient($dailyReport->getClient()));
         $em->flush();

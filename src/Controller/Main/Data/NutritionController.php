@@ -42,7 +42,7 @@ class NutritionController extends AbstractController
 
             $nutritionRepository->save($nutrition, true);
             $dailyReportRepository->save($dailyReport, true);
-            $this->addFlash('success', 'Votre nutrition du jour à était ajoutée');
+            $this->addFlash('success', 'Votre nutrition du jour a été ajoutée.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,7 +65,7 @@ class NutritionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nutritionRepository->save($nutrition, true);
-            $this->addFlash('success', 'Votre nutrition du jour à était modifié');
+            $this->addFlash('success', 'Votre nutrition du jour a été modifiée.');
             return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,7 +83,7 @@ class NutritionController extends AbstractController
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         $nutritionRepository->remove($nutrition, true);
-        $this->addFlash('success', 'Votre nutrition du jour à était supprimé');
+        $this->addFlash('success', 'Votre nutrition du jour a été supprimée.');
 
         $dailyReport->updateDailyNutrition();
         $em->flush();

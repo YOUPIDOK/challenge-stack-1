@@ -24,6 +24,7 @@ class NutritionType extends AbstractType
                 'choices' => MealTypeEnum::getChoices()
             ])
             ->add('food', EntitySelectChoicesType::class, [
+                'label' => 'Aliment / Plat',
                 'class' => Food::class
             ])
             ->add('foodWeight', NumberType::class, [

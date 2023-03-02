@@ -71,7 +71,8 @@ class ActivityTimeType extends AbstractType
                 ]
             ])
             ->add('activity', EntitySelectChoicesType::class, [
-                'class' => Activity::class
+                'class' => Activity::class,
+                'label' => 'Activité'
             ])
         ;
     }

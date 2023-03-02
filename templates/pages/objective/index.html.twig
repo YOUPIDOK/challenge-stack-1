@@ -7,6 +7,7 @@
 	<h1>Vos Objectifs</h1>
 
 	<div class="my-2">
+	<a class="btn btn-primary mb-2" href="{{ path('app_main_objective_new') }}">Ajouter</a>
 		{{ form_start(form) }}
 		<div class="input-group">
 			{{ form_widget(form.label) }}
@@ -85,8 +86,6 @@
 		</div>
 	{% endif %}
 
-	<a class="btn btn-primary" href="{{ path('app_main_objective_new') }}">Ajouter</a>
-	<a class="btn btn-primary" href="{{ path('dashboard') }}">Revenir à votre dashboard</a>
 {% endblock %}
 
 {% block modals %}

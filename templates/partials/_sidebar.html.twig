@@ -13,6 +13,11 @@
 				<span class="nav_logo-name">MyFitLog</span>
 			</a>
 			<div class="nav_list">
+			<a href="{{ path('dashboard') }}" class="nav_link">
+					<i class="fa-solid fa-chart-line nav_icon"></i>
+					<span class="nav_name">Dashboard</span>
+				</a>
+
 				<a href="{{ path('daily_report_show_current') }}" class="nav_link">
 					<i class="fa-solid fa-grip nav_icon"></i>
 					<span class="nav_name">Mon rapport du jour</span>
@@ -38,10 +43,7 @@
 					<i class="fa-solid fa-user nav_icon"></i>
 					<span class="nav_name">Mon profil</span>
 				</a>
-				<a href="/" class="nav_link">
-					<i class="fa-solid fa-house nav_icon"></i>
-					<span class="nav_name">Accueil</span>
-				</a>
+				
 			</div>
 		</div>
 		<div class="nav_link">

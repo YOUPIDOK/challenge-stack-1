@@ -84,20 +84,23 @@ a{
     margin-bottom: 2rem
 }
 .nav_logo-icon{
-    font-size: 1.25rem;color: var(--white-color)
+    font-size: 1.25rem;color: var(--font-color)
 }
 .nav_logo-name{
-    color: var(--white-color);
+    color: var(--font-color);
     font-weight: 700
 }
 .nav_link{
     position: relative;
-    color: var(--first-color-light);
+    color: white;
     margin-bottom: 1.5rem;
     transition: .3s
 }
 .nav_link:hover{
-    color: var(--white-color)
+    background-color: rgb(90, 128, 252);
+    border-radius: 15px;
+    transition: all 0.3s;
+    color: white;
 }
 .nav_icon{
     font-size: 1.25rem

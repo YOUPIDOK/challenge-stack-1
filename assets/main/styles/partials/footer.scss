@@ -1,9 +1,12 @@
 footer {
     padding:45px 15px;
+    margin-top:15px;
     display: flex;
     background-color: var(--bg-blue);
     justify-content: space-around;
     align-items: center;
+    box-shadow: rgb(50 98 255) 0px 0px 1px;
+    height: 150px;
 }
 
 ul#logo {
@@ -28,4 +31,13 @@ ul#lien li {
 }
 ul#lien li a {
     color:var(--font-color);
+}
+ul#lien li a:hover {
+    color: var(--hover-a);
+}
+
+@media only screen and (max-device-width : 768px) {
+    footer {
+        flex-direction: column;
+    }
 }

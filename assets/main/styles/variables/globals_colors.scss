@@ -14,13 +14,18 @@
     --light: #F4EBD9;
     --white-color: #F7F6FB;
     --bg-menu_profile: #ffffff;
-
+    --bg-disabled: #ffffff;
+    --hover-a: #ffffff;
+    --lien_sidebar : black;
   }
   [data-bs-theme="dark"]{
     --bg-nav: #272729;
     --bg-blue: #272729;
     --font-color: white;
     --bg-menu_profile: #272729;
+    --bg-disabled: #444;
     --white-color:rgb(0, 0, 0);
+    --hover-a: rgba(50,98,255,1);
+    --lien_sidebar : #F4EBD9;
 
   }

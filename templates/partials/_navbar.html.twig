@@ -4,6 +4,7 @@
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				{% if is_granted('ROLE_CLIENT') %}
@@ -36,14 +37,14 @@
 					<li class="nav-item">
 						<a class="navbar-brand btn btn-inscription" href=" ">S'inscrire</a>
 					</li>
-					<li class="nav-item mt-2">
-						<input type="checkbox" class="demo5" id="demo5">
-						<label for="demo5"></label>
-						<i class="fa-solid fa-moon"></i>
-						<i class="fa-solid fa-sun" style="color:white"></i>
-					</li>
-				{% endif %}
 
+				{% endif %}
+				<li class="nav-item mt-2">
+					<input type="checkbox" class="demo5" id="demo5">
+					<label for="demo5"></label>
+					<i class="fa-solid fa-moon" style="color:#272729"></i>
+					<i class="fa-solid fa-sun" style="color:white"></i>
+				</li>
 			</ul>
 
 		</div>

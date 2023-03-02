@@ -17,7 +17,7 @@ if (navigator && navigator.serviceWorker) {
 }
 
 //cibler le logo sur chaque page
-let logo = document.querySelector("img#logo");
+let logo = document.querySelectorAll("img#logo");
 let logoFooter = document.querySelector("img#footer");
 let html = document.querySelector("html");
 
@@ -28,12 +28,14 @@ function darkmode() {
         html.setAttribute("data-bs-theme", "dark");
         localStorage.setItem("darkmode", "true");
         logoFooter.setAttribute("src", "/app_icon/logowhite.png");
-        logo.setAttribute("src", "/app_icon/logowhite.png");
+        logo.forEach((element) => element.setAttribute("src", "/app_icon/logowhite.png"));
+        // logo.setAttribute("src", "/app_icon/logowhite.png");
     } else {
         html.setAttribute("data-bs-theme", "");
         localStorage.setItem("darkmode", "false");
         checkbox.setAttribute("checked", "");
-        logo.setAttribute("src", "/app_icon/logo.png");
+        logo.forEach((element) => element.setAttribute("src", "/app_icon/logo.png"));
+        // logo.setAttribute("src", "/app_icon/logo.png");
         logoFooter.setAttribute("src", "/app_icon/logoblancnoir.png");
     }
 }
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isDarkMode == "true") {
         html.setAttribute("data-bs-theme", "dark");
         logo.forEach((element) => element.setAttribute("src", "/app_icon/logowhite.png"));
+        // logo.setAttribute("src", "/app_icon/logowhite.png");
         logoFooter.setAttribute("src", "/app_icon/logowhite.png");
         checkbox.setAttribute("checked", "");
     }

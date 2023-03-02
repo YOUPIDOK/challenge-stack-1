@@ -1,5 +1,10 @@
 <footer class="mt-auto">
     <div class="text-center bg-primary d-flex justify-content-center mt-4 py-2 gap-3">
         <div class="text-white small">© challenge stack n°1 - {{ 'now' | date('Y') }}</div>
+        <div class="text-white small">
+              <a  href="{{ path('conditions_generales')}}">Conditions generales</a>
+              <a href="{{ path('mentions_legales')}}">Mentions legales</a>
+              <a href="{{ path('politiques_de_confidentialite')}}">Politiques de confidentialite</a>
+        </div>
     </div>
 </footer>

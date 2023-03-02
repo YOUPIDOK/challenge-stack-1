@@ -4,53 +4,49 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Mes rapports journaliers</h1>
+<h1>Mes rapports journaliers</h1>
 
-	<a href="{{ path('dashboard') }}" class="btn btn-primary">Dashboard</a>
+<a href="{{ path('dashboard') }}" class="btn btn-primary">Dashboard</a>
+<a class="btn btn-primary" href="{{ path('daily_report_create') }}">Ajouter</a>
 
-	<div class="my-2">
-		{{ form_start(form) }}
-		<span>Selectionnez la periode</span>
-		<div class="input-group">
-			{{ form_widget(form.start) }}
-			{{ form_widget(form.end) }}
-			<button type="submit" class="input-group-btn btn btn-primary">
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-		</div>
-		{{ form_end(form) }}
+<div class="my-2">
+	{{ form_start(form) }}
+	<span>Selectionnez la periode</span>
+	<div class="input-group">
+		{{ form_widget(form.start) }}
+		{{ form_widget(form.end) }}
+		<button type="submit" class="input-group-btn btn btn-primary">
+			<i class="fa-solid fa-magnifying-glass"></i>
+		</button>
 	</div>
+	{{ form_end(form) }}
+</div>
 
-	<div class="table-responsive">
-		<table class="table table-striped  table-hover border">
-			<thead>
+<div class="table-responsive">
+	<table class="table table-striped  table-hover border">
+		<thead>
+			<tr>
+				<th scope="col">Date</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for dailyReport in pager.currentPageResults %}
 				<tr>
-					<th scope="col">Date</th>
-					<th scope="col">Action</th>
+					<th scope="row">{{ dailyReport.date | date('d/m/y') }}</th>
+					<td>
+						<a href="{{ path('daily_report_show', {id: dailyReport.id}) }}">
+							<i class="fa-solid fa-eye text-primary"></i>
+						</a>
+					</td>
 				</tr>
-			</thead>
-			<tbody>
-				{% for dailyReport in pager.currentPageResults %}
-					<tr>
-						<th scope="row">{{ dailyReport.date | date('d/m/y') }}</th>
-						<td>
-							<a href="{{ path('daily_report_show', {id: dailyReport.id}) }}">
-								<i class="fa-solid fa-eye text-primary"></i>
-							</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="2" class="text-center">Aucun rapport journalier.</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+			{% else %}
+				<tr>
+					<td colspan="2" class="text-center">Aucun rapport journalier.</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 
-	{% if pager.nbResults > pager.maxPerPage %}
-		<div class="d-flex justify-content-end mt-3">
-			{% include 'components/_pagination.html.twig' %}
-		</div>
-	{% endif %}
-{% endblock %}
+<<<<<<<HEAD<divclass="d-flexjustify-content-endmt-3"></div>=======<divclass="d-flexjustify-content-endmt-3"></div>>> {% if pager.nbResults > pager.maxPerPage %} {% include 'components/_pagination.html.twig' %} {% endif %} {% endblock %} {% if pager.nbResults > pager.maxPerPage %} {% include 'components/_pagination.html.twig' %} {% endif %} {% endblock %}>>>>> cc716026fb06cc9308d05a14e78410f39cc6d79c

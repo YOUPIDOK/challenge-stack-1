@@ -3,6 +3,7 @@
 namespace App\Controller\Main;
 
 use App\Entity\DailyReport;
+use App\Form\DailyReport\DailyReportType;
 use App\Form\DailyReport\SearchDailyReportType;
 use App\Repository\DailyReportRepository;
 use App\Security\Main\Voter\DailyReportVoter;
@@ -55,13 +56,34 @@ class DailyReportController extends AbstractController
         return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()]);
     }
 
-    #[Route('/{id}', name: 'daily_report_show', methods: ['GET'])]
+    #[Route('/consulter/{id}', name: 'daily_report_show', methods: ['GET'])]
     public function show(DailyReport $dailyReport): Response
     {
         $this->denyAccessUnlessGranted(DailyReportVoter::ACCESS, $dailyReport);
 
         return $this->render('pages/dailyReport/show.html.twig', [
             'dailyReport' => $dailyReport,
+        ]);
+    }
+
+    #[Route('/creer', name: 'daily_report_create', methods: ['GET', 'POST'])]
+    public function new(Request $request, DailyReportRepository $dailyReportRepository): Response
+    {
+        $dailyReport = new DailyReport();
+        $dailyReport->setClient($this->getUser()->getClient());
+
+        $form = $this->createForm(DailyReportType::class, $dailyReport);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dailyReportRepository->save($dailyReport, true);
+
+            return $this->redirectToRoute('daily_report_show', ['id' => $dailyReport->getId()]);
+        }
+
+        return $this->renderForm('pages/dailyReport/new.html.twig', [
+            'daily_report' => $dailyReport,
+            'form' => $form,
         ]);
     }
 }

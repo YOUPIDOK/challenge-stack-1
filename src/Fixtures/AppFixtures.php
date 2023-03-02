@@ -9,9 +9,11 @@ use App\Entity\Data\Nutrition;
 use App\Entity\Data\SleepTime;
 use App\Entity\Data\Weight;
 use App\Entity\Food;
+use App\Entity\Objective\Objective;
 use App\Entity\User\Client;
 use App\Entity\User\User;
 use App\Enum\Nutrition\MealTypeEnum;
+use App\Enum\Objective\ObjectiveTypeEnum;
 use App\Enum\User\GenderEnum;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -34,6 +36,7 @@ class AppFixtures extends Fixture
     private string          $todayFormated;
     private array           $genders;
     private array           $mealTypes;
+    private array           $objectivesType;
 
     public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
     {
@@ -44,6 +47,7 @@ class AppFixtures extends Fixture
         $this->commonFoods = new ArrayCollection();
         $this->genders = [GenderEnum::MAN, GenderEnum::WOMAN, GenderEnum::NON_BINARY];
         $this->mealTypes = [MealTypeEnum::DINNER, MealTypeEnum::SNACK, MealTypeEnum::LUNCH, MealTypeEnum::BREAKFAST];
+        $this->objectivesType = [ObjectiveTypeEnum::AVERAGE_HOUR_SLEEP_PER_DAY, ObjectiveTypeEnum::AVERAGE_CALORIC_SPENT_PER_DAY, ObjectiveTypeEnum::AVERAGE_CALORIC_ASSIMILATE_PER_DAY, ObjectiveTypeEnum::NB_HOUR_ACTIVITY_DURING_THE_PERIOD, ObjectiveTypeEnum::AVERAGE_KILOMETER_TRAVELED, ObjectiveTypeEnum::AVERAGE_CALORIC_DEFICIT_PER_DAY, ObjectiveTypeEnum::WEIGHT_AT_THE_END_OF_THE_PERIOD];
     }
 
     public function load(ObjectManager $manager): void
@@ -81,6 +85,29 @@ class AppFixtures extends Fixture
            $this->commonActivities->add($activity);
         }
 
+        $this->manager->flush();
+    }
+
+    private function objectives(Client $client, int $number): void {
+        $type = $this->objectivesType[array_rand($this->objectivesType)];
+        $objective = (new Objective())
+            ->setClient($client)
+            ->setLabel('Mon objectif numéro :   ' . $number)
+            ->setType($type)
+            ->setStartAt($this->faker->dateTimeBetween('-1 years', '+1 month'));
+
+            if ($type === 'AVERAGE_HOUR_SLEEP_PER_DAY') {
+                $objective->setObjectiveValue($this->faker->numberBetween(1, 24));
+            } else {
+                $objective->setObjectiveValue($this->faker->numberBetween(0, 400));
+            }
+            if ($number % 3 === 0) {
+                $objective->setEndAt(null);
+            } else {
+                $objective->setEndAt($this->faker->dateTimeBetween('+2 month', '+1 year'));
+            }
+
+        $this->manager->persist($objective);
         $this->manager->flush();
     }
 
@@ -142,7 +169,7 @@ class AppFixtures extends Fixture
     {
         $client = (new Client())
             ->setHeight(random_int(145,205))
-            ->setBirthdate($this->faker->dateTimeBetween(new DateTime('now -90 years'), new DateTime('now -16 years')))
+            ->setBirthdate($this->faker->dateTimeBetween(new DateTime('now -60 years'), new DateTime('now -16 years')))
             ->setRegisteredAt(new DateTime('now -8months'))
         ;
 
@@ -173,6 +200,11 @@ class AppFixtures extends Fixture
             }
             $this->clientDailyReport($client, $dailyReportDate, $weight);
             $dailyReportDate->modify('+1 day');
+        }
+
+        $countObjectif = 20;
+        for ($i = 0; $i < $countObjectif; $i++) {
+            $this->objectives($client, $i);
         }
     }
 

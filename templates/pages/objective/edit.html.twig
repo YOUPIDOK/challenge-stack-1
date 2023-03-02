@@ -1,0 +1,12 @@
+{% extends 'layouts/sidebar_layout.html.twig' %}
+
+{% block title %}Modifier mon objectif{% endblock %}
+
+{% block body %}
+    <h1>Modifier mon objectif</h1>
+
+    {{ include('pages/objective/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir aux objectifs</a>
+
+{% endblock %}

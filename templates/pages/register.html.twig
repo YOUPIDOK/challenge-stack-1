@@ -22,8 +22,9 @@
             <div class="col-md-6">{{ form_row(form.client.height) }}</div>
             <div class="col-md-6">{{ form_row(form.weight) }}</div>
         </div>
-
-        <button class="btn btn-primary w-100">S'inscrir</button>
+        <div class="text-center p-2 m-2">
+        <button class="btn-inscription">S'inscrire</button>
+        </div>
         {{ form_end(form) }}
         <div class="mt-2">Déjà inscrit ? <a href="{{ path('login') }}">Se connecter</a></div>
     </div>

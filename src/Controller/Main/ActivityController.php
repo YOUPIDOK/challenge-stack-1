@@ -10,12 +10,14 @@ use App\Security\Main\Voter\ActivityVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/activites')]
+#[IsGranted('ROLE_CLIENT')]
 class ActivityController extends AbstractController
 {
     #[Route('/', name: 'activities', methods: ['GET'])]
@@ -68,7 +70,7 @@ class ActivityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            $this->addFlash('success', 'La nourriture a bien été modifiée.');
+            $this->addFlash('success', 'L\'activité a bien été modifiée.');
         }
 
         return $this->renderForm('pages/activity/update.html.twig', [

@@ -169,7 +169,7 @@ class AppFixtures extends Fixture
     {
         $client = (new Client())
             ->setHeight(random_int(145,205))
-            ->setBirthdate($this->faker->dateTimeBetween(new DateTime('now -90 years'), new DateTime('now -16 years')))
+            ->setBirthdate($this->faker->dateTimeBetween(new DateTime('now -60 years'), new DateTime('now -16 years')))
             ->setRegisteredAt(new DateTime('now -8months'))
         ;
 

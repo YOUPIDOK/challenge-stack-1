@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[IsGranted('ROLE_CLIENT')]
-#[Route('/mon-profile')]
+#[Route('/mon-profil')]
 class ProfileController extends AbstractController
 {
     #[Route('/', name: 'profile')]

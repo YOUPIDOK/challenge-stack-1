@@ -25,6 +25,6 @@ php bin/console user:create # Create user
 - Super admin
     - email : admin@mail.fr
     - mot de passe : password
-- Admin
-    - email : admin@mail.fr
+- Client
+    - email : client1@mail.fr
     - mot de passe : password

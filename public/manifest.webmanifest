@@ -8,7 +8,7 @@
   "description": "Améliorez votre santé en surveillant votre activité physique.",
   "icons": [
     {
-      "src": "app_icon/icon_200px.png",
+      "src": "app_icon/pwa.png",
       "sizes": "200x200",
       "type": "image/png"
     }

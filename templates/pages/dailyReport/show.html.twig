@@ -1,31 +1,81 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
 {% block title %}Rapport journalier{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    {% for file in encore_entry_css_files('daily-report', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
-    <h1>Rapport du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
-    <a class="btn btn-primary" href="{{ path('app_main_data_nutrition_new', {'id': dailyReport.id}) }}">Nutrition</a>
-    <a class="btn btn-primary" href="{{ path('app_main_data_sleep_time_new', {'id': dailyReport.id}) }}">Sommeil</a>
-    <a class="btn btn-primary" href="{{ path('app_main_data_weight_new', {'id': dailyReport.id}) }}">Poid</a>
-    <a class="btn btn-primary" href="{{ path('app_main_data_activity_time_new', {'id': dailyReport.id}) }}">Activité</a>
-
+    <h1 class="daily-h1">Rapport du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
     <div>
         <h2>Mon récapitulatif de la journée</h2>
-        {% if dailyReport.weight is not null%}
-            <div>
-                <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
+        <div class="daily-details d-flex flex-column col-lg-6 col-sm-12 align-items-center">
+        <div class="d-md-flex gap-lg-5 gap-2">
+            {% if dailyReport.weight is not null%}
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{asset('build/main/images/scale.png', 'main')}}" alt="Calories brûlées" height="24" width="24">
+                    <p>Mon poid : {{ dailyReport.weight.weight }} kg</p>
+                </div>
                 <a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier mon poids</a>
+            {% endif %}
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{asset('build/main/images/fire.png', 'main')}}" alt="Calories brûlées" height="24" width="24">
+                <span> Calories mangées : {{ dailyReport.eatCalories }} kcal</span>
             </div>
-        {% endif %}
-        <div>Calories mangées : {{ dailyReport.eatCalories }} kcal</div>
-        <div>Calories dépensées : {{ dailyReport.spentCalories }} kcal</div>
-        <div>Différence calorifique : {{ dailyReport.differenceCalories }} kcal</div>
-        <div>Temps dormis : 0 min</div>
-        <div>Temps d'activités éffectué: 0 min</div>
+        </div>
+        <div class="d-md-flex gap-lg-5 gap-2">
+            <div class="d-flex gap-3">
+                <img src="{{asset('build/main/images/healthy-food.png', 'main')}}" alt="Calories dépensées" height="24" width="24">
+                <span>Calories dépensées : {{ dailyReport.spentCalories }} kcal</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{asset('build/main/images/bar-graph.png', 'main')}}" alt="Différence calorique" height="24" width="24">
+                <span>Diff. calorifique : {{ dailyReport.differenceCalories }} kcal</span>
+            </div>
+        </div>
+        <div class="d-md-flex gap-lg-5 gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{asset('build/main/images/sleeping.png', 'main')}}" alt="Temps dormis" height="24" width="24">
+                <span>Temps dormis : 0 min</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{asset('build/main/images/chronometer.png', 'main')}}" alt="Temps d'activités effectué" height="24" width="24">
+                <span>Tps d'activ. éffectué: 0 min</span>
+            </div>
+        </div>
+        </div>
     </div>
-
-    <h2>Nutritions</h2>
-    <div class="table-responsive">
+    <div class="row justify-content-lg-around flex-lg-row justify-content-md-between justify-content-center gap-1 my-4">
+        <a class="link-daily col-md-2 mt-2" href="{{ path('app_main_data_nutrition_new', {'id': dailyReport.id}) }}">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <i class="fa-solid fa-utensils fa-xl mb-1"></i>
+                <i class="fa-solid fa-plus mb-2"></i>
+            </div>
+        </a>
+        <a class="link-daily col-md-2 mt-2" href="{{ path('app_main_data_sleep_time_new', {'id': dailyReport.id}) }}">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <i class="fa-solid fa-bed fa-xl mb-1"></i>
+                <i class="fa-solid fa-plus mb-2"></i>
+            </div>
+        </a>
+                
+        <a class="link-daily col-md-2 mt-2" href="{{ path('app_main_data_weight_new', {'id': dailyReport.id}) }}">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <i class="fa-solid fa-weight-scale fa-xl mb-1"></i>
+                <i class="fa-solid fa-plus mb-2"></i>
+            </div>
+        </a>
+        <a class="link-daily col-md-2 mt-2" href="{{ path('app_main_data_activity_time_new', {'id': dailyReport.id}) }}">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <i class="fa-solid fa-person-running fa-xl mb-1"></i>
+                <i class="fa-solid fa-plus mb-2" height="200"></i>
+            </div>
+        </a>
+    </div>
+    <h2 class="daily-title mt-5">Nutritions</h2>
+    <div class="table-responsive my-4">
         <table class="table table-striped table-hove border">
             <thead>
             <tr>
@@ -63,8 +113,8 @@
         </table>
     </div>
 
-    <h2>Activité</h2>
-    <div class="table-responsive">
+    <h2 class='daily-title'>Activité</h2>
+    <div class="table-responsive my-4">
         <table class="table table-striped table-hove border">
             <thead>
                 <tr>
@@ -100,8 +150,8 @@
         </table>
     </div>
 
-    <h2>Sommeil</h2>
-    <div class="table-responsive">
+    <h2 class='daily-title'>Sommeil</h2>
+    <div class="table-responsive my-4">
         <table class="table table-striped table-hove border">
             <thead>
             <tr>

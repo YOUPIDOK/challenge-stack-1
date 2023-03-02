@@ -44,7 +44,7 @@ class RegisterType extends AbstractType
         ]);
 
         $builder->add('weight', NumberType::class, [
-            'label' => 'Poid',
+            'label' => 'Poids',
             'required' => true,
             'mapped' => false,
             'scale' => 2,

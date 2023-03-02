@@ -51,7 +51,7 @@ class UpdateProfileType extends AbstractType
         $weight = $options['weight'];
         if ($weight !== null) {
             $builder->add('weight', NumberType::class, [
-                'label' => 'Poid',
+                'label' => 'Poids',
                 'disabled' => true,
                 'data' => $weight->getWeight(),
                 'mapped' => false,

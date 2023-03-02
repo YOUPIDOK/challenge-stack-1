@@ -8,13 +8,12 @@ Back
         - Graphique pour les 4 trackers
     - Un rapport
         - Statistiques
-
 Front
-    - Page : Homepage
+  # - Page : Homepage
     - Page : Dashboard
     - Page : Login
     - Page : Register
-    - Page : Profile
+  # - Page : Profile
     - Page : Editer mon profile
     - Page : Mes aliments
     - Page : Ajouter / Modifier un aliment
@@ -26,11 +25,15 @@ Front
     - Page : Ajouter / Modifier aliments
     - Page : Ajouter / Modifier poids
     - Page : Ajouter / Modifier temps d'activité
-    - Page : Politique de confidentialité
-    - Page : Mention légale
-    - Page : Condition générale d'utilisation
-    - Ajouter les liens dans la sidebar
-    - Footer (mettre les liens RGPD)
+   # - Page : Politique de confidentialité
+   # - Page : Mention légale
+   # - Page : Condition générale d'utilisation
+   # - Ajouter les liens dans la sidebar
+   # - Footer (mettre les liens RGPD)
+
+Corrections
+    -Page d'inscription -> bouton s'inscrire
+                        -> poid avec un "s".
 
 Questions 
     - Comment saisir un rapport journalier pour un jour précis ?

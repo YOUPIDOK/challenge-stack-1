@@ -10,6 +10,7 @@ Encore
     .addEntry("main", "./assets/main/app.js")
     .addEntry("sidebar", "./assets/main/js/sidebar.js")
     .addStyleEntry("login", "./assets/main/styles/pages/login.scss")
+    .addStyleEntry("daily-report", "./assets/main/styles/pages/daily_report.scss")
     .addStyleEntry("sidebarcss", "./assets/main/styles/partials/sidebar.scss")
     .addStyleEntry('home', './assets/main/styles/pages/home.scss')
     .addStyleEntry("dashboard", "./assets/main/styles/pages/dashboard.scss")

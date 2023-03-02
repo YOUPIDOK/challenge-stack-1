@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Enum\User\GenderEnum;
 use App\Form\CustomType\SelectChoicesType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -67,6 +68,13 @@ class RegisterType extends AbstractType
         ]);
 
         $builder->add('client', ClientType::class);
+
+        $builder->add('rgpd', CheckboxType::class, [
+            'label' => "J'accepte la politique de confidentialité",
+            'required' => true,
+            'data' => true,
+            'mapped' => false
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

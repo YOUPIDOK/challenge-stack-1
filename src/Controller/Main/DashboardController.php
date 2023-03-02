@@ -29,7 +29,7 @@ class DashboardController extends AbstractController
         $client = $this->getUser()->getClient();
         $weight = $weightRepo->findLastWeightByClient($client);
 
-        $dateFilter = ['start' => $client->getRegisteredAt(), 'end' => new DateTime('now')];
+        $dateFilter = ['start' =>  new DateTime('now -1 month'), 'end' => new DateTime('now')];
         $form = $this->createForm(DashboardFilterType::class, $dateFilter, ['client' => $client]);
         $form->handleRequest($request);
 
@@ -40,8 +40,6 @@ class DashboardController extends AbstractController
         $sleepTimeChart = (new ChartBuilder())->generate(ChartBuilder::SLEEP_TIME_AVERAGE, 'Évolution du temps de sommeil (h/j)', $dailyReports, $form->get('start')->getData());
         $eatCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::EAT_CALORIES, 'Apport calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
         $spentCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::SPENT_CALORIES, 'Dépense calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
-
-        // TODO : Label
 
         return $this->render('pages/dashboard.html.twig', [
             'client' => $client,

@@ -9,12 +9,6 @@
 	{% endfor %}
 {% endblock %}
 {% block body %}
-	{# <a class="btn btn-primary" href="{{ path('activities') }}">Mes activités</a>
-				<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a>  #}
-
-	<!--Container Main start-->
-	<!--Container Main end-->
-
 	<div class="my-2">
 		{{ form_start(form) }}
 {#		<span>Selectionnez la periode</span>#}
@@ -28,47 +22,63 @@
 		{{ form_end(form) }}
 	</div>
 
-	{% if weightChart.isValid %}
-		{{ include('components/_chart.html.twig', {chart: weightChart}) }}
-	{% else %}
-		<div>Aucune donnée de poids disponible</div>
-	{% endif %}
-
-
-	<div class="profile-card">
-		<div class="profile-card-header">
-			<h3>Mon profil</h3>
-			<div class="avatar">
-				<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
-				{{ client.identity }}
+	<div class="row">
+		<div class="col-md-10 row">
+			<div class="col-lg-6">
+				{% if weightChart.isValid %}
+					{{ include('components/_chart.html.twig', {chart: weightChart}) }}
+				{% else %}
+					<div>Aucune donnée de poids disponible</div>
+				{% endif %}
 			</div>
-			<div class="profile-info">
-				<div class="profile-info-title">
-					{% if weight is not null %}
-						<p>Poids</p>
-					{% endif %}
-					<p>Age</p>
-					<p>Taille</p>
-				</div>
-				<div class="profile-info-value">
-					{% if weight is not null %}
-						<p>{{ weight.weight }}kg</p>
-					{% endif %}
-					<p>{{ client.age }} ans</p>
-					<p>{{ client.heightInMetter }}</p>
-				</div>
+			<div class="col-lg-6">
+				{% if sleepTimeChart.isValid %}
+					{{ include('components/_chart.html.twig', {chart: sleepTimeChart}) }}
+				{% else %}
+					<div>Aucune donnée de sommeil disponible</div>
+				{% endif %}
 			</div>
 		</div>
-{#		<div class="profile-card-body">#}
-{#			<h4>Mes objectifs</h4>#}
-{#			<div#}
-{#				class="accordion" id="accordionExample">#}
-{#				#}{# {% for objectif in objectifs %}#}
+		<div class="col-md-2 mt-4">
+			<div class="profile-card">
+				<div class="profile-card-header">
+					<h3>Mon profil</h3>
+					<div class="avatar">
+						<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
+						{{ client.identity }}
+					</div>
+					<div class="profile-info">
+						<div class="profile-info-title">
+							{% if weight is not null %}
+								<p>Poids</p>
+							{% endif %}
+							<p>Age</p>
+							<p>Taille</p>
+						</div>
+						<div class="profile-info-value">
+							{% if weight is not null %}
+								<p>{{ weight.weight }}kg</p>
+							{% endif %}
+							<p>{{ client.age }} ans</p>
+							<p>{{ client.heightInMetter }}</p>
+						</div>
+					</div>
+				</div>
+				{#		<div class="profile-card-body">#}
+				{#			<h4>Mes objectifs</h4>#}
+				{#			<div#}
+				{#				class="accordion" id="accordionExample">#}
+				{#				#}{# {% for objectif in objectifs %}#}
 
-{#																																																																																																																																																																																																						            {% endfor %} #}
-{#				{% include "components/objectif.html.twig" %}#}
-{#			</div>#}
-{#		</div>#}
+				{#																																																																																																																																																																																																						            {% endfor %} #}
+				{#				{% include "components/objectif.html.twig" %}#}
+				{#			</div>#}
+				{#		</div>#}
+			</div>
+		</div>
 	</div>
+
+
+
 
 {% endblock %}

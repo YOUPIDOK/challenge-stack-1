@@ -47,6 +47,15 @@ class DailyReport
     private ?int $eatCalories = null;
     private ?int $differenceCalories = null;
 
+    #[ORM\Column]
+    private ?float $totalSleepTime = 0;
+
+    #[ORM\Column]
+    private ?float $totalCaloriesSpent = 0;
+
+    #[ORM\Column]
+    private ?float $totalCaloriesEat = 0;
+
     public function __construct()
     {
         $this->sleepTimes = new ArrayCollection();
@@ -122,6 +131,21 @@ class DailyReport
         if ($this->differenceCalories === null) $this->differenceCalories = $this->getEatCalories() - $this->getSpentCalories();
 
         return $this->differenceCalories;
+    }
+
+    public function updateDailyNutrition(): void
+    {
+
+    }
+
+    public function updateDailyReportSleepTime(): void
+    {
+        $this->totalSleepTime = 0;
+
+        /** @var SleepTime $sleepTime */
+        foreach ($this->sleepTimes as $sleepTime) {
+            $this->totalSleepTime += $sleepTime->getTimeInHour();
+        }
     }
 
         public function addSleepTime(SleepTime $sleepTime): self
@@ -214,6 +238,42 @@ class DailyReport
     public function setWeight(?Weight $weight): self
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getTotalSleepTime(): ?float
+    {
+        return $this->totalSleepTime;
+    }
+
+    public function setTotalSleepTime(float $totalSleepTime): self
+    {
+        $this->totalSleepTime = $totalSleepTime;
+
+        return $this;
+    }
+
+    public function getTotalCaloriesSpent(): ?float
+    {
+        return $this->totalCaloriesSpent;
+    }
+
+    public function setTotalCaloriesSpent(float $totalCaloriesSpent): self
+    {
+        $this->totalCaloriesSpent = $totalCaloriesSpent;
+
+        return $this;
+    }
+
+    public function getTotalCaloriesEat(): ?float
+    {
+        return $this->totalCaloriesEat;
+    }
+
+    public function setTotalCaloriesEat(float $totalCaloriesEat): self
+    {
+        $this->totalCaloriesEat = $totalCaloriesEat;
 
         return $this;
     }

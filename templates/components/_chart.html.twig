@@ -1,8 +1,9 @@
 {% if chart.isValid %}
     <canvas
+            id="{{ chart.id }}"
             data-controller="chart"
             data-chart-data-value='{{ chart.data }}'
-            data-chart-type-value="{{ chart.type }}"
+            data-chart-type-value="{{ chart.chartType }}"
             data-chart-options-value="{{ chart.options }}"
     ></canvas>
 {% endif %}

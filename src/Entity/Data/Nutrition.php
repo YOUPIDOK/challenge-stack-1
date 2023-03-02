@@ -110,4 +110,9 @@ class Nutrition
 
         return $this;
     }
+
+    public function updateDailyNutrition()
+    {
+        $this->dailyReport?->updateDailyNutrition();
+    }
 }

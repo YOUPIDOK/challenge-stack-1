@@ -147,7 +147,7 @@ class AppFixtures extends Fixture
         $this->manager->persist($superAdmin);
         $this->manager->flush();
 
-        for ($i = 1; $i <= 2; $i++) {
+        for ($i = 1; $i <= 1; $i++) {
             shuffle($this->genders);
             $user = new User();
             $user
@@ -288,7 +288,7 @@ class AppFixtures extends Fixture
 
     private function clientSleepTime(DailyReport $dailyReport)
     {
-        $midSleepTime = random_int(120,360);
+        $midSleepTime = random_int(210,240);
         if ($midSleepTime % 2 === 1) $midSleepTime -= 1;
 
         $asleepAt = ((clone $dailyReport->getDate())->modify('-' . $midSleepTime . ' minutes'));
@@ -297,8 +297,7 @@ class AppFixtures extends Fixture
         $sleepTime = (new SleepTime())
             ->setDailyReport($dailyReport)
             ->setAsleepAt($asleepAt)
-            ->setAwakeAt($awakeAt)
-        ;
+            ->setAwakeAt($awakeAt);
 
         $this->manager->persist($sleepTime);
         $this->manager->flush();

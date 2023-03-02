@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CnilController extends AbstractController
+class RgpdController extends AbstractController
 {
     #[Route('/conditions-generales', name: 'conditions_generales', methods: ['GET'])]
     public function conditions_generales()

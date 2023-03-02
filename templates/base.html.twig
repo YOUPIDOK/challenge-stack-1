@@ -14,10 +14,8 @@
 		<link rel="manifest" href="/manifest.webmanifest">
 	</head>
 	<body>
-
+	{% include "partials/_flash_messages.html.twig" %}
 		<main>
-
-			{% include "partials/_flash_messages.html.twig" %}
 			<div class="p-2"> {% block main_body %}{% endblock %}
 				</div>
 			</main>

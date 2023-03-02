@@ -31,8 +31,7 @@ class ActivityTime
     #[NotNull]
     private ?Activity $activity = null;
 
-    #[ORM\Column()]
-    #[NotNull]
+    #[ORM\Column(nullable: true)]
     #[Range(min: 0)]
     private ?float $distance = null;
 
@@ -124,14 +123,9 @@ class ActivityTime
         return $this;
     }
 
-    public function setTimeFromDates(): self
+    public function updateTime(): self
     {
-        $interval = $this->startAt->diff($this->endAt);
-        $minutes = $interval->format('%a') * 24 * 60;
-        $minutes .= $interval->format('%h') * 60;
-        $minutes .= $interval->format('%i');
-
-        $this->time = intval($minutes) / 10;
+        $this->time = ($this->endAt->getTimestamp() - $this->startAt->getTimestamp()) / 60;
 
         return $this;
     }

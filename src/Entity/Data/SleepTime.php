@@ -90,14 +90,9 @@ class SleepTime
         return $this;
     }
 
-    public function setTimeFromDates(): self
+    public function updateTime(): self
     {
-        $interval = $this->asleepAt->diff($this->awakeAt);
-        $minutes = $interval->format('%a') * 24 * 60;
-        $minutes .= $interval->format('%h') * 60;
-        $minutes .= $interval->format('%i');
-
-        $this->time = intval($minutes) / 10;
+        $this->time = ($this->awakeAt->getTimestamp() - $this->asleepAt->getTimestamp()) / 60;
 
         return $this;
     }

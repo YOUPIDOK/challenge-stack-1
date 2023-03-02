@@ -38,8 +38,6 @@ class SleepTimeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sleepTime->setTimeFromDates();
-
             $sleepTimeRepository->save($sleepTime, true);
             $dailyReportRepository->save($dailyReport, true);
             $this->addFlash('success', 'Votre temps de sommeil à était ajouté');
@@ -63,7 +61,6 @@ class SleepTimeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sleepTime->setTimeFromDates();
             $sleepTimeRepository->save($sleepTime, true);
 
             $this->addFlash('success', 'Votre temps de sommeil à était modifié');

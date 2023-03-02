@@ -8,8 +8,10 @@
 {% endblock %}
 {% block main_body %}
 	<section id="body-pd">
-		{% include "partials/_sidebar.html.twig" %}
+		<div class="container">
+			{% include "partials/_sidebar.html.twig" %}
 
-		{% block body %}{% endblock %}
+			{% block body %}{% endblock %}
+		</div>
 	</section>
 {% endblock %}

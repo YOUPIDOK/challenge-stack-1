@@ -120,7 +120,7 @@ class AppFixtures extends Fixture
         $this->manager->persist($superAdmin);
         $this->manager->flush();
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             shuffle($this->genders);
             $user = new User();
             $user

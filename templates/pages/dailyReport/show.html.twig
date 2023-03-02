@@ -3,7 +3,7 @@
 {% block title %}Rapport journalier{% endblock %}
 
 {% block body %}
-    <h1>Rapport journalier du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
+    <h1>Rapport du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
     <a class="btn btn-primary" href="{{ path('app_main_data_nutrition_new', {'id': dailyReport.id}) }}">Nutrition</a>
     <a class="btn btn-primary" href="{{ path('app_main_data_sleep_time_new', {'id': dailyReport.id}) }}">Sommeil</a>
     <a class="btn btn-primary" href="{{ path('app_main_data_weight_new', {'id': dailyReport.id}) }}">Poid</a>

@@ -9,7 +9,7 @@
 composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
-php bin/console doctrine:fixtures:load         
+php bin/console doctrine:fixtures:load            # Peut être un peu long à cause du hash des passwords et de la masse de données généré
 yarn install
 yarn build
 ```

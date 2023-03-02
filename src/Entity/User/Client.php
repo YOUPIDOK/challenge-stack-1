@@ -72,6 +72,28 @@ class Client
         return '' . $this->getUser();
     }
 
+    public function getIdentity()
+    {
+        return '' . $this->getUser()?->getIdentity();
+    }
+
+    public function getAge()
+    {
+        $now = new DateTime('now');
+        return date_diff($this->getBirthdate() ?? $now, $now)->y;
+    }
+
+    public function getHeighTinMetter()
+    {
+        if ($this->height === null) return '';
+
+        $m = intval($this->height / 100) . 'm';
+        $cm = $this->height % 100;
+        if ($cm < 10) $cm = '0' . $cm;
+
+        return $m . $cm;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

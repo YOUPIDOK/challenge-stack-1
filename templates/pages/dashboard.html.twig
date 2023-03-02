@@ -14,40 +14,62 @@
 			<a class="btn btn-primary" href="{{ path('daily_reports') }}">Mes rapports journaliers</a> #}
 
 	<!--Container Main start-->
-	<div class="col-9"> <h4>Main Components</h4>
-	</div>
 	<!--Container Main end-->
 
-	<div class="profile-card col-1">
+	<div class="my-2">
+		{{ form_start(form) }}
+{#		<span>Selectionnez la periode</span>#}
+		<div class="input-group">
+			{{ form_widget(form.start) }}
+			{{ form_widget(form.end) }}
+			<button type="submit" class="input-group-btn btn btn-primary">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+
+	{% if weightChart.isValid %}
+		{{ include('components/_chart.html.twig', {chart: weightChart}) }}
+	{% else %}
+		<div>Aucune donnée de poids disponible</div>
+	{% endif %}
+
+
+	<div class="profile-card">
 		<div class="profile-card-header">
 			<h3>Mon profil</h3>
 			<div class="avatar">
 				<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
-				Nom Prénom
+				{{ client.identity }}
 			</div>
 			<div class="profile-info">
 				<div class="profile-info-title">
-					<p>Poids</p>
+					{% if weight is not null %}
+						<p>Poids</p>
+					{% endif %}
 					<p>Age</p>
 					<p>Taille</p>
 				</div>
 				<div class="profile-info-value">
-					<p>85kg</p>
-					<p>40ans</p>
-					<p>1m90</p>
+					{% if weight is not null %}
+						<p>{{ weight.weight }}kg</p>
+					{% endif %}
+					<p>{{ client.age }} ans</p>
+					<p>{{ client.heightInMetter }}</p>
 				</div>
 			</div>
 		</div>
-		<div class="profile-card-body">
-			<h4>Mes objectifs</h4>
-			<div
-				class="accordion" id="accordionExample">
-				{# {% for objectif in objectifs %}
-														
-																																																																																																																																																																																																						            {% endfor %} #}
-				{% include "components/objectif.html.twig" %}
-			</div>
-		</div>
+{#		<div class="profile-card-body">#}
+{#			<h4>Mes objectifs</h4>#}
+{#			<div#}
+{#				class="accordion" id="accordionExample">#}
+{#				#}{# {% for objectif in objectifs %}#}
+
+{#																																																																																																																																																																																																						            {% endfor %} #}
+{#				{% include "components/objectif.html.twig" %}#}
+{#			</div>#}
+{#		</div>#}
 	</div>
 
 {% endblock %}

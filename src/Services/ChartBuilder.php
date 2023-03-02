@@ -12,6 +12,8 @@ class ChartBuilder
 {
     const WEIGHT_AVERAGE = 'WEIGHT_AVERAGE';
     const SLEEP_TIME_AVERAGE = 'SLEEP_TIME_AVERAGE';
+    const EAT_CALORIES = 'EAT_CALORIES';
+    const SPENT_CALORIES = 'SPENT_CALORIES';
 
     private string   $type;
     private string   $chartTitle;
@@ -115,6 +117,26 @@ class ChartBuilder
                     $this->dataValues[] = [
                         'x' => $dailyReport->getDate()->format('Y-m-d'),
                         'y' => $dailyReport->getTotalSleepTime(),
+                    ];
+                    $this->labels[] = '';
+                }
+                break;
+            case self::EAT_CALORIES :
+                /** @var DailyReport $dailyReport */
+                foreach ($this->data as $dailyReport) {
+                    $this->dataValues[] = [
+                        'x' => $dailyReport->getDate()->format('Y-m-d'),
+                        'y' => $dailyReport->getTotalCaloriesEat(),
+                    ];
+                    $this->labels[] = '';
+                }
+                break;
+            case self::SPENT_CALORIES:
+                /** @var DailyReport $dailyReport */
+                foreach ($this->data as $dailyReport) {
+                    $this->dataValues[] = [
+                        'x' => $dailyReport->getDate()->format('Y-m-d'),
+                        'y' => $dailyReport->getTotalCaloriesSpent(),
                     ];
                     $this->labels[] = '';
                 }

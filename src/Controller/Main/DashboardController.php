@@ -37,18 +37,19 @@ class DashboardController extends AbstractController
         $weights = $weightRepo->searchByClient($client, $form->get('start')->getData(), $form->get('end')->getData());
 
         $weightChart = (new ChartBuilder())->generate(ChartBuilder::WEIGHT_AVERAGE, 'Évolution du poids (kg/j)', $weights, $form->get('start')->getData());
-        $sleepTimetChart = (new ChartBuilder())->generate(ChartBuilder::SLEEP_TIME_AVERAGE, 'Évolution du temps de sommeil (h/j)', $dailyReports, $form->get('start')->getData());
+        $sleepTimeChart = (new ChartBuilder())->generate(ChartBuilder::SLEEP_TIME_AVERAGE, 'Évolution du temps de sommeil (h/j)', $dailyReports, $form->get('start')->getData());
+        $eatCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::EAT_CALORIES, 'Apport calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
+        $spentCaloriesChart = (new ChartBuilder())->generate(ChartBuilder::SPENT_CALORIES, 'Dépense calorique (Kcal/j)', $dailyReports, $form->get('start')->getData());
 
-        // TODO : Label 
-
-        // TODO : Nutrition
-        // TODO : Activité
+        // TODO : Label
 
         return $this->render('pages/dashboard.html.twig', [
             'client' => $client,
             'weight' => $weight,
             'weightChart' => $weightChart,
-            'sleepTimeChart' => $sleepTimetChart,
+            'sleepTimeChart' => $sleepTimeChart,
+            'eatCaloriesChart' => $eatCaloriesChart,
+            'spentCaloriesChart' => $spentCaloriesChart,
             'form' => $form->createView()
         ]);
     }

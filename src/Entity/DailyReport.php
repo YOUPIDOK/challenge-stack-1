@@ -43,10 +43,6 @@ class DailyReport
     #[ORM\OneToOne(inversedBy: 'dailyReport', cascade: ['persist', 'remove'])]
     private ?Weight $weight = null;
 
-    private ?int $spentCalories = null;
-    private ?int $eatCalories = null;
-    private ?int $differenceCalories = null;
-
     #[ORM\Column]
     private ?float $totalSleepTime = 0;
 
@@ -135,7 +131,25 @@ class DailyReport
 
     public function updateDailyNutrition(): void
     {
+        $this->totalCaloriesEat = 0;
 
+        /** @var Nutrition $nutrition */
+        foreach ($this->nutritions as $nutrition) {
+            $this->totalCaloriesEat += $nutrition->getFoodWeight() * $nutrition->getFood()->getCalorieByGramme();
+        }
+    }
+
+    public function updateDailyActivityTime(Weight $weight): void
+    {
+        $this->totalCaloriesSpent = 0;
+        $age = date_diff(new \DateTime('now'), $this->getClient()->getBirthdate())->y;
+        /** @var ActivityTime $activityTime */
+        foreach ($this->activityTimes as $activityTime) {
+            $calorieSpent = ((0.2017 * $age) + (0.6309 * $activityTime->getActivity()->getHeartRate()) - (0.09036 * ($weight->getWeight() ?? 50)) - 55.0969) * $activityTime->getTime() / 4.184;
+            $this->totalCaloriesSpent += $calorieSpent;
+        }
+
+        $this->totalCaloriesSpent = round($this->totalCaloriesSpent, 2);
     }
 
     public function updateDailyReportSleepTime(): void
@@ -276,5 +290,10 @@ class DailyReport
         $this->totalCaloriesEat = $totalCaloriesEat;
 
         return $this;
+    }
+
+    public function getCaloricDifferency()
+    {
+        return $this->totalCaloriesEat - $this->totalCaloriesSpent;
     }
 }

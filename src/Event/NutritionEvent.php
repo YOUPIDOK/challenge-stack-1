@@ -8,17 +8,31 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 
-#[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Nutrition::class)]
-#[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: Nutrition::class)]
+#[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Nutrition::class)]
+#[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: Nutrition::class)]
+#[AsEntityListener(event: Events::postRemove, method: 'postRemove', entity: Nutrition::class)]
 class NutritionEvent
 {
-    public function prePersist(Nutrition $nutrition, LifecycleEventArgs $event): void
+    public function postPersist(Nutrition $nutrition, LifecycleEventArgs $event): void
     {
-        $nutrition->updateDailyNutrition();
+        $dailyReport =  $nutrition->getDailyReport();
+        $event->getObjectManager()->refresh($dailyReport);
+        $dailyReport->updateDailyNutrition();
     }
 
-    public function preUpdate(Nutrition $nutrition, LifecycleEventArgs $event): void
+    public function postUpdate(Nutrition $nutrition, LifecycleEventArgs $event): void
     {
-        $nutrition->updateDailyNutrition();
+        $dailyReport =  $nutrition->getDailyReport();
+        $event->getObjectManager()->refresh($dailyReport);
+        $dailyReport->updateDailyNutrition();
+    }
+
+    public function postRemove(Nutrition $nutrition, LifecycleEventArgs $event): void
+    {
+        $dailyReport =  $nutrition->getDailyReport();
+        $event->getObjectManager()->refresh($dailyReport);
+        $dailyReport->updateDailyNutrition();
+
+        $event->getObjectManager()->flush();
     }
 }

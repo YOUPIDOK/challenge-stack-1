@@ -38,6 +38,20 @@
 					<div>Aucune donnée de sommeil disponible</div>
 				{% endif %}
 			</div>
+			<div class="col-lg-6">
+				{% if eatCaloriesChart.isValid %}
+					{{ include('components/_chart.html.twig', {chart: eatCaloriesChart}) }}
+				{% else %}
+					<div>Aucune donnée sur les calories ingérées</div>
+				{% endif %}
+			</div>
+			<div class="col-lg-6">
+				{% if spentCaloriesChart.isValid %}
+					{{ include('components/_chart.html.twig', {chart: spentCaloriesChart}) }}
+				{% else %}
+					<div>Aucune donnée sur les calories dépensées</div>
+				{% endif %}
+			</div>
 		</div>
 		<div class="col-md-2 mt-4">
 			<div class="profile-card">

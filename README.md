@@ -19,7 +19,7 @@ yarn build
 php bin/console user:create # Create user
 ```
 ### MLD
-> https://dbdiagram.io/d/63fc7977296d97641d83f681
+> https://dbdiagram.io/d/63ff7fd7296d97641d84b184
 
 ## Utilisateurs
 - Super admin

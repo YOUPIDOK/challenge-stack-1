@@ -9,8 +9,7 @@
 	{% endfor %}
 {% endblock %}
 {% block body %}
-	<h1 class="daily-h1">Rapport du
-		{{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
+	<h1 class="daily-h1">Rapport du {{ dailyReport.date ? dailyReport.date|date('d/m/Y') : '' }}</h1>
 	<div>
 		<h2>Mon récapitulatif de la journée</h2>
 		<div class="daily-details d-flex flex-column col-lg-6 col-sm-12 align-items-center">
@@ -18,45 +17,40 @@
 				{% if dailyReport.weight is not null%}
 					<div class="d-flex align-items-center gap-2">
 						<img src="{{asset('build/main/images/scale.png', 'main')}}" alt="Calories brûlées" height="24" width="24">
-						<p>Mon poid :
-							{{ dailyReport.weight.weight }}
-							kg</p>
+						<span>Mon poids : {{ dailyReport.weight.weight }} kg</span>
 					</div>
-					<a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier mon poids</a>
 				{% endif %}
 				<div class="d-flex align-items-center gap-2">
 					<img src="{{asset('build/main/images/fire.png', 'main')}}" alt="Calories brûlées" height="24" width="24">
-					<span>
-						Calories mangées :
-						{{ dailyReport.eatCalories }}
-						kcal</span>
+					<span> Calories mangées : {{ dailyReport.totalCaloriesEat }} kcal</span>
 				</div>
 			</div>
 			<div class="d-md-flex gap-lg-5 gap-2">
 				<div class="d-flex gap-3">
 					<img src="{{asset('build/main/images/healthy-food.png', 'main')}}" alt="Calories dépensées" height="24" width="24">
-					<span>Calories dépensées :
-						{{ dailyReport.spentCalories }}
-						kcal</span>
+					<span>Calories dépensées : {{ dailyReport.totalCaloriesSpent }} kcal</span>
 				</div>
 				<div class="d-flex align-items-center gap-2">
 					<img src="{{asset('build/main/images/bar-graph.png', 'main')}}" alt="Différence calorique" height="24" width="24">
-					<span>Diff. calorifique :
-						{{ dailyReport.differenceCalories }}
-						Kcal</span>
+					<span>Diff. calorifique : {{ dailyReport.caloricDifferency }} kcal</span>
 				</div>
 			</div>
 			<div class="d-md-flex gap-lg-5 gap-2">
 				<div class="d-flex align-items-center gap-2">
 					<img src="{{asset('build/main/images/sleeping.png', 'main')}}" alt="Temps dormis" height="24" width="24">
-					<span>Temps dormis : 0 min</span>
+					<span>Temps dormis : {{ dailyReport.totalSleepTime }}h</span>
 				</div>
-				<div class="d-flex align-items-center gap-2">
-					<img src="{{asset('build/main/images/chronometer.png', 'main')}}" alt="Temps d'activités effectué" height="24" width="24">
-					<span>Tps d'activ. éffectué: 0 min</span>
-				</div>
+				{#            <div class="d-flex align-items-center gap-2">#}
+				{#                <img src="{{asset('build/main/images/chronometer.png', 'main')}}" alt="Temps d'activités effectué" height="24" width="24">#}
+				{#                <span>Tps d'activ. éffectué: 0 min</span>#}
+				{#            </div>#}
 			</div>
 		</div>
+		{% if dailyReport.weight is not null%}
+			<div class="text-center">
+				<a href="{{ path('app_main_data_weight_edit', {'id': dailyReport.weight.id}) }}">Modifier mon poids</a>
+			</div>
+		{% endif %}
 	</div>
 	<div class="row justify-content-lg-around flex-lg-row justify-content-md-between justify-content-center gap-1 my-4">
 		<a class="link-daily col-md-2 mt-2" href="{{ path('app_main_data_nutrition_new', {'id': dailyReport.id}) }}">
@@ -87,43 +81,39 @@
 	</div>
 	<h2 class="daily-title mt-5">Nutritions</h2>
 	<div class="table-responsive my-4">
-		<table class="table table-striped  table-hover border">
+		<table class="table table-striped table-hover border">
 			<thead>
-				<tr>
-					<th scope="col">Label</th>
-					<th scope="col">Food label</th>
-					<th scope="col">Calories</th>
-					<th scope="col">Glucide</th>
-					<th scope="col">Lipide</th>
-					<th scope="col">Protein</th>
-					<th scope="col">Poids</th>
-					<th scope="col">actions</th>
-				</tr>
+			<tr>
+				<th scope="col">Label</th>
+				<th scope="col">Food label</th>
+				<th scope="col">Calories</th>
+				<th scope="col">Glucide</th>
+				<th scope="col">Lipide</th>
+				<th scope="col">Protein</th>
+				<th scope="col">Poids</th>
+				<th scope="col">actions</th>
+			</tr>
 			</thead>
 			<tbody>
-				{% for nutrition in dailyReport.nutritions %}
-					<tr>
-						<th scope="row">{{ nutrition.mealType }}</th>
-						<td>{{ nutrition.food.label }}</td>
-						<td>{{ nutrition.food.calories }}</td>
-						<td>{{ nutrition.food.carbohydrates }}</td>
-						<td>{{ nutrition.food.lipids }}</td>
-						<td>{{ nutrition.food.proteins }}</td>
-						<td>{{ nutrition.foodWeight }}</td>
-						<td>
-							<a href="{{ path('app_main_data_nutrition_edit', {id: nutrition.id}) }}">
-								<i class="fa-solid fa-pen-to-square text-primary"></i>
-							</a>
-							<a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-nutrition-{{ nutrition.id }}">
-								<i class="fa-solid fa-trash-can text-danger"></i>
-							</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="8">Pas de nutrition ajouté</td>
-					</tr>
-				{% endfor %}
+			{% for nutrition in dailyReport.nutritions %}
+				<tr>
+					<th scope="row">{{ nutrition.mealType }}</th>
+					<td>{{ nutrition.food.label }}</td>
+					<td>{{ nutrition.food.calories }}</td>
+					<td>{{ nutrition.food.carbohydrates }}</td>
+					<td>{{ nutrition.food.lipids }}</td>
+					<td>{{ nutrition.food.proteins }}</td>
+					<td>{{ nutrition.foodWeight }}</td>
+					<td>
+						<a href="{{ path('app_main_data_nutrition_edit', {id: nutrition.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+						<a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-nutrition-{{ nutrition.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Pas de nutrition ajouté</td>
+				</tr>
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -183,30 +173,35 @@
 				</tr>
 			</thead>
 			<tbody>
+
 				{% for sleepTime in dailyReport.sleepTimes %}
 					<tr>
 						<th scope="row">{{ sleepTime.asleepAt ? sleepTime.asleepAt|date('d/m/Y H:i:s') : '' }}</th>
+						<td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('d/m/Y H:i:s') : '' }}</td>
+						<td>{{ sleepTime.time }}
+							min</td>
+						<td>
+							<a href="{{ path('app_main_data_sleep_time_edit', {id: sleepTime.id}) }}">
+								<i class="fa-solid fa-pen-to-square text-primary"></i>
+							</a>
+							<a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-sleep-time-{{ sleepTime.id }}">
+								<i class="fa-solid fa-trash-can text-danger"></i>
+							</a>
+						</td>
 					</tr>
-				</td>
-				<td>{{ sleepTime.awakeAt ? sleepTime.awakeAt|date('d/m/Y H:i:s') : '' }}</td>
-				<td>{{ sleepTime.time }}
-					min</td>
-				<td>
-					<a href="{{ path('app_main_data_sleep_time_edit', {id: sleepTime.id}) }}">
-						<i class="fa-solid fa-pen-to-square text-primary"></i>
-					</a>
-					<a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-sleep-time-{{ sleepTime.id }}">
-						<i class="fa-solid fa-trash-can text-danger"></i>
-					</a>
-				</td>
+
 			</tbody>
-		</tr>
 	{% else %}
 		<tr>
 			<td colspan="7">Pas de temps de sommeil ajouté</td>
 		</tr>
 	{% endfor %}
-</tbody></table></div>{% endblock %}{% block modals %}{% for nutrition in dailyReport.nutritions %}<div class="modal fade" id="delete-nutrition-{{ nutrition.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+	</tbody></table></div>
+	{% endblock %}
+
+{% block modals %}
+	{% for nutrition in dailyReport.nutritions %}<div class="modal fade" id="delete-nutrition-{{ nutrition.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">

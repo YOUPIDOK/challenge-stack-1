@@ -64,6 +64,10 @@ h4 {
   background-color:var(--bg-menu_profile);
   color:var(--font-color);
 }
+.form-control:focus {
+  background-color: var(--hover-tr);
+  color:var(--font-color);
+}
 .form-select:disabled, .form-control:disabled {
   background-color:var(--bg-disabled);
 }
@@ -73,6 +77,17 @@ h4 {
 }
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   color:var(--font-color);
+}
+.choices__list--single .choices__item, .choices[data-type*=select-one] .choices__inner,.choices__list--dropdown, .choices__list[aria-expanded], .choices[data-type*=select-one] .choices__input {
+  color:var(--font-color);
+  background-color:var(--bg-menu_profile) ;
+}
+.choices__list--dropdown .choices__item--selectable.is-highlighted, .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+  background-color:var(--hover-tr) ;
+}
+
+.table tbody tr:hover {
+  background-color: var(--hover-tr);
 }
 // .table-responsive {
 //  background-color: var(--bg-menu_profile)!important;

@@ -81,13 +81,15 @@ a{
     padding: .5rem 0 .5rem 1.5rem
 }
 .nav_logo{
-    margin-bottom: 2rem
+    margin-bottom: 2rem;
+    color:white;
 }
 .nav_logo-icon{
-    font-size: 1.25rem;color: var(--font-color)
+    font-size: 1.25rem;
+    color:white;
 }
 .nav_logo-name{
-    color: var(--font-color);
+    color: white;
     font-weight: 700
 }
 .nav_link{
@@ -96,7 +98,7 @@ a{
     margin-bottom: 1.5rem;
     transition: .3s
 }
-.nav_link:hover{
+.nav_link:hover:not(.nohover){
     background-color: rgb(90, 128, 252);
     border-radius: 15px;
     transition: all 0.3s;
@@ -158,9 +160,14 @@ input[type="checkbox"].demo5 {
   }
   input[type="checkbox"].demo5:checked + label {
     background-color: #00B7E8 ;
+    
   }
   input[type="checkbox"].demo5:checked + label::before {
     margin-left: 12px ;
+    
+  }
+  input[type="checkbox"].demo5 + label:hover {
+    cursor: pointer;
   }
 
 @media screen and (min-width: 768px){

@@ -28,7 +28,7 @@ class ActivityTimeType extends AbstractType
         $activityTime = $options['data'];
         $dailyReport = $activityTime->getDailyReport();
         $minDate = (clone $dailyReport->getDate())->modify('-1 day');
-        $maxDate = (clone$dailyReport->getDate())->modify('+23 hour')->modify('+59 minute');
+        $maxDate = (clone $dailyReport->getDate())->modify('+23 hour')->modify('+59 minute');
 
         $builder
             ->add('startAt', DateTimeType::class, [
@@ -65,15 +65,14 @@ class ActivityTimeType extends AbstractType
                 'label' => 'Distance',
                 'required' => false,
                 'scale' => 2,
-                'help' => 'En métres',
+                'help' => 'En mètres',
                 'constraints' => [
-                    new Range( ['min' => 0])
+                    new Range(['min' => 0])
                 ]
             ])
             ->add('activity', EntitySelectChoicesType::class, [
                 'class' => Activity::class
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,11 +1,12 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}New ActivityTime{% endblock %}
+{% block title %}Ajout Activité
+{% endblock %}
 
 {% block body %}
-    <h1>Create new ActivityTime</h1>
+	<h1>Ajout d'une Activité</h1>
 
-    {{ include('pages/data/activity_time/_form.html.twig') }}
+	{{ include('pages/data/activity_time/_form.html.twig') }}
 
-    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+	<a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 {% endblock %}

@@ -1,37 +1,40 @@
 {% extends 'layouts/navbar_layout.html.twig' %}
 
-{% block title %}Créer un compte{% endblock %}
+{% block title %}Créer un compte
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Créer un compte</h1>
+	<div class="container">
+		<h1>Créer un compte</h1>
 
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.email) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.firstname) }}</div>
-            <div class="col-md-6">{{ form_row(form.lastname) }}</div>
-            <div class="col-md-6">{{ form_row(form.gender) }}</div>
-            <div class="col-md-6">{{ form_row(form.client.birthdate) }}</div>
-            <div class="col-md-6">{{ form_row(form.plainPassword.first) }}</div>
-            <div class="col-md-6">{{ form_row(form.plainPassword.second) }}</div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-6">{{ form_row(form.client.height) }}</div>
-            <div class="col-md-6">{{ form_row(form.weight) }}</div>
-            <div class="col-md-6">
-                {{ form_row(form.rgpd) }}
-                <a href="{{ path('politiques_de_confidentialite') }}" target="_blank">Lire la politique de confidentialités</a>
-            </div>
-        </div>
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col-md-6">{{ form_row(form.email) }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">{{ form_row(form.firstname) }}</div>
+			<div class="col-md-6">{{ form_row(form.lastname) }}</div>
+			<div class="col-md-6">{{ form_row(form.gender) }}</div>
+			<div class="col-md-6">{{ form_row(form.client.birthdate) }}</div>
+			<div class="col-md-6">{{ form_row(form.plainPassword.first) }}</div>
+			<div class="col-md-6">{{ form_row(form.plainPassword.second) }}</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col-md-6">{{ form_row(form.client.height) }}</div>
+			<div class="col-md-6">{{ form_row(form.weight) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.rgpd) }}
+				<a href="{{ path('politiques_de_confidentialite') }}" target="_blank">Lire les politiques de confidentialités</a>
+			</div>
+		</div>
 
-        <div class="text-center p-2 m-2">
-            <button class="btn-inscription" type="submit">S'inscrire</button>
-        </div>
-        {{ form_end(form) }}
+		<div class="text-center p-2 m-2">
+			<button class="btn-inscription" type="submit">S'inscrire</button>
+		</div>
+		{{ form_end(form) }}
 
-        <div class="mt-2">Déjà inscrit ? <a href="{{ path('login') }}">Se connecter</a></div>
-    </div>
+		<div class="mt-2">Déjà inscrit ?
+			<a href="{{ path('login') }}">Se connecter</a>
+		</div>
+	</div>
 {% endblock %}

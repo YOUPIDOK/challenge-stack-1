@@ -19,7 +19,7 @@ class NutritionType extends AbstractType
     {
         $builder
             ->add('mealType', SelectChoicesType::class, [
-                'label' => 'Nature du repas',
+                'label' => 'Type de repas',
                 'required' => true,
                 'choices' => MealTypeEnum::getChoices()
             ])
@@ -30,12 +30,11 @@ class NutritionType extends AbstractType
                 'label' => 'Poids',
                 'required' => true,
                 'scale' => 2,
-                'help' => 'En gramme',
+                'help' => 'En grammes',
                 'constraints' => [
-                    new Range( ['min' => 0])
+                    new Range(['min' => 0])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

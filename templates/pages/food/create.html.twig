@@ -1,8 +1,9 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}Nouveau{% endblock %}
+{% block title %}Nouveau
+{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une nourriture</h1>
-    {% include 'components/form/food_form.html.twig' with {btn_label : 'Créer'} %}
+	<h1>Ajouter un aliment</h1>
+	{% include 'components/form/food_form.html.twig' with {btn_label : 'Créer'} %}
 {% endblock %}

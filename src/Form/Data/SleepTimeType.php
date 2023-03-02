@@ -27,7 +27,7 @@ class SleepTimeType extends AbstractType
 
         $builder
             ->add('asleepAt', DateTimeType::class, [
-                'label' => 'Heure d\'endormisement',
+                'label' => 'Heure du coucher',
                 'required' => true,
                 'widget' => 'single_text',
                 'constraints' => [
@@ -55,8 +55,7 @@ class SleepTimeType extends AbstractType
                         }
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

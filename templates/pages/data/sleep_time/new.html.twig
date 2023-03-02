@@ -1,11 +1,12 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}New SleepTime{% endblock %}
+{% block title %}Ajout durée sommeil
+{% endblock %}
 
 {% block body %}
-    <h1>Create new SleepTime</h1>
+	<h1>Ajout durée Sommeil</h1>
 
-    {{ include('pages/data/sleep_time/_form.html.twig') }}
+	{{ include('pages/data/sleep_time/_form.html.twig') }}
 
-    <a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
+	<a class="btn btn-primary" href="{{ path('daily_report_show', {'id': dailyReport.id }) }}">Retour</a>
 {% endblock %}

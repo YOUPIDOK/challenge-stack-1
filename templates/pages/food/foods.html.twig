@@ -1,10 +1,10 @@
 {% extends 'layouts/sidebar_layout.html.twig' %}
 
-{% block title %}Ma nourritures
+{% block title %}Mon alimentation
 {% endblock %}
 
 {% block body %}
-	<h1>Ma nourritures</h1>
+	<h1>Mon alimentation</h1>
 
 	<a href="{{ path('food_create') }}" class="btn btn-primary">Ajouter
 	</a>
@@ -24,11 +24,11 @@
 		<table class="table table-striped  table-hover border">
 			<thead>
 				<tr>
-					<th scope="col">Nourriture</th>
+					<th scope="col">Aliments</th>
 					<th scope="col">Calories pour 100g</th>
-					<th scope="col">Glucides</th>
-					<th scope="col">Lipides</th>
-					<th scope="col">Protéines</th>
+					<th scope="col">Glucides (g)</th>
+					<th scope="col">Lipides (g)</th>
+					<th scope="col">Protéines (g)</th>
 					<th scope="col">Actions</th>
 				</tr>
 			</thead>
@@ -52,7 +52,7 @@
 					</tr>
 				{% else %}
 					<tr>
-						<td colspan="6" class="text-center">Aucune nourriture personalisée.</td>
+						<td colspan="6" class="text-center">Aucune nourriture ajoutée.</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -76,7 +76,7 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						Voulez vous vraiment supprimer la nourriture
+						Voulez vous vraiment supprimer l'aliment :
 						{{ food.label }}
 						?
 					</div>

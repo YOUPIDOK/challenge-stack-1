@@ -10,26 +10,27 @@ Back
         - Statistiques
 
 Front
-    - Homepage
-    - Dashboard
-    - Login
-    - Register
-    - Profile
-    - Editer mon profile
-    - Mes aliments
-    - Ajouter / Modifier un aliment
-    - Mes activités 
-    - Ajouter / Modifier une activité
-    - Mes rapports journalier
-    - Mon rapport journalier
-    - Ajouter / Modifier temps de sommeille
-    - Ajouter / Modifier aliments
-    - Ajouter / Modifier poids
-    - Ajouter / Modifier temps d'activité
+    - Page : Homepage
+    - Page : Dashboard
+    - Page : Login
+    - Page : Register
+    - Page : Profile
+    - Page : Editer mon profile
+    - Page : Mes aliments
+    - Page : Ajouter / Modifier un aliment
+    - Page : Mes activités 
+    - Page : Ajouter / Modifier une activité
+    - Page : Mes rapports journalier
+    - Page : Mon rapport journalier
+    - Page : Ajouter / Modifier temps de sommeille
+    - Page : Ajouter / Modifier aliments
+    - Page : Ajouter / Modifier poids
+    - Page : Ajouter / Modifier temps d'activité
+    - Page : Politique de confidentialité
+    - Page : Mention légale
+    - Page : Condition générale d'utilisation
+    - Ajouter les liens dans la sidebar
     - Footer (mettre les liens RGPD)
-    - Politique de confidentialité
-    - Mention légale
-    - Condition générale d'utilisation
 
 Questions 
     - Comment saisir un rapport journalier pour un jour précis ?

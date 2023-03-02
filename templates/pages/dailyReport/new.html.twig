@@ -1,0 +1,11 @@
+{% extends 'layouts/sidebar_layout.html.twig' %}
+
+{% block title %}Nouveau rapport{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un rapport</h1>
+
+    {{ include('pages/dailyReport/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('daily_reports') }}">Revenir aux rapports journalier</a>
+{% endblock %}

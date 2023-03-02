@@ -65,6 +65,7 @@ class DailyReportRepository extends ServiceEntityRepository
     }
 
 
+
     //    /**
 //     * @return DailyReport[] Returns an array of DailyReport objects
 //     */

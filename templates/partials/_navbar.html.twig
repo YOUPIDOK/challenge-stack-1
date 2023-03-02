@@ -9,7 +9,7 @@
 				{% if is_granted('ROLE_CLIENT') %}
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<img id="img_profile" src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="25" width="25">
+							<img src="{{ asset('images/user/' ~ app.user.gender ~ '.jpg')}}" alt="user" height="25" width="25">
 							{{ app.user.identity }}
 						</a>
 						<ul class="dropdown-menu">

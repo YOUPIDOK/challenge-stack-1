@@ -8,7 +8,6 @@ Back
         - Graphique pour les 4 trackers
     - Un rapport
         - Statistiques
-
 Front
     - Page : Homepage
     - Page : Dashboard
@@ -26,11 +25,11 @@ Front
     - Page : Ajouter / Modifier aliments
     - Page : Ajouter / Modifier poids
     - Page : Ajouter / Modifier temps d'activité
-    - Page : Politique de confidentialité
-    - Page : Mention légale
-    - Page : Condition générale d'utilisation
-    - Ajouter les liens dans la sidebar
-    - Footer (mettre les liens RGPD)
+   # - Page : Politique de confidentialité
+   # - Page : Mention légale
+   # - Page : Condition générale d'utilisation
+   # - Ajouter les liens dans la sidebar
+   # - Footer (mettre les liens RGPD)
 
 Questions 
     - Comment saisir un rapport journalier pour un jour précis ?

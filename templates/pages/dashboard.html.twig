@@ -11,7 +11,7 @@
 {% block body %}
 	<div class="my-2">
 		{{ form_start(form) }}
-{#		<span>Selectionnez la periode</span>#}
+		{#		<span>Selectionnez la periode</span>#}
 		<div class="input-group">
 			{{ form_widget(form.start) }}
 			{{ form_widget(form.end) }}
@@ -58,7 +58,7 @@
 				<div class="profile-card-header">
 					<h3>Mon profil</h3>
 					<div class="avatar">
-						<img src="{{ asset("build/main/images/user.png", 'main')}}" alt="user" height="150" width="150">
+						<img src="{{ asset('images/user/' ~ app.user.gender ~ '.jpg')}}" class="rounded-circle" alt="user" height="150" width="150">
 						{{ client.identity }}
 					</div>
 					<div class="profile-info">
@@ -73,16 +73,18 @@
 							{% if weight is not null %}
 								<p>{{ weight.weight }}kg</p>
 							{% endif %}
-							<p>{{ client.age }} ans</p>
+							<p>{{ client.age }}
+								ans</p>
 							<p>{{ client.heightInMetter }}</p>
 						</div>
 					</div>
 				</div>
 				{#		<div class="profile-card-body">#}
-				{#			<h4>Mes objectifs</h4>#}
+			{#			<h4>Mes objectifs</h4>#}
 				{#			<div#}
 				{#				class="accordion" id="accordionExample">#}
-				{#				#}{# {% for objectif in objectifs %}#}
+				{#				#}
+				{# {% for objectif in objectifs %}#}
 
 				{#																																																																																																																																																																																																						            {% endfor %} #}
 				{#				{% include "components/objectif.html.twig" %}#}
@@ -91,8 +93,6 @@
 			</div>
 		</div>
 	</div>
-
-
 
 
 {% endblock %}

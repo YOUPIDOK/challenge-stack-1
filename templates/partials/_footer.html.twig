@@ -1,10 +1,36 @@
 <footer class="mt-auto">
-    <div class="text-center bg-primary d-flex justify-content-center mt-4 py-2 gap-3">
-        <div class="text-white small">© challenge stack n°1 - {{ 'now' | date('Y') }}</div>
-        <div class="text-white small">
-              <a  href="{{ path('conditions_generales')}}">Conditions generales</a>
-              <a href="{{ path('mentions_legales')}}">Mentions legales</a>
-              <a href="{{ path('politiques_de_confidentialite')}}">Politiques de confidentialite</a>
-        </div>
-    </div>
+
+	<div id="logo">
+		<a class="navbar-brand" href="{{ path('homepage') }}"><img id="footer" src="{{ asset('app_icon/logoblancnoir.png') }}" width="200px"></a>
+
+	</div>
+
+	<ul id='logo'>
+
+		<li>
+			<img src=" {{ asset('app_icon/twitter.png') }} " alt="logo twitter">
+		</li>
+		<li>
+			<img src=" {{ asset('app_icon/instagram.png') }} " alt="logo instagram">
+		</li>
+		<li>
+			<img src=" {{ asset('app_icon/facebook.png') }} " alt="logo facebook">
+		</li>
+		<li>
+			<img src=" {{ asset('app_icon/discord.png') }} " alt="logo discord">
+		</li>
+	</ul>
+
+	<ul id="lien">
+		<li>
+			<a href="{{ path('conditions_generales')}}">Conditions générales</a>
+		</li>
+		<li>
+			<a href="{{ path('mentions_legales')}}">Mentions légales</a>
+		</li>
+		<li>
+			<a href="{{ path('politiques_de_confidentialite')}}">Politique de confidentialité</a>
+		</li>
+	</ul>
+
 </footer>

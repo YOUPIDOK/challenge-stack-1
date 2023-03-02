@@ -1,3 +1,31 @@
 footer {
+    padding:45px 15px;
+    display: flex;
+    background-color: var(--bg-blue);
+    justify-content: space-around;
+    align-items: center;
+}
 
+ul#logo {
+    display: flex;
+    justify-content: center;
+    margin-top : 20px;
+    
+}
+
+ul#logo li {
+    list-style: none;
+    margin: 5px 10px;
+}
+ul#logo li img {
+
+    width: 2rem;   
+}
+ul#lien li {
+    list-style: none;
+    margin: 5px 10px;
+    
+}
+ul#lien li a {
+    color:var(--font-color);
 }

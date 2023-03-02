@@ -13,7 +13,7 @@
 							{{ app.user.identity }}
 						</a>
 						<ul class="dropdown-menu">
-							<li >
+							<li>
 								<a class="dropdown-item" href="{{ path('profile') }}">Mon profil</a>
 							</li>
 							<li>
@@ -35,6 +35,12 @@
 					</li>
 					<li class="nav-item">
 						<a class="navbar-brand btn btn-inscription" href=" ">S'inscrire</a>
+					</li>
+					<li class="nav-item mt-2">
+						<input type="checkbox" class="demo5" id="demo5">
+						<label for="demo5"></label>
+						<i class="fa-solid fa-moon"></i>
+						<i class="fa-solid fa-sun" style="color:white"></i>
 					</li>
 				{% endif %}
 

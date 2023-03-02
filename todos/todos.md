@@ -32,6 +32,10 @@ Front
     - Ajouter les liens dans la sidebar
     - Footer (mettre les liens RGPD)
 
+Corrections
+    -Page d'inscription -> bouton s'inscrire
+                        -> poid avec un "s".
+
 Questions 
     - Comment saisir un rapport journalier pour un jour précis ?
         Faire un form ajouter un rapport journalier avec un select date et rediriger sur le rapport à la soumission du form

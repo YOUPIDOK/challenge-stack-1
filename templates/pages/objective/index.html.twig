@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objectif{% endblock %}
+
+{% block body %}
+    <h1>Objectif</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hove border">
+            <thead>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Label</th>
+                    <th scope="col">ObjectiveValue</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">StartAt</th>
+                    <th scope="col">EndAt</th>
+                    <th scope="col">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for objective in objectives %}
+                <tr>
+                    <th scope="row">{{ objective.type }}</th>
+                    <td>{{ objective.label }}</td>
+                    <td>{{ objective.objectiveValue }}</td>
+                    <td>{{ objective.active ? 'Yes' : 'No' }}</td>
+                    <td>{{ objective.startAt ? objective.startAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ objective.endAt ? objective.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_main_objective_show', {'id': objective.id}) }}">show</a>
+                        <a href="{{ path('app_main_objective_edit', {'id': objective.id}) }}">edit</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_main_objective_show', {id: objective.id}) }}"><i class="fa-solid fa-eye text-primary"></i></a>
+                        <a href="{{ path('app_main_objective_edit', {id: objective.id}) }}"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+                        <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#delete-objective-{{ activity.id }}"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Vous n'avez pas d'objectif</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('app_main_objective_new') }}">Ajouter</a>
+    <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir au objectif</a>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" id="delete-objective-{{ objective.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Voulez vous vraiment supprimer cet objectif ?
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ path('app_main_objective_delete', {id: objective.id}) }}" class="text-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

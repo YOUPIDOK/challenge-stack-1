@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objective{% endblock %}
+
+{% block body %}
+    <h1>Objective</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Début de l'objectif</th>
+                <td>{{ objective.startAt ? objective.startAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin de l'objectif</th>
+                <td>{{ objective.endAt ? objective.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ objective.label }}</td>
+            </tr>
+            <tr>
+                <th>Valeur de mon objectif</th>
+                <td>{{ objective.objectiveValue }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ objective.active ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_main_objective_index') }}">Revenir au objectif</a>
+
+    <a class="btn btn-primary" href="{{ path('app_main_objective_edit', {'id': objective.id}) }}">Modifier</a>
+
+    {{ include('main/objective/_delete_form.html.twig') }}
+{% endblock %}

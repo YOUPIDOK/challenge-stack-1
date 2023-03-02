@@ -81,6 +81,10 @@ a.btn-connexion:hover {
   border : solid 2px rgba(50,98,255,0.6);
 }
 
+img#img_user {
+  border-radius:15px;
+}
+
 @media only screen and (max-device-width : 991px) {
   ul.navbar-nav {
     align-items: center;
@@ -88,5 +92,9 @@ a.btn-connexion:hover {
   ul.navbar-nav li {
     margin : 10px 0;
   }
+  }
+  
+  .hidden{
+    display: none;
   }
   

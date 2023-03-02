@@ -17,6 +17,7 @@
     --bg-disabled: #ffffff;
     --hover-a: #ffffff;
     --lien_sidebar : black;
+    --hover-tr:#F2F2F2;
   }
   [data-bs-theme="dark"]{
     --bg-nav: #272729;
@@ -27,5 +28,6 @@
     --white-color:rgb(0, 0, 0);
     --hover-a: rgba(50,98,255,1);
     --lien_sidebar : #F4EBD9;
+    --hover-tr:#444;
 
   }

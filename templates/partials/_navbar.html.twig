@@ -8,18 +8,18 @@
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				{% if is_granted('ROLE_CLIENT') %}
-				<li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('dashboard') }}">Dashboard</a>
-                </li>
-				<li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('app_main_objective_index') }}">Mes objectifs</a>
-                </li>
-				<li class="nav-item mx-auto">
-                    <a class="nav-link" aria-current="page" href="{{ path('daily_report_show_current') }}">Mon rapport du jour</a>
-                </li>
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="{{ path('dashboard') }}">Dashboard</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="{{ path('app_main_objective_index') }}">Mes objectifs</a>
+					</li>
+					<li class="nav-item mx-auto">
+						<a class="nav-link" aria-current="page" href="{{ path('daily_report_show_current') }}">Mon rapport du jour</a>
+					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="{{ asset('images/user/' ~ app.user.gender ~ '.jpg')}}" alt="user" height="25" width="25">
+							<img id="img_user" src="{{ asset('images/user/' ~ app.user.gender ~ '.jpg')}}" alt="user" height="25" width="25">
 							{{ app.user.identity }}
 						</a>
 						<ul class="dropdown-menu">
@@ -43,8 +43,13 @@
 				<li class="nav-item mt-2">
 					<input type="checkbox" class="demo5" id="demo5">
 					<label for="demo5"></label>
-					<i class="fa-solid fa-moon" style="color:#272729"></i>
-					<i class="fa-solid fa-sun" style="color:white"></i>
+					<span id="moon" class="hidden">
+						<i class="fa-solid fa-moon"></i>
+					</span>
+					<span id="sun" class="hidden">
+						<i class="fa-solid fa-sun"></i>
+					</span>
+
 				</li>
 			</ul>
 

@@ -19,16 +19,18 @@
             <div class="col-md-6">{{ form_row(form.plainPassword.second) }}</div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">{{ form_row(form.client.height) }}</div>
+            
             {% if weight is not null %}
                 <div class="col-md-6">
                     {{ form_row(form.weight) }}
-                    <a href="{# TODO LINK #}" class="link-primary">Modifier</a> mon poid
+                    <a href="{# TODO LINK #}" class="link-primary">Modifier</a> mon poids
                 </div>
             {% endif %}
+            <div class="col-md-6">{{ form_row(form.client.height) }}</div>
         </div>
-
-        <button class="btn btn-primary w-100 mt-3">Modifier</button>
+        <div class="text-center">
+         <a class="navbar-brand btn btn-inscription"  href="{{ path('profile_update')}}"> Modifier</a>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

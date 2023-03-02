@@ -9,11 +9,11 @@ Back
     - Un rapport
         - Statistiques
 Front
-    - Page : Homepage
+  # - Page : Homepage
     - Page : Dashboard
     - Page : Login
     - Page : Register
-    - Page : Profile
+  # - Page : Profile
     - Page : Editer mon profile
     - Page : Mes aliments
     - Page : Ajouter / Modifier un aliment

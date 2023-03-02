@@ -1,33 +1,38 @@
-{% extends 'layouts/navbar_layout.html.twi' %}
+{% extends 'layouts/navbar_layout.html.twig' %}
 
 {% block title %}Homepage{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    {% for file in encore_entry_css_files('home', 'main') %}
+        <link rel="stylesheet" href="{{ preload(file, { as: 'style', importance: 'high' }) }}">
+    {% endfor %}
+{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container pt-4">
             <p>
                 La CNIL ne fournit pas de texte standard pour les conditions générales d'un site web. Toutefois, voici un exemple de texte qui peut être utilisé comme base pour la rédaction des conditions générales de votre site web :
 
-                Conditions Générales d'Utilisation (CGU)
+               <h2> Conditions Générales d'Utilisation (CGU) </h2>
 
-                Les présentes Conditions Générales d'Utilisation  régissent l'utilisation du site web Myftlog.fr . En utilisant le Site, vous acceptez pleinement et sans réserve ces CGU. Si vous n'acceptez pas ces CGU, vous devez immédiatement cesser d'utiliser le Site.
+               <p> Les présentes Conditions Générales d'Utilisation  régissent l'utilisation du site web Myftlog.fr . En utilisant le Site, vous acceptez pleinement et sans réserve ces CGU. Si vous n'acceptez pas ces CGU, vous devez immédiatement cesser d'utiliser le Site.
 
-                Propriété intellectuelle
-                Le Site et tout son contenu, y compris mais sans s'y limiter, les textes, graphismes, images, logos, marques, codes informatiques et logiciels, sont la propriété exclusive de Myftlog ou de ses partenaires et sont protégés par les lois sur la propriété intellectuelle applicables. Vous ne pouvez pas reproduire, distribuer, modifier, copier, transmettre, afficher ou exploiter de quelque manière que ce soit tout ou partie du contenu du Site sans notre autorisation écrite préalable.
+               <h2> Propriété intellectuelle </h2>
+               <p> Le Site et tout son contenu, y compris mais sans s'y limiter, les textes, graphismes, images, logos, marques, codes informatiques et logiciels, sont la propriété exclusive de Myftlog ou de ses partenaires et sont protégés par les lois sur la propriété intellectuelle applicables. Vous ne pouvez pas reproduire, distribuer, modifier, copier, transmettre, afficher ou exploiter de quelque manière que ce soit tout ou partie du contenu du Site sans notre autorisation écrite préalable.
 
-                Limitation de responsabilité
-                Nous nous efforçons de garantir que les informations fournies sur le Site sont exactes et à jour, mais nous ne pouvons garantir l'exactitude, l'exhaustivité ou la pertinence de ces informations. En utilisant le Site, vous reconnaissez que nous ne sommes pas responsables des dommages directs ou indirects, y compris la perte de données, la perte de profits ou la perte d'opportunités commerciales, qui pourraient résulter de l'utilisation ou de l'impossibilité d'utiliser le Site ou du contenu de ce dernier.
+               <h2> Limitation de responsabilité </h2>
+               <P> Nous nous efforçons de garantir que les informations fournies sur le Site sont exactes et à jour, mais nous ne pouvons garantir l'exactitude, l'exhaustivité ou la pertinence de ces informations. En utilisant le Site, vous reconnaissez que nous ne sommes pas responsables des dommages directs ou indirects, y compris la perte de données, la perte de profits ou la perte d'opportunités commerciales, qui pourraient résulter de l'utilisation ou de l'impossibilité d'utiliser le Site ou du contenu de ce dernier.
 
-                Liens vers des sites tiers
-                Le Site peut contenir des liens vers des sites web de tiers. Ces liens sont fournis uniquement à titre informatif et nous ne sommes pas responsables de leur contenu ou de leur fonctionnement. L'inclusion de ces liens ne signifie pas que nous approuvons ou recommandons les produits ou services offerts sur ces sites web de tiers.
+               <h2> Liens vers des sites tiers </h2>
+               <P> Le Site peut contenir des liens vers des sites web de tiers. Ces liens sont fournis uniquement à titre informatif et nous ne sommes pas responsables de leur contenu ou de leur fonctionnement. L'inclusion de ces liens ne signifie pas que nous approuvons ou recommandons les produits ou services offerts sur ces sites web de tiers.
 
-                Protection des données personnelles
-                Nous collectons, utilisons et traitons vos données personnelles conformément à notre politique de confidentialité disponible sur le Site. En utilisant le Site, vous acceptez que nous collections, utilisions et traitons vos données personnelles conformément à cette politique de confidentialité.
+               <h2> Protection des données personnelles </h2>
+               <p> Nous collectons, utilisons et traitons vos données personnelles conformément à notre politique de confidentialité disponible sur le Site. En utilisant le Site, vous acceptez que nous collections, utilisions et traitons vos données personnelles conformément à cette politique de confidentialité.
 
-                Modification des CGU
-                Nous nous réservons le droit de modifier ces CGU à tout moment et sans préavis. La version la plus récente des CGU est disponible sur le Site. Si vous continuez à utiliser le Site après la publication de modifications des CGU, vous acceptez les nouvelles CGU.
+               <h2>  Modification des CGU </h2>
+               <p> Nous nous réservons le droit de modifier ces CGU à tout moment et sans préavis. La version la plus récente des CGU est disponible sur le Site. Si vous continuez à utiliser le Site après la publication de modifications des CGU, vous acceptez les nouvelles CGU.
 
-                Loi applicable et juridiction compétente
-                Les présentes CGU sont régies et interprétées conformément au droit français. Tout différend découlant de l'utilisation du Site sera soumis à la compétence exclusive des tribunaux français.
+               <h2> Loi applicable et juridiction compétente </h2>
+               <p> Les présentes CGU sont régies et interprétées conformément au droit français. Tout différend découlant de l'utilisation du Site sera soumis à la compétence exclusive des tribunaux français.
 
                 Si vous avez des questions ou des préoccupations concernant ces CGU, veuillez nous contacter à l'adresse e-mail suivante : contact@Myftlog.fr.
 

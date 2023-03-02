@@ -1,11 +1,11 @@
 {
   "id": "/",
-  "name": "TOUPIK-TV",
-  "short_name": "TOUPIK-TV",
-  "start_url": "https://toupik-tv.pidok-server.fr",
+  "name": "MyFitLog",
+  "short_name": "MyFitLog",
+  "start_url": "https://challenge-stack-1.pidok-server.fr",
   "display": "standalone",
   "background_color": "#fff",
-  "description": "TOUPIK-TV youtube manager",
+  "description": "Améliorez votre santé en surveillant votre activité physique.",
   "icons": [
     {
       "src": "app_icon/icon_200px.png",

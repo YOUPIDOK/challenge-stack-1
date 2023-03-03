@@ -1,5 +1,6 @@
 # Challenge stack 1
 > https://challenge-stack-1.pidok-server.fr
+
 ## Documentation
 ### Exigences
 * PHP ``8.1``
@@ -14,6 +15,13 @@ php bin/console doctrine:fixtures:load            # Peut être un peu long à ca
 yarn install
 yarn build
 ```
+### Utilisation (Attention a utiliser https)
+Https obligatoire pour la sécurité
+> Option 1 : Utilisé un host Nginx / Apache
+
+> Option 2 :
+> ``symfony server:ca:install``
+> ``symfony serve``
 ### Commandes
 #### Outils
 ```shell

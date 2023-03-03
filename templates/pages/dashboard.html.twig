@@ -28,28 +28,28 @@
 				{% if weightChart.isValid %}
 					{{ include('components/_chart.html.twig', {chart: weightChart}) }}
 				{% else %}
-					<div>Pas assez de donnée sur le poids.</div>
+					<div>Pas assez de données sur le poids.</div>
 				{% endif %}
 			</div>
 			<div class="col-lg-6">
 				{% if sleepTimeChart.isValid %}
 					{{ include('components/_chart.html.twig', {chart: sleepTimeChart}) }}
 				{% else %}
-					<div>Pas assez de donnée sur le temps de sommeil.</div>
+					<div>Pas assez de données sur le temps de sommeil.</div>
 				{% endif %}
 			</div>
 			<div class="col-lg-6">
 				{% if eatCaloriesChart.isValid %}
 					{{ include('components/_chart.html.twig', {chart: eatCaloriesChart}) }}
 				{% else %}
-					<div>Pas assez de donnée sur les calories ingérées.</div>
+					<div>Pas assez de données sur les calories ingérées.</div>
 				{% endif %}
 			</div>
 			<div class="col-lg-6">
 				{% if spentCaloriesChart.isValid %}
 					{{ include('components/_chart.html.twig', {chart: spentCaloriesChart}) }}
 				{% else %}
-					<div>Pas assez de donnée sur les calories dépensées.</div>
+					<div>Pas assez de données sur les calories dépensées.</div>
 				{% endif %}
 			</div>
 		</div>
@@ -74,8 +74,7 @@
 								{% if weight is not null %}
 									<p>{{ weight.weight }}Kg</p>
 								{% endif %}
-								<p>{{ client.age }}
-									ans</p>
+								<p>{{ client.age }} ans</p>
 								<p>{{ client.heightInMetter }}</p>
 							</div>
 						</div>
